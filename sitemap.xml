@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- 메인 페이지 -->
+  <url>
+    <loc>https://시대학원.com/</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 2027 수시지원전략 -->
+  <url>
+    <loc>https://시대학원.com/2027_수시지원전략.html</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 국어 약술형 랜딩페이지 -->
+  <url>
+    <loc>https://시대학원.com/국어약술형_랜딩페이지.html</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 수학 약술형 랜딩페이지 -->
+  <url>
+    <loc>https://시대학원.com/수학약술형_랜딩페이지.html</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

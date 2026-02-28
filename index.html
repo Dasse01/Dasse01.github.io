@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시대학원 | 약술형 논술 전문</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Do+Hyeon&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bk:#0a0a0a;--dk:#111;--dk2:#1a1a1a;--dk3:#222;--dk4:#2a2a2a;
+  --red:#dc2626;--cherry:#b91c1c;--dcherry:#991b1b;--fire:#ef4444;
+  --gold:#f59e0b;--lgold:#fcd34d;--dgold:#d97706;
+  --white:#fff;--off:#f5f5f5;--gray:#9ca3af;--lgray:#d1d5db;--dgray:#6b7280;
+  --blue:#3b82f6;--teal:#14b8a6;--purple:#6c5ce7;
+  --font-display:'Do Hyeon',sans-serif;
+  --font-body:'Noto Sans KR',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bk);color:var(--white);font-family:var(--font-body);overflow-x:hidden;line-height:1.6}
+
+/* Noise overlay */
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.8rem 2rem;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);background:rgba(10,10,10,0.85);border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.3s}
+.nav.scrolled{padding:0.5rem 2rem;box-shadow:0 4px 30px rgba(0,0,0,0.5)}
+.nav-brand{font-family:var(--font-display);font-size:1.5rem;color:var(--gold);text-decoration:none;letter-spacing:1px}
+.nav-brand span{color:var(--white);font-size:0.9rem;margin-left:0.5rem;font-family:var(--font-body);font-weight:300}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.3s;position:relative}
+.nav-links a:hover{color:var(--white)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--red);transition:width 0.3s}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem;border-radius:4px;font-weight:700!important;font-size:0.85rem!important}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{background:var(--fire)!important}
+.nav-susi{color:var(--lgold)!important;font-weight:700!important;background:rgba(245,158,11,0.1);padding:0.3rem 0.7rem;border-radius:3px;border:1px solid rgba(245,158,11,0.25)!important}
+.nav-susi:hover{background:rgba(245,158,11,0.2)!important;color:#fcd34d!important}
+.nav-susi::after{background:var(--lgold)!important}
+
+/* 수시전략 프로모션 배너 */
+.susi-promo{position:relative;overflow:hidden;padding:5rem 2rem;background:linear-gradient(135deg,#1a0f00 0%,#0d0a05 50%,#0a0a14 100%)}
+.susi-promo::before{content:'';position:absolute;top:-40%;right:-15%;width:60%;height:180%;background:radial-gradient(ellipse,rgba(245,158,11,0.1) 0%,transparent 70%);pointer-events:none}
+.susi-promo::after{content:'';position:absolute;bottom:-30%;left:-10%;width:50%;height:150%;background:radial-gradient(ellipse,rgba(220,38,38,0.06) 0%,transparent 70%);pointer-events:none}
+.susi-inner{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.susi-top{display:flex;align-items:flex-start;gap:3rem}
+.susi-text{flex:1}
+.susi-badge{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);padding:0.3rem 0.8rem;border-radius:50px;font-size:0.72rem;font-weight:700;color:var(--lgold);margin-bottom:1rem}
+.susi-badge .sdot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+.susi-text h2{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.8rem);line-height:1.4;margin-bottom:0.8rem}
+.susi-text h2 .s-hl{color:var(--lgold)}
+.susi-text h2 .s-fire{color:var(--fire)}
+.susi-text .s-desc{font-size:0.95rem;color:var(--lgray);line-height:1.7;margin-bottom:1.5rem;max-width:550px}
+.susi-stats{display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.susi-stat{background:var(--dk2);border-top:3px solid var(--gold);padding:0.8rem 1.2rem;text-align:center;min-width:90px}
+.susi-stat .ss-num{font-family:var(--font-display);font-size:1.6rem;color:var(--gold);line-height:1}
+.susi-stat .ss-label{font-size:0.68rem;color:var(--dgray);margin-top:0.15rem}
+.susi-stat:nth-child(2){border-color:var(--fire)}.susi-stat:nth-child(2) .ss-num{color:var(--fire)}
+.susi-stat:nth-child(3){border-color:var(--teal)}.susi-stat:nth-child(3) .ss-num{color:var(--teal)}
+.susi-actions{display:flex;gap:0.8rem;flex-wrap:wrap}
+.susi-cards{flex:0 0 320px;display:flex;flex-direction:column;gap:0.6rem}
+.sc-card{background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:0.8rem 1rem;display:flex;align-items:center;gap:0.8rem;transition:all 0.3s}
+.sc-card:hover{border-color:rgba(245,158,11,0.2);background:var(--dk3);transform:translateX(4px)}
+.sc-icon{font-size:1.3rem;flex-shrink:0;width:2rem;text-align:center}
+.sc-card h4{font-size:0.82rem;font-weight:700;margin-bottom:0.1rem}
+.sc-card p{font-size:0.7rem;color:var(--dgray)}
+.susi-event{margin-top:1.5rem;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.susi-event .se-info{font-size:0.88rem;color:var(--lgray)}
+.susi-event .se-info strong{color:var(--lgold)}
+.susi-event .se-date{font-family:var(--font-display);font-size:1.1rem;color:var(--lgold)}
+@media(max-width:768px){.susi-top{flex-direction:column;gap:1.5rem}.susi-cards{flex:none;width:100%}.susi-stats{gap:0.6rem}.susi-stat{min-width:70px;padding:0.6rem 0.8rem}.susi-stat .ss-num{font-size:1.2rem}}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(220,38,38,0.12) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent,var(--bk));pointer-events:none;z-index:2}
+.hero-inner{max-width:1200px;margin:0 auto;padding:8rem 2rem 4rem;position:relative;z-index:3}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.3);padding:0.4rem 1rem;border-radius:50px;font-size:0.8rem;color:var(--fire);margin-bottom:2rem;animation:fadeInUp 0.8s ease}
+.hero-badge .dot{width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.5rem,7vw,4.5rem);line-height:1.45;margin-bottom:1.5rem;animation:fadeInUp 0.8s ease 0.1s both;text-shadow:0 2px 30px rgba(0,0,0,0.5);letter-spacing:4px}
+.hero h1 .accent{color:var(--fire);position:relative;text-shadow:0 0 40px rgba(239,68,68,0.3)}
+.hero h1 .gold{color:var(--lgold);text-shadow:0 0 40px rgba(252,211,77,0.3)}
+.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--lgray);max-width:600px;margin-bottom:2.5rem;font-weight:400;animation:fadeInUp 0.8s ease 0.2s both;line-height:1.8}
+.hero-stats{display:flex;gap:2rem;margin-bottom:3rem;animation:fadeInUp 0.8s ease 0.3s both}
+.hero-stat{text-align:center}
+.hero-stat .num{font-family:var(--font-display);font-size:2.5rem;color:var(--gold);display:block}
+.hero-stat .label{font-size:0.8rem;color:var(--dgray);margin-top:0.2rem}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeInUp 0.8s ease 0.4s both}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.9rem 2rem;border-radius:4px;font-size:0.95rem;font-weight:700;text-decoration:none;transition:all 0.3s;border:none;cursor:pointer;font-family:var(--font-body)}
+.btn-primary{background:var(--red);color:var(--white);box-shadow:0 4px 20px rgba(220,38,38,0.4)}
+.btn-primary:hover{background:var(--fire);transform:translateY(-2px);box-shadow:0 8px 30px rgba(220,38,38,0.5)}
+.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-gold{background:var(--dgold);color:var(--white);box-shadow:0 4px 20px rgba(245,158,11,0.3)}
+.btn-gold:hover{background:var(--gold);transform:translateY(-2px)}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* Floating side element */
+.hero-float{position:absolute;right:2rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0.5rem;z-index:3}
+.hero-float .tag{writing-mode:vertical-rl;font-size:0.7rem;color:var(--dgray);letter-spacing:3px;text-transform:uppercase}
+
+/* 합격 분포도 차트 */
+.dist-chart{background:linear-gradient(180deg,var(--bk) 0%,#080810 100%);padding:3.5rem 2rem 4rem;overflow:hidden}
+.dist-inner{max-width:960px;margin:0 auto}
+.dist-label{text-align:center;margin-bottom:2rem}
+.dist-label h2{font-family:var(--font-display);font-size:1.5rem;margin-bottom:0.3rem}
+.dist-label h2 span{color:var(--lgold)}
+.dist-label p{font-size:0.82rem;color:var(--dgray)}
+
+/* 트리맵 스타일 */
+.treemap{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:auto;gap:3px;margin-bottom:1.5rem}
+.tm-cell{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:1rem 0.5rem;min-height:110px;transition:all 0.4s;cursor:default;text-align:center}
+.tm-cell:hover{filter:brightness(1.25);transform:scale(1.02);z-index:2}
+.tm-cell .tm-emoji{font-size:1.4rem;margin-bottom:0.3rem}
+.tm-cell .tm-count{font-family:var(--font-display);font-size:2rem;font-weight:900;line-height:1}
+.tm-cell .tm-name{font-size:0.72rem;font-weight:700;margin-top:0.3rem;letter-spacing:-0.02em}
+.tm-cell .tm-detail{font-size:0.62rem;margin-top:0.2rem;opacity:0.7;line-height:1.3}
+
+.tm-medical{grid-column:span 2;background:linear-gradient(135deg,#7f1d1d,#991b1b);color:#fca5a5}
+.tm-sky{grid-column:span 3;background:linear-gradient(135deg,#78350f,#92400e);color:#fcd34d}
+.tm-sunghan{grid-column:span 3;background:linear-gradient(135deg,#3b0764,#581c87);color:#c4b5fd}
+.tm-major{grid-column:span 4;background:linear-gradient(135deg,#1e3a5f,#1e40af);color:#93c5fd}
+.tm-etc{grid-column:span 12;background:linear-gradient(135deg,#064e3b,#065f46);color:#6ee7b7;min-height:80px;flex-direction:row;gap:2rem;padding:0.8rem 2rem}
+.tm-etc .tm-left{display:flex;align-items:center;gap:0.8rem}
+.tm-etc .tm-schools{display:flex;flex-wrap:wrap;gap:0.4rem}
+.tm-etc .tm-school-tag{padding:0.2rem 0.5rem;background:rgba(255,255,255,0.08);border-radius:3px;font-size:0.65rem;font-weight:600;white-space:nowrap}
+
+/* 비율 바 */
+.dist-bar-wrap{margin-top:0.5rem}
+.dist-bar{display:flex;height:32px;border-radius:4px;overflow:hidden;position:relative}
+.dist-bar .bar-seg{display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;transition:width 1.5s ease;white-space:nowrap}
+.bar-seg.medical{background:#991b1b;color:#fca5a5}
+.bar-seg.sky{background:#92400e;color:#fcd34d}
+.bar-seg.sunghan{background:#581c87;color:#c4b5fd}
+.bar-seg.major{background:#1e40af;color:#93c5fd}
+.bar-seg.etc{background:#065f46;color:#6ee7b7}
+
+.dist-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:1rem}
+.dist-legend .leg{display:flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--dgray)}
+.dist-legend .leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.leg-dot.medical{background:#991b1b}.leg-dot.sky{background:#92400e}.leg-dot.sunghan{background:#581c87}.leg-dot.major{background:#1e40af}.leg-dot.etc{background:#065f46}
+
+/* 세부 브레이크다운 */
+.dist-details{display:grid;grid-template-columns:repeat(5,1fr);gap:0.8rem;margin-top:1.5rem}
+.dd-col{text-align:center}
+.dd-col .dd-title{font-size:0.7rem;font-weight:700;margin-bottom:0.5rem;padding-bottom:0.3rem;border-bottom:2px solid}
+.dd-col.medical .dd-title{color:#fca5a5;border-color:#991b1b}
+.dd-col.sky .dd-title{color:#fcd34d;border-color:#92400e}
+.dd-col.sunghan .dd-title{color:#c4b5fd;border-color:#581c87}
+.dd-col.major .dd-title{color:#93c5fd;border-color:#1e40af}
+.dd-col.etc .dd-title{color:#6ee7b7;border-color:#065f46}
+.dd-item{font-size:0.68rem;color:var(--lgray);padding:0.2rem 0;display:flex;justify-content:space-between;gap:0.3rem}
+.dd-item span:last-child{font-weight:700;color:var(--white);font-family:var(--font-display)}
+
+@media(max-width:768px){
+  .treemap{grid-template-columns:repeat(6,1fr)}
+  .tm-medical{grid-column:span 3}.tm-sky{grid-column:span 3}.tm-sunghan{grid-column:span 3}.tm-major{grid-column:span 3}.tm-etc{grid-column:span 6;flex-direction:column;gap:0.5rem}
+  .tm-cell{min-height:90px;padding:0.7rem 0.3rem}
+  .tm-cell .tm-count{font-size:1.5rem}
+  .dist-details{grid-template-columns:repeat(2,1fr)}.dist-details .dd-col:last-child{grid-column:span 2}
+  .tm-etc .tm-schools{justify-content:center}
+}
+
+/* 강사진 소개 */
+.instructors{background:linear-gradient(180deg,#080810 0%,#0a0a14 50%,var(--bk) 100%);padding:5rem 2rem;position:relative}
+.instructors::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,0.3),transparent)}
+.inst-header{text-align:center;margin-bottom:3rem}
+.inst-header h2{font-family:var(--font-display);font-size:2rem;margin-bottom:0.4rem}
+.inst-header h2 span{color:var(--lgold)}
+.inst-header p{font-size:0.85rem;color:var(--dgray);line-height:1.6}
+
+.inst-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;max-width:1100px;margin:0 auto}
+
+.inst-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);padding:0;overflow:hidden;transition:all 0.4s;position:relative}
+.inst-card:hover{border-color:rgba(255,255,255,0.12);transform:translateY(-4px);background:rgba(255,255,255,0.04)}
+
+.inst-top{padding:1.8rem 1.5rem 1rem;text-align:center;position:relative}
+.inst-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 0.8rem;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;font-family:var(--font-display);letter-spacing:-0.02em}
+.inst-card.director .inst-avatar{background:linear-gradient(135deg,#92400e,#b45309);color:#fef3c7;border:2px solid rgba(245,158,11,0.4)}
+.inst-card.korean .inst-avatar{background:linear-gradient(135deg,#581c87,#7c3aed);color:#e9d5ff;border:2px solid rgba(124,58,237,0.4)}
+.inst-card.math .inst-avatar{background:linear-gradient(135deg,#991b1b,#dc2626);color:#fecaca;border:2px solid rgba(220,38,38,0.4)}
+.inst-card.strategy .inst-avatar{background:linear-gradient(135deg,#065f46,#059669);color:#d1fae5;border:2px solid rgba(5,150,105,0.4)}
+
+.inst-name{font-size:1.1rem;font-weight:900;margin-bottom:0.15rem}
+.inst-role{font-size:0.72rem;font-weight:700;letter-spacing:0.03em;margin-bottom:0.6rem;display:inline-block;padding:0.15rem 0.6rem;border-radius:3px}
+.inst-card.director .inst-role{background:rgba(245,158,11,0.1);color:var(--lgold)}
+.inst-card.korean .inst-role{background:rgba(124,58,237,0.1);color:#a78bfa}
+.inst-card.math .inst-role{background:rgba(220,38,38,0.1);color:#fca5a5}
+.inst-card.strategy .inst-role{background:rgba(5,150,105,0.1);color:#6ee7b7}
+
+.inst-quote{font-size:0.78rem;color:var(--lgray);font-style:italic;line-height:1.5;padding:0 0.5rem;min-height:3.2em}
+
+.inst-divider{height:1px;background:rgba(255,255,255,0.05);margin:0.8rem 0 0}
+
+.inst-body{padding:1rem 1.5rem 1.5rem}
+.inst-body .inst-tag{font-size:0.68rem;font-weight:700;color:var(--dgray);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
+.inst-body ul{list-style:none;padding:0;margin:0}
+.inst-body ul li{font-size:0.75rem;color:var(--lgray);padding:0.25rem 0;padding-left:0.8rem;position:relative;line-height:1.5}
+.inst-body ul li::before{content:"·";position:absolute;left:0;color:var(--dgray);font-weight:900}
+
+.inst-highlight{margin-top:0.8rem;padding:0.6rem 0.8rem;background:rgba(255,255,255,0.03);border-left:2px solid;font-size:0.73rem;line-height:1.5}
+.inst-card.director .inst-highlight{border-color:var(--lgold);color:var(--lgold)}
+.inst-card.korean .inst-highlight{border-color:#a78bfa;color:#c4b5fd}
+.inst-card.math .inst-highlight{border-color:#fca5a5;color:#fecaca}
+.inst-card.strategy .inst-highlight{border-color:#6ee7b7;color:#d1fae5}
+
+.inst-bottom-msg{text-align:center;margin-top:2.5rem;max-width:800px;margin-left:auto;margin-right:auto}
+.inst-bottom-msg p{font-size:0.85rem;color:var(--lgray);line-height:1.7}
+.inst-bottom-msg strong{color:var(--lgold)}
+
+@media(max-width:768px){.inst-grid{grid-template-columns:repeat(2,1fr)}.inst-quote{min-height:auto}}
+
+/* Sections */
+section{padding:5rem 2rem}
+.container{max-width:1200px;margin:0 auto}
+.section-tag{display:inline-block;background:rgba(220,38,38,0.15);color:var(--fire);padding:0.3rem 1rem;border-radius:3px;font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem}
+.section-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,3rem);margin-bottom:0.5rem}
+.section-sub{color:var(--gray);font-size:1rem;max-width:600px;margin-bottom:3rem}
+
+/* Reality check section */
+.reality{background:linear-gradient(180deg,var(--bk) 0%,#0d0d0d 100%)}
+.reality-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2rem}
+.reality-card{background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:2rem;position:relative;overflow:hidden;transition:all 0.4s}
+.reality-card:hover{border-color:rgba(220,38,38,0.3);transform:translateY(-4px)}
+.reality-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%}
+.reality-card:nth-child(1)::before{background:var(--red)}
+.reality-card:nth-child(2)::before{background:var(--dgold)}
+.reality-card:nth-child(3)::before{background:var(--dgold)}
+.reality-card .num{font-family:var(--font-display);font-size:3rem;color:rgba(255,255,255,0.05);position:absolute;top:0.5rem;right:1rem}
+.reality-card h3{font-size:1.1rem;font-weight:700;margin-bottom:0.3rem;color:var(--fire)}
+.reality-card .type{font-size:0.8rem;color:var(--dgray);margin-bottom:1rem}
+.reality-card p{font-size:0.9rem;color:var(--gray);line-height:1.7}
+.reality-card .pct{display:inline-block;margin-top:1rem;padding:0.3rem 0.8rem;font-size:0.8rem;font-weight:700;border-radius:3px}
+.reality-card:nth-child(1) .pct{background:rgba(220,38,38,0.2);color:var(--fire)}
+.reality-card:nth-child(2) .pct{background:rgba(217,119,6,0.2);color:var(--gold)}
+.reality-card:nth-child(3) .pct{background:rgba(217,119,6,0.2);color:var(--gold)}
+.reality-cta{background:var(--red);text-align:center;padding:1.5rem;font-size:1.1rem;font-weight:700;border-radius:4px}
+
+/* What is 약술형 */
+.whatis{background:var(--dk)}
+.whatis-features{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.feat-card{background:var(--dk2);border-left:4px solid var(--gold);padding:2rem;transition:all 0.4s}
+.feat-card:hover{transform:translateX(8px);background:var(--dk3)}
+.feat-card .icon{font-size:1.8rem;margin-bottom:1rem}
+.feat-card h3{font-size:1.05rem;font-weight:700;margin-bottom:0.5rem}
+.feat-card p{font-size:0.88rem;color:var(--gray);line-height:1.7}
+
+/* Universities */
+.unis{background:var(--bk)}
+.uni-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0.5rem;margin-bottom:2rem}
+.uni-cell{background:var(--dk2);padding:1rem 0.5rem;text-align:center;transition:all 0.3s;border:1px solid transparent}
+.uni-cell:hover{border-color:rgba(245,158,11,0.3);background:var(--dk3)}
+.uni-cell .name{font-size:0.85rem;font-weight:700;margin-bottom:0.2rem}
+.uni-cell .count{font-size:0.8rem;color:var(--gray)}
+.uni-cell.up .count{color:var(--lgold)}
+.uni-cell.top .count{color:var(--fire);font-weight:700}
+.uni-total{background:var(--red);text-align:center;padding:1rem;font-weight:700;font-size:1.1rem;border-radius:4px;margin-bottom:1.5rem}
+.check-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem}
+.check-item{display:flex;align-items:center;gap:0.6rem;font-size:0.9rem;color:var(--lgray)}
+.check-item::before{content:'✓';color:#22c55e;font-weight:700;font-size:1rem}
+
+/* Strengths / 시대학원 */
+.strengths{background:linear-gradient(180deg,var(--dk) 0%,var(--bk) 100%)}
+.strength-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem}
+.stat-box{background:var(--dk2);border-top:4px solid var(--gold);padding:1.5rem;text-align:center}
+.stat-box .big{font-family:var(--font-display);font-size:2.5rem;color:var(--gold)}
+.stat-box .desc{font-size:0.85rem;color:var(--dgray);margin-top:0.3rem}
+.strength-list{display:flex;flex-direction:column;gap:1rem}
+.str-card{display:flex;gap:1.5rem;background:var(--dk2);padding:1.5rem 2rem;border-left:4px solid;transition:all 0.4s}
+.str-card:hover{transform:translateX(8px)}
+.str-card:nth-child(1){border-color:var(--gold)}
+.str-card:nth-child(2){border-color:var(--gold)}
+.str-card:nth-child(3){border-color:var(--red)}
+.str-card:nth-child(4){border-color:var(--blue)}
+.str-card:nth-child(5){border-color:var(--teal)}
+.str-card .str-icon{font-size:1.5rem;flex-shrink:0;width:2.5rem;text-align:center}
+.str-card h3{font-size:1rem;font-weight:700;margin-bottom:0.3rem}
+.str-card p{font-size:0.88rem;color:var(--gray);line-height:1.6}
+
+/* 합격 실적 */
+.results{background:linear-gradient(180deg,var(--dk) 0%,var(--bk) 100%)}
+.results-hero{text-align:center;margin-bottom:3rem}
+.results-hero .big-nums{display:flex;justify-content:center;gap:1.5rem;margin:2rem 0;flex-wrap:wrap}
+.big-num-box{background:var(--dk2);border-top:4px solid var(--gold);padding:1.2rem 1.5rem;min-width:130px;text-align:center}
+.big-num-box .bn{font-family:var(--font-display);font-size:2.8rem;color:var(--gold);line-height:1}
+.big-num-box .bl{font-size:0.8rem;color:var(--dgray);margin-top:0.3rem}
+.big-num-box.red{border-color:var(--red)}
+.big-num-box.red .bn{color:var(--fire)}
+
+.result-category{margin-bottom:2rem}
+.cat-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;cursor:pointer;background:var(--dk2);border:1px solid rgba(255,255,255,0.05);border-bottom:none;transition:all 0.3s}
+.cat-header:hover{background:var(--dk3)}
+.cat-header h3{font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:0.6rem}
+.cat-header .cat-count{font-size:0.8rem;padding:0.2rem 0.7rem;border-radius:50px;font-weight:700}
+.cat-header .arrow{transition:transform 0.3s;color:var(--dgray);font-size:0.9rem}
+.cat-header.open .arrow{transform:rotate(180deg)}
+.cat-body{max-height:0;overflow:hidden;transition:max-height 0.5s ease;background:var(--dk2);border:1px solid rgba(255,255,255,0.05);border-top:none;padding:0 1.5rem}
+.cat-body.open{max-height:2000px;padding:1rem 1.5rem 1.5rem}
+
+.cat-medical .cat-count{background:rgba(220,38,38,0.15);color:var(--fire)}
+.cat-sky .cat-count{background:rgba(245,158,11,0.15);color:var(--lgold)}
+.cat-top .cat-count{background:rgba(108,92,231,0.15);color:#a29bfe}
+.cat-major .cat-count{background:rgba(59,130,246,0.15);color:#93c5fd}
+.cat-other .cat-count{background:rgba(20,184,166,0.15);color:#5eead4}
+
+.result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.6rem}
+.r-item{display:flex;align-items:center;gap:0.6rem;padding:0.5rem 0.7rem;background:rgba(255,255,255,0.03);border-radius:4px;font-size:0.85rem;transition:background 0.2s}
+.r-item:hover{background:rgba(255,255,255,0.06)}
+.r-item .r-univ{color:var(--lgold);font-weight:700;white-space:nowrap;min-width:60px}
+.r-item .r-dept{color:var(--lgray)}
+
+.uni-block{margin-bottom:1rem}
+.uni-block-header{font-size:0.9rem;font-weight:700;color:var(--white);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem}
+.uni-block-header .ub-count{font-size:0.75rem;color:var(--dgray);font-weight:400}
+.uni-block-items{display:flex;flex-wrap:wrap;gap:0.4rem}
+.dept-tag{padding:0.3rem 0.7rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:3px;font-size:0.8rem;color:var(--lgray);transition:all 0.2s}
+.dept-tag:hover{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.2);color:var(--lgold)}
+
+.results-download{display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
+.dl-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.5rem;border-radius:4px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.3s;background:var(--dk2);border:1px solid rgba(255,255,255,0.1);color:var(--lgray)}
+.dl-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+
+@media(max-width:768px){
+  .big-num-box{min-width:100px;padding:1rem}
+  .big-num-box .bn{font-size:2rem}
+  .result-grid{grid-template-columns:1fr}
+}
+
+/* Tools section */
+.tools{background:linear-gradient(180deg,var(--bk) 0%,#0d0d0d 100%);padding:5rem 2rem}
+.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem}
+.tool-card{background:var(--dk2);border:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:all 0.4s;position:relative}
+.tool-card:hover{border-color:rgba(245,158,11,0.3);transform:translateY(-4px)}
+.tool-header{padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05)}
+.tool-header h3{font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:0.5rem}
+.tool-header .tool-badge{font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:50px;font-weight:700}
+.tool-badge.calc{background:rgba(16,185,129,0.15);color:#10b981}
+.tool-badge.search{background:rgba(59,130,246,0.15);color:#3b82f6}
+.tool-desc{padding:1rem 2rem;font-size:0.85rem;color:var(--gray);line-height:1.6;border-bottom:1px solid rgba(255,255,255,0.05)}
+.tool-iframe-wrap{width:100%;height:600px;background:var(--dk3)}
+.tool-iframe-wrap iframe{width:100%;height:100%;border:none}
+.tool-actions{padding:1rem 2rem;display:flex;gap:0.8rem;align-items:center}
+.tool-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1.2rem;border-radius:4px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.3s;cursor:pointer;border:none;font-family:var(--font-body)}
+.tool-btn.open{background:var(--dgold);color:var(--white)}
+.tool-btn.open:hover{background:var(--gold)}
+.tool-btn.toggle{background:rgba(255,255,255,0.08);color:var(--lgray);border:1px solid rgba(255,255,255,0.1)}
+.tool-btn.toggle:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2)}
+.tool-btn.toggle.active{background:rgba(245,158,11,0.15);color:var(--gold);border-color:rgba(245,158,11,0.3)}
+.tool-collapsed .tool-iframe-wrap{height:0;overflow:hidden}
+@media(max-width:768px){
+  .tools-grid{grid-template-columns:1fr}
+  .tool-iframe-wrap{height:500px}
+}
+/* 수능 병행 */
+.suneung-intro{background:linear-gradient(180deg,#0d0d0d 0%,var(--bk) 100%);padding:5rem 2rem;text-align:center}
+.suneung-why{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2.5rem auto 0;max-width:900px}
+.sw-card{background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:1.5rem;text-align:center;transition:all 0.3s}
+.sw-card:hover{border-color:rgba(245,158,11,0.2);transform:translateY(-3px)}
+.sw-card .sw-icon{font-size:2rem;margin-bottom:0.8rem}
+.sw-card h3{font-size:0.95rem;font-weight:700;margin-bottom:0.4rem}
+.sw-card p{font-size:0.82rem;color:var(--dgray);line-height:1.5}
+@media(max-width:768px){.suneung-why{grid-template-columns:1fr}}
+
+.suneung-section{background:var(--bk);padding:4rem 2rem}
+.suneung-section.alt{background:var(--dk)}
+.sn-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.sn-badge{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:12px;font-size:1.5rem;font-weight:900;flex-shrink:0}
+.sn-badge.korean{background:linear-gradient(135deg,#6c5ce7,#a29bfe);color:#fff}
+.sn-badge.math{background:linear-gradient(135deg,#dc2626,#f59e0b);color:#fff}
+.sn-header-text h2{font-family:var(--font-display);font-size:1.8rem;line-height:1.2}
+.sn-header-text p{font-size:0.85rem;color:var(--dgray);margin-top:0.3rem}
+
+.sn-overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:2.5rem}
+.sn-stat{background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:1rem;text-align:center}
+.sn-stat .sn-val{font-family:var(--font-display);font-size:1.4rem;color:var(--lgold)}
+.sn-stat .sn-label{font-size:0.75rem;color:var(--dgray);margin-top:0.2rem}
+.sn-stat.purple .sn-val{color:#a29bfe}
+
+.sn-content{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.sn-block{background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:1.5rem;transition:all 0.3s}
+.sn-block:hover{border-color:rgba(255,255,255,0.1)}
+.sn-block h3{font-size:0.95rem;font-weight:700;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem}
+.sn-block h3 .sn-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:0.7rem;font-weight:900;flex-shrink:0}
+.sn-block.korean h3 .sn-num{background:rgba(108,92,231,0.2);color:#a29bfe}
+.sn-block.math h3 .sn-num{background:rgba(220,38,38,0.15);color:var(--fire)}
+.sn-block p{font-size:0.82rem;color:var(--lgray);line-height:1.6}
+.sn-block ul{list-style:none;padding:0}
+.sn-block ul li{font-size:0.82rem;color:var(--lgray);padding:0.3rem 0;padding-left:1rem;position:relative;line-height:1.5}
+.sn-block ul li::before{content:"›";position:absolute;left:0;color:var(--dgold);font-weight:700}
+.sn-block.full{grid-column:1/-1}
+
+.grade-table{width:100%;border-collapse:collapse;margin-top:0.8rem}
+.grade-table th{text-align:left;padding:0.5rem 0.6rem;font-size:0.78rem;color:var(--dgray);font-weight:600;border-bottom:1px solid rgba(255,255,255,0.08)}
+.grade-table td{padding:0.5rem 0.6rem;font-size:0.8rem;color:var(--lgray);border-bottom:1px solid rgba(255,255,255,0.04)}
+.grade-table .g-badge{display:inline-block;padding:0.15rem 0.5rem;border-radius:3px;font-size:0.72rem;font-weight:700}
+.g-badge.g1{background:rgba(16,185,129,0.15);color:#6ee7b7}
+.g-badge.g2{background:rgba(59,130,246,0.15);color:#93c5fd}
+.g-badge.g3{background:rgba(245,158,11,0.15);color:#fcd34d}
+.g-badge.g4{background:rgba(239,68,68,0.15);color:#fca5a5}
+
+.sn-tip{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);padding:1.2rem 1.5rem;margin-top:2rem;font-size:0.85rem;color:var(--lgray);line-height:1.6}
+.sn-tip strong{color:var(--lgold)}
+@media(max-width:768px){.sn-content{grid-template-columns:1fr}.sn-block.full{grid-column:1}.sn-overview{grid-template-columns:repeat(2,1fr)}}
+
+/* 후기 섹션 */
+.reviews-section{padding:5rem 2rem;position:relative;overflow:hidden}
+.reviews-section.rv-korean{background:linear-gradient(180deg,#0f0a1e 0%,#1a1025 50%,#0d0d0d 100%)}
+.reviews-section.rv-math{background:linear-gradient(180deg,#0d0d0d 0%,#1a0d0d 50%,#0d0d0d 100%)}
+.reviews-section.rv-pass{background:linear-gradient(180deg,#0d0d0d 0%,#0d1a12 50%,#0d0d0d 100%)}
+.rv-header{text-align:center;margin-bottom:3rem}
+.rv-header .rv-icon{font-size:2.5rem;margin-bottom:0.8rem}
+.rv-header h2{font-family:var(--font-display);font-size:2rem;margin-bottom:0.5rem}
+.rv-header .rv-sub{font-size:0.9rem;color:var(--dgray);line-height:1.6}
+.rv-header .rv-count{display:inline-block;margin-top:0.8rem;padding:0.3rem 1rem;border-radius:20px;font-size:0.78rem;font-weight:700;letter-spacing:0.02em}
+.rv-count.purple{background:rgba(108,92,231,0.15);color:#a29bfe;border:1px solid rgba(108,92,231,0.3)}
+.rv-count.red{background:rgba(220,38,38,0.12);color:#fca5a5;border:1px solid rgba(220,38,38,0.25)}
+.rv-count.green{background:rgba(16,185,129,0.12);color:#6ee7b7;border:1px solid rgba(16,185,129,0.25)}
+
+.rv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;max-width:1100px;margin:0 auto}
+.rv-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);padding:1.8rem;position:relative;transition:all 0.4s;overflow:hidden}
+.rv-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;transition:height 0.3s}
+.rv-card.purple::before{background:linear-gradient(180deg,#6c5ce7,#a29bfe)}
+.rv-card.red::before{background:linear-gradient(180deg,#dc2626,#f59e0b)}
+.rv-card.green::before{background:linear-gradient(180deg,#10b981,#6ee7b7)}
+.rv-card:hover{border-color:rgba(255,255,255,0.12);transform:translateY(-3px);background:rgba(255,255,255,0.04)}
+
+.rv-card .rv-num{position:absolute;top:1rem;right:1.2rem;font-family:var(--font-display);font-size:2.5rem;font-weight:900;opacity:0.06;line-height:1}
+.rv-card .rv-profile{display:flex;align-items:center;gap:0.7rem;margin-bottom:1rem}
+.rv-card .rv-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;flex-shrink:0}
+.rv-card.purple .rv-avatar{background:rgba(108,92,231,0.2);color:#a29bfe}
+.rv-card.red .rv-avatar{background:rgba(220,38,38,0.15);color:#fca5a5}
+.rv-card.green .rv-avatar{background:rgba(16,185,129,0.15);color:#6ee7b7}
+.rv-card .rv-name{font-size:0.82rem;font-weight:700}
+.rv-card .rv-meta{font-size:0.7rem;color:var(--dgray);margin-top:0.1rem}
+.rv-card .rv-title{font-size:0.95rem;font-weight:800;margin-bottom:0.6rem;line-height:1.4}
+.rv-card.purple .rv-title{color:#c4b5fd}
+.rv-card.red .rv-title{color:#fcd34d}
+.rv-card.green .rv-title{color:#6ee7b7}
+.rv-card .rv-body{font-size:0.82rem;color:var(--lgray);line-height:1.7}
+.rv-card .rv-body em{font-style:normal;color:var(--lgold);font-weight:600}
+.rv-card .rv-tag{display:inline-block;margin-top:0.8rem;padding:0.2rem 0.6rem;border-radius:3px;font-size:0.7rem;font-weight:600}
+.rv-card.purple .rv-tag{background:rgba(108,92,231,0.12);color:#a29bfe}
+.rv-card.red .rv-tag{background:rgba(245,158,11,0.1);color:#fcd34d}
+.rv-card.green .rv-tag{background:rgba(16,185,129,0.1);color:#6ee7b7}
+
+.rv-card .rv-quote{position:relative;padding-left:1rem;border-left:2px solid rgba(255,255,255,0.08);margin:0.6rem 0;font-size:0.8rem;color:var(--gray);line-height:1.6;font-style:italic}
+
+.rv-bottom-msg{text-align:center;margin-top:2.5rem;padding:1.5rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)}
+.rv-bottom-msg p{font-size:0.88rem;color:var(--lgray);line-height:1.7}
+.rv-bottom-msg strong{color:var(--lgold)}
+
+@media(max-width:768px){.rv-grid{grid-template-columns:1fr}.rv-card .rv-num{font-size:2rem}}
+
+.subject-nav{background:var(--dk);padding:3rem 2rem;text-align:center}
+.subject-nav h2{font-family:var(--font-display);font-size:2rem;margin-bottom:0.5rem}
+.subject-nav p{color:var(--gray);margin-bottom:2rem}
+.subject-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto}
+.subj-card{background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:3rem 2rem;text-align:center;transition:all 0.4s;text-decoration:none;color:var(--white);position:relative;overflow:hidden}
+.subj-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,0.15)}
+.subj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.subj-card.kor::before{background:var(--purple)}
+.subj-card.math::before{background:var(--red)}
+.subj-card .subj-icon{font-size:3rem;margin-bottom:1rem}
+.subj-card h3{font-family:var(--font-display);font-size:1.5rem;margin-bottom:0.5rem}
+.subj-card p{font-size:0.88rem;color:var(--gray);line-height:1.6;margin-bottom:1.5rem}
+.subj-card .subj-link{display:inline-block;padding:0.5rem 1.5rem;border:1px solid;border-radius:3px;font-size:0.85rem;font-weight:700;transition:all 0.3s}
+.subj-card.kor .subj-link{border-color:var(--purple);color:var(--purple)}
+.subj-card.kor:hover .subj-link{background:var(--purple);color:var(--white)}
+.subj-card.math .subj-link{border-color:var(--red);color:var(--fire)}
+.subj-card.math:hover .subj-link{background:var(--red);color:var(--white)}
+.subj-card.susi::before{background:linear-gradient(90deg,var(--gold),var(--fire))}
+.subj-card.susi .subj-link{border-color:var(--gold);color:var(--lgold)}
+.subj-card.susi:hover .subj-link{background:var(--dgold);color:var(--white);border-color:var(--dgold)}
+
+/* CTA */
+.cta-section{background:var(--cherry);position:relative;overflow:hidden;text-align:center;padding:5rem 2rem}
+.cta-section::before{content:'';position:absolute;top:-50%;right:-30%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);pointer-events:none}
+.cta-section h2{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);margin-bottom:0.5rem;position:relative;z-index:2}
+.cta-section .sub{font-size:1.1rem;color:var(--lgold);margin-bottom:2rem;position:relative;z-index:2}
+.cta-info{display:flex;justify-content:center;gap:3rem;margin-bottom:2rem;position:relative;z-index:2;flex-wrap:wrap}
+.cta-info-item{display:flex;align-items:center;gap:0.5rem;font-size:1rem}
+.cta-info-item .icon{font-size:1.2rem}
+.cta-phone{font-family:var(--font-display);font-size:clamp(1.5rem,4vw,2.5rem);margin-bottom:0.5rem;position:relative;z-index:2}
+
+/* Footer */
+footer{background:var(--dk);padding:2rem;text-align:center;font-size:0.8rem;color:var(--dgray);border-top:1px solid rgba(255,255,255,0.05)}
+footer a{color:var(--gray);text-decoration:none}
+
+/* Scroll animations */
+.reveal{opacity:0;transform:translateY(40px);transition:all 0.8s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:all 0.8s cubic-bezier(0.16,1,0.3,1)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+
+/* Mobile */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .reality-grid{grid-template-columns:1fr}
+  .whatis-features{grid-template-columns:1fr}
+  .uni-grid{grid-template-columns:repeat(3,1fr)}
+  .strength-stats{grid-template-columns:1fr}
+  .subject-cards{grid-template-columns:1fr}
+  .hero-stats{gap:1rem}
+  .hero-stat .num{font-size:1.8rem}
+  .hero-float{display:none}
+  .check-list{grid-template-columns:1fr}
+  .cta-info{flex-direction:column;align-items:center;gap:1rem}
+  .str-card{flex-direction:column;gap:0.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-brand">시대학원 <span>약술형 논술 전문</span></a>
+  <div class="nav-links">
+    <a href="#reality">현실 직시</a>
+    <a href="#whatis">약술형이란</a>
+    <a href="#universities">모집 대학</a>
+    <a href="#why">왜 시대학원</a>
+    <a href="#results">합격 실적</a>
+    <a href="#tools">분석 도구</a>
+    <a href="#suneung">수능 병행</a>
+    <a href="#reviews-kr">공부법 후기</a>
+    <a href="#instructors">강사진</a>
+    <a href="2027_수시지원전략.html" class="nav-susi">🔥 수시전략</a>
+    <a href="국어약술형_랜딩페이지.html">국어 약술</a>
+    <a href="수학약술형_랜딩페이지.html">수학 약술</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="nav-cta">상담신청</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span> 2027학년도 신입생 모집 중</div>
+    <h1>내신 <span class="accent">4~6등급,</span><br><span style="display:inline-block;margin-top:0.15em">정말 갈 곳이</span><br><span class="gold" style="display:inline-block;margin-top:0.15em">없는 걸까요?</span></h1>
+    <p class="hero-sub" style="margin-top:0.5rem">약술형 논술이라는 역전의 기회가 있습니다.<br>국어 + 수학 2과목만으로 인서울이 가능합니다.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">15+</span><span class="label">실시 대학</span></div>
+      <div class="hero-stat"><span class="num">4,200+</span><span class="label">총 모집인원</span></div>
+      <div class="hero-stat"><span class="num">156건</span><span class="label">2026 합격실적</span></div>
+      <div class="hero-stat"><span class="num">30년</span><span class="label">입시 노하우</span></div>
+    </div>
+    <div class="hero-actions">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="btn btn-primary">📋 상담 신청하기</a>
+      <a href="#whatis" class="btn btn-outline">약술형 논술 알아보기 →</a>
+    </div>
+  </div>
+  <div class="hero-float">
+    <span class="tag">SIDAE ACADEMY</span>
+  </div>
+</section>
+
+<!-- 합격 분포도 차트 -->
+<section class="dist-chart" id="dist">
+  <div class="dist-inner">
+    <div class="dist-label reveal">
+      <h2>2026학년도 합격 <span>156건</span>의 분포</h2>
+      <p>시대학원 약술형 논술반 합격 실적 — 의약학부터 인서울까지</p>
+    </div>
+
+    <!-- 트리맵 -->
+    <div class="treemap reveal">
+      <div class="tm-cell tm-medical">
+        <div class="tm-emoji">🏥</div>
+        <div class="tm-count">11</div>
+        <div class="tm-name">의약학계</div>
+        <div class="tm-detail">의예 4 · 약학 3 · 한의예 3 · 수의예 1</div>
+      </div>
+      <div class="tm-cell tm-sky">
+        <div class="tm-emoji">👑</div>
+        <div class="tm-count">24</div>
+        <div class="tm-name">SKY + 특수대</div>
+        <div class="tm-detail">서울대 2 · 연세대 8 · 고려대 8 · 특수대 6</div>
+      </div>
+      <div class="tm-cell tm-sunghan">
+        <div class="tm-emoji">🎯</div>
+        <div class="tm-count">24</div>
+        <div class="tm-name">성한서이 · 에리카</div>
+        <div class="tm-detail">성균관 · 한양 · 서강 · 이화 · 에리카</div>
+      </div>
+      <div class="tm-cell tm-major">
+        <div class="tm-emoji">🏫</div>
+        <div class="tm-count">47</div>
+        <div class="tm-name">주요 대학</div>
+        <div class="tm-detail">중경외시 · 건동홍숙 · 아주 등</div>
+      </div>
+      <div class="tm-cell tm-etc">
+        <div class="tm-left">
+          <div class="tm-emoji" style="font-size:1.2rem">📚</div>
+          <div>
+            <div class="tm-count" style="font-size:1.6rem">50+</div>
+            <div class="tm-name">기타 주요 합격</div>
+          </div>
+        </div>
+        <div class="tm-schools">
+          <span class="tm-school-tag">가천 10</span>
+          <span class="tm-school-tag">한성 5</span>
+          <span class="tm-school-tag">삼육 4</span>
+          <span class="tm-school-tag">수원 3</span>
+          <span class="tm-school-tag">을지 3</span>
+          <span class="tm-school-tag">상명 3</span>
+          <span class="tm-school-tag">한국공학 3</span>
+          <span class="tm-school-tag">홍익(세종) 3</span>
+          <span class="tm-school-tag">서경 2</span>
+          <span class="tm-school-tag">기타 14+</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 비율 바 -->
+    <div class="dist-bar-wrap reveal">
+      <div class="dist-bar">
+        <div class="bar-seg medical" style="width:7.1%">7%</div>
+        <div class="bar-seg sky" style="width:15.4%">15%</div>
+        <div class="bar-seg sunghan" style="width:15.4%">15%</div>
+        <div class="bar-seg major" style="width:30.1%">30%</div>
+        <div class="bar-seg etc" style="width:32%">33%</div>
+      </div>
+    </div>
+
+    <div class="dist-legend reveal">
+      <div class="leg"><span class="leg-dot medical"></span>의약학계 11건</div>
+      <div class="leg"><span class="leg-dot sky"></span>SKY·특수대 24건</div>
+      <div class="leg"><span class="leg-dot sunghan"></span>성한서이 24건</div>
+      <div class="leg"><span class="leg-dot major"></span>주요 대학 47건</div>
+      <div class="leg"><span class="leg-dot etc"></span>기타 대학 50+건</div>
+    </div>
+
+    <!-- 세부 브레이크다운 -->
+    <div class="dist-details reveal">
+      <div class="dd-col medical">
+        <div class="dd-title">🏥 의약학계</div>
+        <div class="dd-item"><span>의예과</span><span>4</span></div>
+        <div class="dd-item"><span>약학</span><span>3</span></div>
+        <div class="dd-item"><span>한의예</span><span>3</span></div>
+        <div class="dd-item"><span>수의예</span><span>1</span></div>
+      </div>
+      <div class="dd-col sky">
+        <div class="dd-title">👑 SKY·특수대</div>
+        <div class="dd-item"><span>서울대</span><span>2</span></div>
+        <div class="dd-item"><span>연세대</span><span>8</span></div>
+        <div class="dd-item"><span>고려대</span><span>8</span></div>
+        <div class="dd-item"><span>특수대</span><span>6</span></div>
+      </div>
+      <div class="dd-col sunghan">
+        <div class="dd-title">🎯 성한서이</div>
+        <div class="dd-item"><span>성균관</span><span>6</span></div>
+        <div class="dd-item"><span>한양</span><span>7</span></div>
+        <div class="dd-item"><span>서강</span><span>4</span></div>
+        <div class="dd-item"><span>이화·에리카</span><span>7</span></div>
+      </div>
+      <div class="dd-col major">
+        <div class="dd-title">🏫 주요 대학</div>
+        <div class="dd-item"><span>중앙·경희</span><span>12</span></div>
+        <div class="dd-item"><span>외대·시립</span><span>8</span></div>
+        <div class="dd-item"><span>건국·동국</span><span>10</span></div>
+        <div class="dd-item"><span>홍익·숙명·아주</span><span>17</span></div>
+      </div>
+      <div class="dd-col etc">
+        <div class="dd-title">📚 기타 대학</div>
+        <div class="dd-item"><span>가천대</span><span>10</span></div>
+        <div class="dd-item"><span>한성·삼육</span><span>9</span></div>
+        <div class="dd-item"><span>수원·을지·상명</span><span>9</span></div>
+        <div class="dd-item"><span>기타</span><span>22+</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 현실 직시 -->
+<section class="reality" id="reality">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">현실 직시</span>
+      <h2 class="section-title">4~6등급, 현실을 직시하세요</h2>
+      <p class="section-sub">내신으로는 갈 수 있는 곳이 없습니다. 기존 전형의 한계를 정확히 파악하세요.</p>
+    </div>
+    <div class="reality-grid">
+      <div class="reality-card reveal" style="transition-delay:0.1s">
+        <span class="num">01</span>
+        <h3>교과전형</h3>
+        <p class="type">— 문 닫혔습니다</p>
+        <p>내신 3.5등급만 넘어가면 인서울 주요대 교과전형 추천라인에서 탈락합니다. 4~6등급이면 지원 자체가 불가능합니다.</p>
+        <span class="pct">합격률 0%</span>
+      </div>
+      <div class="reality-card reveal" style="transition-delay:0.2s">
+        <span class="num">02</span>
+        <h3>학생부종합</h3>
+        <p class="type">— 현실적으로 어렵습니다</p>
+        <p>일반고 학생의 주요 13개 대학 학종 합격률은 겨우 2.1%에 불과합니다. 내신이 뒷받침되지 않으면 서류부터 탈락합니다.</p>
+        <span class="pct">합격률 2.1%</span>
+      </div>
+      <div class="reality-card reveal" style="transition-delay:0.3s">
+        <span class="num">03</span>
+        <h3>정시</h3>
+        <p class="type">— 도박에 가깝습니다</p>
+        <p>주요 15개 대학 정시 모집 정원은 수능 응시 인원의 4% 수준. 고3의 정시 진학 가능성은 1.7%에 불과합니다.</p>
+        <span class="pct">합격률 1.7%</span>
+      </div>
+    </div>
+    <div class="reality-cta reveal">🔥 그래서 <strong>약술형 논술</strong>이 유일한 역전 카드입니다 →</div>
+  </div>
+</section>
+
+<!-- 약술형이란 -->
+<section class="whatis" id="whatis">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">핵심 전형 소개</span>
+      <h2 class="section-title">약술형 논술이란?</h2>
+      <p class="section-sub">국어 + 수학 2과목으로 인서울하는 기회의 전형. 일반 논술과는 다릅니다.</p>
+    </div>
+    <div class="whatis-features">
+      <div class="feat-card reveal" style="transition-delay:0.1s">
+        <div class="icon">⚡</div>
+        <h3>일반 논술과 다릅니다</h3>
+        <p>수능과 유사하되, 정기고사 서답형에 가까운 형태입니다. 핵심 개념을 두세 문장으로 간략하게 서술하는 방식으로, 장문 논술이 아닌 핵심 포인트를 짧게 정리하는 능력을 평가합니다.</p>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.2s">
+        <div class="icon">📚</div>
+        <h3>EBS 연계 출제</h3>
+        <p>EBS 수능특강·수능완성을 활용하여 출제됩니다. 수능 준비가 곧 논술 준비 — 별도의 공부 부담 없이 동시 대비가 가능합니다.</p>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.3s">
+        <div class="icon">⭐</div>
+        <h3>내신 부담 최소화</h3>
+        <p>논술 100% 반영 대학이 다수입니다 (가천대, 삼육대, 고려대세종 등). 내신 미반영 or 대폭 축소 → 이론상 9등급도 합격 가능한 구조입니다.</p>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.4s">
+        <div class="icon">🚀</div>
+        <h3>단기간 실력 향상 가능</h3>
+        <p>수능은 1등급 올리는 데 수년이 걸리지만, 약술형은 핵심 개념 중심이라 체계적 학습 시 단기간 성적 향상이 가능합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 모집 대학 -->
+<section class="unis" id="universities">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">모집 대학</span>
+      <h2 class="section-title">2027학년도 약술형 논술 실시 대학</h2>
+      <p class="section-sub">15개 이상 대학, 총 4,200명 이상 모집 — 학과 선택의 폭이 넓습니다.</p>
+    </div>
+    <div class="uni-grid reveal">
+      <div class="uni-cell top"><div class="name">가천대</div><div class="count">1,068명 ★</div></div>
+      <div class="uni-cell"><div class="name">수원대</div><div class="count">445명</div></div>
+      <div class="uni-cell"><div class="name">강남대</div><div class="count">359명</div></div>
+      <div class="uni-cell up"><div class="name">을지대</div><div class="count">283명 ↑</div></div>
+      <div class="uni-cell up"><div class="name">삼육대</div><div class="count">272명 ↑</div></div>
+      <div class="uni-cell"><div class="name">한국공학대</div><div class="count">270명</div></div>
+      <div class="uni-cell"><div class="name">국민대</div><div class="count">230명</div></div>
+      <div class="uni-cell up"><div class="name">서경대</div><div class="count">216명 ↑</div></div>
+      <div class="uni-cell"><div class="name">한신대</div><div class="count">209명</div></div>
+      <div class="uni-cell up"><div class="name">홍익대(세종)</div><div class="count">195명 ↑</div></div>
+      <div class="uni-cell up"><div class="name">신한대</div><div class="count">192명 ↑</div></div>
+      <div class="uni-cell up"><div class="name">고려대(세종)</div><div class="count">165명 ↑</div></div>
+      <div class="uni-cell"><div class="name">한국기술교대</div><div class="count">147명</div></div>
+      <div class="uni-cell"><div class="name">상명대</div><div class="count">85명</div></div>
+      <div class="uni-cell"><div class="name">한국외대(글)</div><div class="count">76명</div></div>
+    </div>
+    <div class="uni-total reveal">총 모집인원 약 4,200명+ — 인서울의 기회!</div>
+    <div class="check-list reveal">
+      <div class="check-item">내신 미반영 대학 다수</div>
+      <div class="check-item">논술 100% 반영 대학 포함</div>
+      <div class="check-item">EBS 연계 출제 → 수능과 동시 대비</div>
+      <div class="check-item">이론상 9등급도 합격 가능한 구조</div>
+    </div>
+  </div>
+</section>
+
+<!-- 왜 시대학원 -->
+<section class="strengths" id="why">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">합격의 산실</span>
+      <h2 class="section-title">왜 시대학원인가?</h2>
+      <p class="section-sub">30년 노하우 × 156건 합격 실적이 증명합니다.</p>
+    </div>
+    <div class="strength-stats reveal">
+      <div class="stat-box"><div class="big">30년</div><div class="desc">입시 컨설팅 경험</div></div>
+      <div class="stat-box"><div class="big">156건</div><div class="desc">2026학년도 합격</div></div>
+      <div class="stat-box"><div class="big">SKY 24</div><div class="desc">주요대 실적</div></div>
+    </div>
+    <div class="strength-list">
+      <div class="str-card reveal"><div class="str-icon">🏆</div><div><h3>전 호서대 교수 출신 원장 직접 운영</h3><p>입시 전략서 저자, 수천 명의 합격생 배출. 데이터 기반 전략으로 최적의 합격 경로를 설계합니다.</p></div></div>
+      <div class="str-card reveal"><div class="str-icon">🥇</div><div><h3>2026학년도 156건 합격 실적</h3><p>의약학 11건 / SKY 24건 / 성한서이 24건. 데이터 기반 전략이 만든 실제 결과입니다.</p></div></div>
+      <div class="str-card reveal"><div class="str-icon">🎓</div><div><h3>약술형 논술 전문 커리큘럼</h3><p>대학별 출제 패턴 완벽 분석. EBS 연계 + 서술형 답안 작성법을 체계적으로 훈련합니다.</p></div></div>
+      <div class="str-card reveal"><div class="str-icon">👥</div><div><h3>소수정예 밀착 관리</h3><p>대형학원의 찍어내기식 수업이 아닙니다. 학생별 취약점 진단 → 맞춤 처방 → 합격까지 관리합니다.</p></div></div>
+      <div class="str-card reveal"><div class="str-icon">🎯</div><div><h3>수능 + 논술 동시 대비 전략</h3><p>약술형은 수능과 출제 근거가 동일합니다. 한 번의 공부로 수능과 논술을 동시에 잡습니다.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2026 합격 실적 -->
+<section class="results" id="results">
+  <div class="container">
+    <div class="reveal results-hero">
+      <span class="section-tag">2026학년도 합격 실적</span>
+      <h2 class="section-title">수시 + 정시 합격자 명단</h2>
+      <p class="section-sub" style="margin:0 auto 1rem">365일의 땀과 눈물, 포기하고 싶은 순간을 견뎌낸 여러분이 진짜 영웅입니다.</p>
+      <div class="big-nums">
+        <div class="big-num-box"><div class="bn">156</div><div class="bl">전체 합격</div></div>
+        <div class="big-num-box red"><div class="bn">11</div><div class="bl">의약학계</div></div>
+        <div class="big-num-box"><div class="bn">24</div><div class="bl">SKY+특수대</div></div>
+        <div class="big-num-box"><div class="bn">24</div><div class="bl">성한서이+에리카</div></div>
+        <div class="big-num-box"><div class="bn">47</div><div class="bl">주요 대학</div></div>
+      </div>
+      <p style="font-size:0.8rem;color:var(--dgray)">※ 현재까지 수렴된 결과이며, 추가 합격자 명단이 계속 업데이트됩니다.</p>
+    </div>
+
+    <!-- 의약학계 -->
+    <div class="result-category reveal">
+      <div class="cat-header cat-medical open" onclick="toggleCat(this)">
+        <h3>🏥 의약학계 합격 <span class="cat-count">11건</span></h3>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="cat-body open">
+        <div class="result-grid">
+          <div class="r-item"><span class="r-univ">인하대</span><span class="r-dept">의예과 · 이◯◯</span></div>
+          <div class="r-item"><span class="r-univ">가천대</span><span class="r-dept">의예과 · 이◯◯</span></div>
+          <div class="r-item"><span class="r-univ">순천향대</span><span class="r-dept">의예과 · 이◯◯</span></div>
+          <div class="r-item"><span class="r-univ">경북대</span><span class="r-dept">의예과 · 전◯◯</span></div>
+          <div class="r-item"><span class="r-univ">덕성여대</span><span class="r-dept">약학과 · 배◯◯</span></div>
+          <div class="r-item"><span class="r-univ">경성대</span><span class="r-dept">약학과 · 전◯◯</span></div>
+          <div class="r-item"><span class="r-univ">대구가톨릭대</span><span class="r-dept">약학과 · 전◯◯</span></div>
+          <div class="r-item"><span class="r-univ">제주대</span><span class="r-dept">수의예과 · 고◯◯</span></div>
+          <div class="r-item"><span class="r-univ">대전대</span><span class="r-dept">한의예과 · 이◯◯</span></div>
+          <div class="r-item"><span class="r-univ">원광대</span><span class="r-dept">한의예과 · 김◯◯</span></div>
+          <div class="r-item"><span class="r-univ">대구대</span><span class="r-dept">한의예과(인문) · 이◯◯</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKY + 특수대 -->
+    <div class="result-category reveal">
+      <div class="cat-header cat-sky" onclick="toggleCat(this)">
+        <h3>🏆 SKY + 특수대 합격 <span class="cat-count">24건</span></h3>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="cat-body">
+        <div class="uni-block"><div class="uni-block-header">서울대 <span class="ub-count">2건</span></div><div class="uni-block-items"><span class="dept-tag">기계공학과</span><span class="dept-tag">인문계열</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">연세대 <span class="ub-count">8건</span></div><div class="uni-block-items"><span class="dept-tag">천문우주학과</span><span class="dept-tag">기계공학과</span><span class="dept-tag">수학과</span><span class="dept-tag">식품영양학과</span><span class="dept-tag">영어영문과</span><span class="dept-tag">시스템생물</span><span class="dept-tag">사회환경시스템공학부</span><span class="dept-tag">융합ISE</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">고려대 <span class="ub-count">8건</span></div><div class="uni-block-items"><span class="dept-tag">언어학과</span><span class="dept-tag">바이오메디컬</span><span class="dept-tag">신소재공학과</span><span class="dept-tag">수학과</span><span class="dept-tag">경영대학</span><span class="dept-tag">영문과</span><span class="dept-tag">컴퓨터공학과</span><span class="dept-tag">간호학과</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">특수대 <span class="ub-count">6건</span></div><div class="uni-block-items"><span class="dept-tag">포스텍</span><span class="dept-tag">유니스트</span><span class="dept-tag">디지스트</span><span class="dept-tag">지스트(2)</span><span class="dept-tag">경인교대</span></div></div>
+      </div>
+    </div>
+
+    <!-- 성한서이 -->
+    <div class="result-category reveal">
+      <div class="cat-header cat-top" onclick="toggleCat(this)">
+        <h3>⭐ 성균관 · 한양 · 서강 · 이화 <span class="cat-count">24건</span></h3>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="cat-body">
+        <div class="uni-block"><div class="uni-block-header">성균관대 <span class="ub-count">8건</span></div><div class="uni-block-items"><span class="dept-tag">반도체공학과</span><span class="dept-tag">수학과</span><span class="dept-tag">공학계열(2)</span><span class="dept-tag">사회과학계열(2)</span><span class="dept-tag">글로벌바이오메디컬</span><span class="dept-tag">물리학과</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">한양대 <span class="ub-count">6건</span></div><div class="uni-block-items"><span class="dept-tag">인터칼리지(장학)</span><span class="dept-tag">사회학과</span><span class="dept-tag">정책학과</span><span class="dept-tag">경영학과</span><span class="dept-tag">산업공학과</span><span class="dept-tag">국제학부</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">서강대 <span class="ub-count">2건</span></div><div class="uni-block-items"><span class="dept-tag">지식융합미디어학부(2)</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">이화여대 <span class="ub-count">4건</span></div><div class="uni-block-items"><span class="dept-tag">융합보건학과</span><span class="dept-tag">식품영양학과</span><span class="dept-tag">심리학과</span><span class="dept-tag">컴퓨터공학</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">한양대(ERICA) <span class="ub-count">4건</span></div><div class="uni-block-items"><span class="dept-tag">바이오신약융합학부</span><span class="dept-tag">컴퓨터학부</span><span class="dept-tag">경영학과</span><span class="dept-tag">자율전공학부</span></div></div>
+      </div>
+    </div>
+
+    <!-- 주요 대학 -->
+    <div class="result-category reveal">
+      <div class="cat-header cat-major" onclick="toggleCat(this)">
+        <h3>🎓 주요 대학 합격 <span class="cat-count">47건</span></h3>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="cat-body">
+        <div class="uni-block"><div class="uni-block-header">중앙대 <span class="ub-count">5건</span></div><div class="uni-block-items"><span class="dept-tag">일본어문학</span><span class="dept-tag">SW학부</span><span class="dept-tag">프랑스문학</span><span class="dept-tag">식물생명공학</span><span class="dept-tag">예술공학부</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">경희대 <span class="ub-count">3건</span></div><div class="uni-block-items"><span class="dept-tag">간호학과</span><span class="dept-tag">자유전공학부(2)</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">한국외대 <span class="ub-count">3건</span></div><div class="uni-block-items"><span class="dept-tag">융합일본지역학부</span><span class="dept-tag">프랑스어학부</span><span class="dept-tag">몽골어과</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">건국대 <span class="ub-count">3건</span></div><div class="uni-block-items"><span class="dept-tag">이과자유전공</span><span class="dept-tag">사과융합학부</span><span class="dept-tag">기계로봇자동차공학부</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">동국대 <span class="ub-count">4건</span></div><div class="uni-block-items"><span class="dept-tag">기계로봇에너지공학과</span><span class="dept-tag">연극학부</span><span class="dept-tag">경영대학</span><span class="dept-tag">건축학</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">홍익대·숙명여대 <span class="ub-count">2건</span></div><div class="uni-block-items"><span class="dept-tag">컴퓨터공학과</span><span class="dept-tag">화공생명공학부</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">아주대 <span class="ub-count">5건</span></div><div class="uni-block-items"><span class="dept-tag">기계공학</span><span class="dept-tag">모빌리티(장학)</span><span class="dept-tag">건축</span><span class="dept-tag">모빌리티</span><span class="dept-tag">교통시스템</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">인하대 <span class="ub-count">2건</span></div><div class="uni-block-items"><span class="dept-tag">중국어과</span><span class="dept-tag">의예과</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">항공대 <span class="ub-count">3건</span></div><div class="uni-block-items"><span class="dept-tag">자유전공</span><span class="dept-tag">기계공학</span><span class="dept-tag">AI융합대학</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">국민대 <span class="ub-count">5건</span></div><div class="uni-block-items"><span class="dept-tag">동아시아국제학부</span><span class="dept-tag">컴퓨터공학</span><span class="dept-tag">경제</span><span class="dept-tag">미디어</span><span class="dept-tag">기계공학</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">세종대 <span class="ub-count">4건</span></div><div class="uni-block-items"><span class="dept-tag">생명시스템</span><span class="dept-tag">자유전공(2)</span><span class="dept-tag">지능정보융합</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">단국대 <span class="ub-count">5건</span></div><div class="uni-block-items"><span class="dept-tag">사이버보안</span><span class="dept-tag">자연공학</span><span class="dept-tag">인문계열</span><span class="dept-tag">도시계획</span><span class="dept-tag">전기전자</span></div></div>
+      </div>
+    </div>
+
+    <!-- 기타 대학 -->
+    <div class="result-category reveal">
+      <div class="cat-header cat-other" onclick="toggleCat(this)">
+        <h3>📋 기타 대학 합격 <span class="cat-count">54건+</span></h3>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="cat-body">
+        <div class="uni-block"><div class="uni-block-header">가천대 <span class="ub-count">10건</span></div><div class="uni-block-items"><span class="dept-tag">시스템반도체</span><span class="dept-tag">건축</span><span class="dept-tag">반도체대학</span><span class="dept-tag">간호</span><span class="dept-tag">자유전공(3)</span><span class="dept-tag">도시계획조경</span><span class="dept-tag">식품영양</span><span class="dept-tag">의예</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">한성대 <span class="ub-count">5건</span></div><div class="uni-block-items"><span class="dept-tag">IT공과대학</span><span class="dept-tag">AI융합</span><span class="dept-tag">IT공학</span><span class="dept-tag">상상력인재학부</span><span class="dept-tag">모빌리티</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">경기대 <span class="ub-count">3건</span></div><div class="uni-block-items"><span class="dept-tag">AI컴퓨터공학부</span><span class="dept-tag">기계시스템공학</span><span class="dept-tag">영어영문</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">부산대·전남대 <span class="ub-count">3건</span></div><div class="uni-block-items"><span class="dept-tag">응용생명융합학부</span><span class="dept-tag">화학교육</span><span class="dept-tag">기계공학</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">성신여대·명지대 <span class="ub-count">4건</span></div><div class="uni-block-items"><span class="dept-tag">AI융합학부</span><span class="dept-tag">영어영문</span><span class="dept-tag">환경에너지</span><span class="dept-tag">영어영문</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">동덕여대·덕성여대 <span class="ub-count">3건</span></div><div class="uni-block-items"><span class="dept-tag">화장품공학</span><span class="dept-tag">경영융합</span><span class="dept-tag">글로벌융합대학</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">광운대·상명대·홍익대 <span class="ub-count">3건</span></div><div class="uni-block-items"><span class="dept-tag">전기공학</span><span class="dept-tag">금융경제학부</span><span class="dept-tag">컴퓨터공학</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">서울여대·인천대 <span class="ub-count">2건</span></div><div class="uni-block-items"><span class="dept-tag">영어영문학과</span><span class="dept-tag">정치외교학과</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">안양대·서경대 <span class="ub-count">4건</span></div><div class="uni-block-items"><span class="dept-tag">화장품발명디자인</span><span class="dept-tag">이공계열</span><span class="dept-tag">미래융합(2)</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">간호학과 합격 <span class="ub-count">5건+</span></div><div class="uni-block-items"><span class="dept-tag">신한대</span><span class="dept-tag">조선대</span><span class="dept-tag">경동대</span><span class="dept-tag">나사렛대</span><span class="dept-tag">안산대</span><span class="dept-tag">경민대</span></div></div>
+        <div class="uni-block"><div class="uni-block-header">기타 <span class="ub-count">7건+</span></div><div class="uni-block-items"><span class="dept-tag">삼육대</span><span class="dept-tag">한국공학대</span><span class="dept-tag">공주대</span><span class="dept-tag">한국교통대</span><span class="dept-tag">수원대</span></div></div>
+      </div>
+    </div>
+
+    <p class="reveal" style="text-align:center;font-size:0.82rem;color:var(--dgray);margin-top:1.5rem">※ 특수목적고 합격 다수 포함 · 추가 합격자가 계속 업데이트될 수 있습니다</p>
+  </div>
+</section>
+
+<!-- 입시 도구 -->
+<section class="tools" id="tools">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">입시 분석 도구</span>
+      <h2 class="section-title">약술형 논술 분석 프로그램</h2>
+      <p class="section-sub">시대학원이 직접 개발한 약술형 논술 전용 분석 도구를 무료로 사용해 보세요.</p>
+    </div>
+    <div class="tools-grid">
+      <!-- 계산기 -->
+      <div class="tool-card reveal" id="calcCard">
+        <div class="tool-header">
+          <h3>📐 약술형 논술 합불판단기</h3>
+          <span class="tool-badge calc">TOOL</span>
+        </div>
+        <div class="tool-desc">내 성적으로 합격이 가능할까? 과목별 점수를 입력하면 합격·불합격 여부를 판단합니다.</div>
+        <div class="tool-actions">
+          <button class="tool-btn toggle active" onclick="toggleTool('calc')">▼ 미리보기</button>
+          <a href="약술형논술_합불판단기.html" target="_blank" class="tool-btn open">새 창으로 열기 →</a>
+        </div>
+        <div class="tool-iframe-wrap" id="calcFrame">
+          <iframe src="약술형논술_합불판단기.html" loading="lazy"></iframe>
+        </div>
+      </div>
+      <!-- 입결 검색기 -->
+      <div class="tool-card reveal" id="searchCard">
+        <div class="tool-header">
+          <h3>🔍 약술형 논술 입결 검색기</h3>
+          <span class="tool-badge search">TOOL</span>
+        </div>
+        <div class="tool-desc">2025학년도 약술형 논술 입시결과를 대학별, 학과별로 검색하고 비교 분석합니다.</div>
+        <div class="tool-actions">
+          <button class="tool-btn toggle active" onclick="toggleTool('search')">▼ 미리보기</button>
+          <a href="약술형논술_입결검색기.html" target="_blank" class="tool-btn open">새 창으로 열기 →</a>
+        </div>
+        <div class="tool-iframe-wrap" id="searchFrame">
+          <iframe src="약술형논술_입결검색기.html" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 수능 병행 인트로 -->
+<section class="suneung-intro" id="suneung">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">약술형 논술 + 수능 = 합격 공식</span>
+      <h2 class="section-title">왜 수능국어·수학을 병행해야 할까?</h2>
+      <p class="section-sub" style="margin:0 auto">약술형 논술은 수능최저학력기준이 필수인 대학이 많습니다.<br>논술에 합격해도 수능최저를 충족하지 못하면 <strong style="color:var(--fire)">불합격</strong>입니다.<br>또한 수시가 실패하더라도 <strong style="color:var(--lgold)">정시 마지노선</strong>을 확보하는 것이 핵심 전략입니다.</p>
+    </div>
+    <div class="suneung-why reveal">
+      <div class="sw-card">
+        <div class="sw-icon">🎯</div>
+        <h3>수능최저 충족</h3>
+        <p>약술형 논술 대학 대부분 수능최저 2~3개 영역 등급 합을 요구합니다. 국어·수학이 핵심 변수입니다.</p>
+      </div>
+      <div class="sw-card">
+        <div class="sw-icon">🛡️</div>
+        <h3>정시 마지노선</h3>
+        <p>수시 실패 시 정시가 최후의 보루입니다. 수능 실력이 뒷받침되어야 안정적 대학 진학이 가능합니다.</p>
+      </div>
+      <div class="sw-card">
+        <div class="sw-icon">📈</div>
+        <h3>시너지 효과</h3>
+        <p>수능국어 독해력은 논술 지문 분석에, 수능수학 사고력은 수리논술에 직결됩니다. 함께 올라갑니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 수능국어 -->
+<section class="suneung-section" id="suneung-korean">
+  <div class="container">
+    <div class="sn-header reveal">
+      <div class="sn-badge korean">국</div>
+      <div class="sn-header-text">
+        <h2>수능국어 완전 분석</h2>
+        <p>2027학년도 수능 (2026.11.19 시행) · 공통+선택 마지막 체제</p>
+      </div>
+    </div>
+
+    <div class="sn-overview reveal">
+      <div class="sn-stat purple"><div class="sn-val">45</div><div class="sn-label">총 문항 수</div></div>
+      <div class="sn-stat purple"><div class="sn-val">80분</div><div class="sn-label">시험 시간</div></div>
+      <div class="sn-stat purple"><div class="sn-val">75%</div><div class="sn-label">공통 비율</div></div>
+      <div class="sn-stat purple"><div class="sn-val">25%</div><div class="sn-label">선택 비율</div></div>
+      <div class="sn-stat purple"><div class="sn-val">50%</div><div class="sn-label">EBS 간접연계</div></div>
+    </div>
+
+    <div class="sn-content">
+      <div class="sn-block korean reveal">
+        <h3><span class="sn-num">공</span> 독서 (비문학) — 17문항</h3>
+        <ul>
+          <li>독서론 + 인문/예술 + 법/경제 + 과학/기술 총 4지문</li>
+          <li>지문 구조 파악 능력이 핵심 — 정보량 많고 논리 추론 필수</li>
+          <li>2026 수능에서 오답률 상위 대부분이 독서 문항</li>
+          <li>주제통합 지문(6문항)이 최고 난이도</li>
+        </ul>
+      </div>
+      <div class="sn-block korean reveal">
+        <h3><span class="sn-num">공</span> 문학 — 17문항</h3>
+        <ul>
+          <li>현대시, 고전시가, 현대소설, 고전소설 + 갈래복합</li>
+          <li>갈래복합 유형이 최근 5~6문항으로 비중 증가</li>
+          <li>EBS 수능특강 작품 연계 출제 — 작품 감상 능력 필수</li>
+          <li>선지와 지문의 1:1 매칭 훈련이 핵심</li>
+        </ul>
+      </div>
+      <div class="sn-block korean reveal">
+        <h3><span class="sn-num">택</span> 화법과 작문 — 11문항</h3>
+        <ul>
+          <li>상대적으로 난이도 낮음 — 시간 단축이 핵심 전략</li>
+          <li>15분 이내 완료 목표 → 독서·문학에 시간 확보</li>
+          <li>유형이 정형화되어 기출 반복으로 만점 가능</li>
+        </ul>
+      </div>
+      <div class="sn-block korean reveal">
+        <h3><span class="sn-num">택</span> 언어와 매체 — 11문항</h3>
+        <ul>
+          <li>문법 암기 필수 — 표준점수 유리하지만 학습 부담</li>
+          <li>지문형 문법 문제 출제 — 독서처럼 읽고 푸는 능력 필요</li>
+          <li>상위권 선택 비율 높음 (표준점수 최고점 유리)</li>
+        </ul>
+      </div>
+
+      <!-- 등급별 전략 -->
+      <div class="sn-block korean full reveal">
+        <h3><span class="sn-num">★</span> 등급별 핵심 전략</h3>
+        <table class="grade-table">
+          <thead><tr><th>현재 등급</th><th>핵심 전략</th><th>우선 공략</th></tr></thead>
+          <tbody>
+            <tr><td><span class="g-badge g4">4~5등급</span></td><td>선지·지문 1:1 매칭 훈련 — '감'이 아닌 '근거'로 풀기</td><td>화작 만점 + 문학 기본</td></tr>
+            <tr><td><span class="g-badge g3">2~3등급</span></td><td>문학 정복이 우선 → 독서 시간 확보 전략</td><td>문학 완벽 + 독서 구조분석</td></tr>
+            <tr><td><span class="g-badge g2">1등급 도전</span></td><td>독서 고난이도 문항 공략 + LEET·PEET 급 지문 연습</td><td>주제통합 + 과학기술 지문</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sn-tip reveal">
+      <strong>💡 시대학원 Tip</strong> — 약술형 논술의 지문 독해력은 수능국어 독서 실력과 직결됩니다. 논술 준비와 수능국어를 동시에 훈련하면, 독해 속도와 논리적 사고력이 함께 향상됩니다. 수능최저 충족은 물론, 논술 실력까지 올라가는 <strong>일석이조 전략</strong>입니다.
+    </div>
+  </div>
+</section>
+
+<!-- 수능수학 -->
+<section class="suneung-section alt" id="suneung-math">
+  <div class="container">
+    <div class="sn-header reveal">
+      <div class="sn-badge math">수</div>
+      <div class="sn-header-text">
+        <h2>수능수학 완전 분석</h2>
+        <p>2027학년도 수능 · 선택과목 마지막 체제 · 주관식 30% 출제</p>
+      </div>
+    </div>
+
+    <div class="sn-overview reveal">
+      <div class="sn-stat"><div class="sn-val">30</div><div class="sn-label">총 문항 수</div></div>
+      <div class="sn-stat"><div class="sn-val">100분</div><div class="sn-label">시험 시간</div></div>
+      <div class="sn-stat"><div class="sn-val">22</div><div class="sn-label">공통 문항</div></div>
+      <div class="sn-stat"><div class="sn-val">8</div><div class="sn-label">선택 문항</div></div>
+      <div class="sn-stat"><div class="sn-val">9</div><div class="sn-label">주관식(단답형)</div></div>
+    </div>
+
+    <div class="sn-content">
+      <div class="sn-block math reveal">
+        <h3><span class="sn-num">공</span> 수학Ⅰ</h3>
+        <ul>
+          <li><strong>지수와 로그</strong> — 지수법칙, 로그 성질, 지수·로그함수 그래프</li>
+          <li><strong>삼각함수</strong> — 삼각비, 사인·코사인법칙, 주기·그래프</li>
+          <li><strong>수열</strong> — 등차·등비수열, 수열의 합, 수학적 귀납법</li>
+        </ul>
+      </div>
+      <div class="sn-block math reveal">
+        <h3><span class="sn-num">공</span> 수학Ⅱ</h3>
+        <ul>
+          <li><strong>함수의 극한과 연속</strong> — 극한값 계산, 연속성 판단</li>
+          <li><strong>미분</strong> — 도함수, 접선, 증감·극값, 최대최소</li>
+          <li><strong>적분</strong> — 부정적분, 정적분, 넓이 계산</li>
+        </ul>
+      </div>
+      <div class="sn-block math reveal">
+        <h3><span class="sn-num">택</span> 확률과 통계</h3>
+        <ul>
+          <li>경우의 수(순열·조합), 확률의 성질, 통계적 추정</li>
+          <li>학습 부담 낮음 → '확통런' 현상 심화</li>
+          <li>표준점수 최고점이 미적분보다 낮을 수 있음</li>
+        </ul>
+      </div>
+      <div class="sn-block math reveal">
+        <h3><span class="sn-num">택</span> 미적분 / 기하</h3>
+        <ul>
+          <li><strong>미적분</strong> — 수열의 극한, 급수, 여러 미분·적분법</li>
+          <li><strong>기하</strong> — 이차곡선, 벡터, 공간좌표와 공간도형</li>
+          <li>난이도 높지만 표준점수 최고점 유리 → 상위권 선호</li>
+        </ul>
+      </div>
+
+      <!-- 등급별 전략 -->
+      <div class="sn-block math full reveal">
+        <h3><span class="sn-num">★</span> 등급별 핵심 전략</h3>
+        <table class="grade-table">
+          <thead><tr><th>현재 등급</th><th>핵심 전략</th><th>목표 점수</th></tr></thead>
+          <tbody>
+            <tr><td><span class="g-badge g4">4~5등급</span></td><td>고난이도 4점 제외, 나머지 완벽 → 쎈 B스텝 유형 반복</td><td>64~68점 (3등급컷)</td></tr>
+            <tr><td><span class="g-badge g3">3등급</span></td><td>기출 4점 문항 깊이 분석 + 입문 N제로 확장</td><td>70~78점 (2등급)</td></tr>
+            <tr><td><span class="g-badge g2">2등급</span></td><td>준킬러 2~3문제 공략 + 중난도 N제·드릴 병행</td><td>80~88점 (1등급)</td></tr>
+            <tr><td><span class="g-badge g1">1등급+</span></td><td>고난도 N제 + 실전개념(스킬) 완성 + 킬러 도전</td><td>90점+ (만점)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2027 특이사항 -->
+      <div class="sn-block math full reveal">
+        <h3><span class="sn-num">⚠</span> 2027 수능 최대 변수</h3>
+        <p>2027학년도 수능은 <strong style="color:var(--lgold)">선택과목제 마지막 수능</strong>입니다. 2028학년도부터 대수·미적분Ⅰ·확률과통계 통합 출제로 전환되어, 현 체제를 '마지막 기회'로 인식하는 N수생이 급증할 전망입니다. 확통런·사탐런 현상이 심화될 수 있으므로, <strong style="color:var(--fire)">선택과목 전략</strong>이 그 어느 해보다 중요합니다.</p>
+      </div>
+    </div>
+
+    <div class="sn-tip reveal">
+      <strong>💡 시대학원 Tip</strong> — 약술형 수리논술의 핵심은 수학Ⅰ·Ⅱ 기본기입니다. 수능수학 공통과목을 탄탄히 다지면, 논술 풀이 속도와 정확도가 함께 올라갑니다. 수능최저 충족 + 수리논술 실력 향상 + 정시 안전망까지, <strong>세 마리 토끼를 한 번에</strong> 잡는 전략이 시대학원의 커리큘럼입니다.
+    </div>
+  </div>
+</section>
+
+<!-- ========== 약술국어 공부법 후기 ========== -->
+<section class="reviews-section rv-korean" id="reviews-kr">
+  <div class="container">
+    <div class="rv-header reveal">
+      <div class="rv-icon">📖</div>
+      <h2>약술국어, 이렇게 공부했습니다</h2>
+      <p class="rv-sub">EBS 지문이 곧 시험지였다 — 시대학원 수강생들의 실전 공부법</p>
+      <span class="rv-count purple">공부법 후기 10선</span>
+    </div>
+
+    <div class="rv-grid">
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">01</span>
+        <div class="rv-profile"><div class="rv-avatar">김○</div><div><div class="rv-name">김○현</div><div class="rv-meta">내신 4.2 · 가천대 경영학부 합격</div></div></div>
+        <div class="rv-title">"수특 지문을 3번 읽으니, 시험지가 반가웠습니다"</div>
+        <div class="rv-body">처음엔 독서 지문이 외계어처럼 보였습니다. 선생님이 알려준 방법대로 <em>문단별 중심 문장에 밑줄</em>을 긋고, 지문 전체의 논지 흐름을 한 줄로 요약하는 연습을 반복했습니다. 수특 독서를 3회독 했을 때, 시험장에서 지문을 보자마자 "아, 이 구조!"라고 느꼈습니다. 낯선 지문이 아니라 <em>이미 만난 친구</em>처럼 느껴지는 순간, 합격이 보였습니다.</div>
+        <span class="rv-tag">핵심: 수특 독서 3회독 + 문단별 요약</span>
+      </div>
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">02</span>
+        <div class="rv-profile"><div class="rv-avatar">이○</div><div><div class="rv-name">이○서</div><div class="rv-meta">내신 5.1 · 가천대 미디어커뮤니케이션 합격</div></div></div>
+        <div class="rv-title">"문학은 '감'이 아니라 '근거'로 푸는 거였습니다"</div>
+        <div class="rv-body">솔직히 국어를 감으로 풀었습니다. 맞으면 운이 좋았고, 틀리면 할 수 없다고 생각했죠. 시대학원에서 <em>선지와 지문을 1:1로 매칭</em>하는 훈련을 시작하면서 모든 게 달라졌습니다. "이 선지의 근거가 지문 몇 번째 문장에 있는가?"를 찾는 습관이 들자, 문학 정답률이 <em>60%에서 90%</em>로 뛰었습니다.</div>
+        <span class="rv-tag">핵심: 선지-지문 1:1 매칭 훈련</span>
+      </div>
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">03</span>
+        <div class="rv-profile"><div class="rv-avatar">박○</div><div><div class="rv-name">박○준</div><div class="rv-meta">내신 3.8 · 고려대(세종) 국어국문 합격</div></div></div>
+        <div class="rv-title">"고전시가가 제 비밀 무기가 됐습니다"</div>
+        <div class="rv-body">다들 현대시에 집중할 때, 선생님은 <em>고전시가부터 잡으라</em>고 하셨습니다. 연시조와 가사를 현대어로 완벽하게 해석하는 연습을 하니, 어렵다고 피하던 고전이 오히려 가장 확실한 점수원이 됐습니다. 시험장에서 고전시가 문제가 나오면 남들이 당황할 때 <em>저는 웃으면서 풀었습니다.</em> 남들이 포기하는 곳이 바로 기회입니다.</div>
+        <span class="rv-tag">핵심: 고전시가 현대어 해석 훈련</span>
+      </div>
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">04</span>
+        <div class="rv-profile"><div class="rv-avatar">최○</div><div><div class="rv-name">최○아</div><div class="rv-meta">내신 4.5 · 수원대 간호학과 합격</div></div></div>
+        <div class="rv-title">"화작을 15분에 끝내니, 독서 시간이 생겼습니다"</div>
+        <div class="rv-body">시간이 항상 부족했습니다. 80분 안에 15문항을 풀어야 하는데, 하나하나 고민하면 끝이 없었죠. 선생님의 조언대로 <em>화작을 15분 안에 끝내는 연습</em>을 집중적으로 했습니다. 화작은 유형이 정형화되어 있어서 기출만 반복하면 거의 자동으로 풀립니다. 아낀 시간을 독서에 몰아넣으니, <em>시간 부족으로 틀리는 문제가 0개</em>가 됐습니다.</div>
+        <span class="rv-tag">핵심: 화작 15분 완료 → 독서 시간 확보</span>
+      </div>
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">05</span>
+        <div class="rv-profile"><div class="rv-avatar">정○</div><div><div class="rv-name">정○혁</div><div class="rv-meta">내신 5.5 · 을지대 물리치료학과 합격</div></div></div>
+        <div class="rv-title">"EBS 보기(참고자료)까지 외웠더니 적중했습니다"</div>
+        <div class="rv-body">대부분 EBS 지문만 읽고 끝내는데, 시대학원에서는 <em>문제의 보기와 해설까지 분석</em>하라고 했습니다. 처음엔 귀찮았지만, 실제 시험에서 EBS 보기가 거의 그대로 변형되어 나온 걸 보고 소름이 돋았습니다. "이건 수특 몇 강의 보기인데!" 하면서 푸는 그 쾌감. <em>지문만 읽는 건 반쪽짜리 공부</em>였습니다.</div>
+        <span class="rv-tag">핵심: EBS 보기·해설까지 완벽 분석</span>
+      </div>
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">06</span>
+        <div class="rv-profile"><div class="rv-avatar">한○</div><div><div class="rv-name">한○민</div><div class="rv-meta">내신 4.8 · 삼육대 상담심리학과 합격</div></div></div>
+        <div class="rv-title">"경제 지문이 가장 쉬운 문제였다는 걸 뒤늦게 알았습니다"</div>
+        <div class="rv-body">경제 지문만 나오면 패닉이었습니다. 브레턴우즈 체제, 금본위제… 용어부터 겁을 먹었죠. 그런데 선생님이 <em>"경제 지문은 계산+추론이 아니라 맥락만 파악하면 된다"</em>고 알려주셨습니다. 실제로 약술형 경제 문제는 기출 분석 결과, 논리 추론보다 핵심 개념 이해를 묻는 경우가 대부분이었습니다. 두려움을 내려놓으니 <em>경제가 보너스 점수</em>가 됐습니다.</div>
+        <span class="rv-tag">핵심: 경제·과학 지문 = 맥락 파악 승부</span>
+      </div>
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">07</span>
+        <div class="rv-profile"><div class="rv-avatar">윤○</div><div><div class="rv-name">윤○진</div><div class="rv-meta">내신 3.5 · 한국외대(글로벌) 합격</div></div></div>
+        <div class="rv-title">"단답형 서술, 처음엔 한 줄도 못 썼습니다"</div>
+        <div class="rv-body">수능 객관식에만 익숙했던 저에게, "두세 문장으로 서술하시오"는 공포였습니다. 선택지 중에 고르는 것과 <em>내 말로 쓰는 것</em>은 차원이 다른 능력이더라고요. 매일 하나씩 서술형 답안을 쓰고 첨삭받는 연습을 2개월 했습니다. 처음 한 달은 정말 괴로웠지만, 두 번째 달부터 <em>핵심어 2~3개로 문장을 구성하는 감각</em>이 생겼습니다. 이 훈련이 합격의 결정적 차이였습니다.</div>
+        <span class="rv-tag">핵심: 매일 1문항 서술형 답안 작성+첨삭</span>
+      </div>
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">08</span>
+        <div class="rv-profile"><div class="rv-avatar">서○</div><div><div class="rv-name">서○은</div><div class="rv-meta">내신 6.2 · 가천대 간호학과 합격</div></div></div>
+        <div class="rv-title">"내신 6등급도 간호학과에 갈 수 있다는 걸 증명했습니다"</div>
+        <div class="rv-body">내신 6.2. 솔직히 어디서도 간호학과는 불가능하다고 했습니다. 하지만 가천대 논술은 <em>100% 논술 성적</em>으로만 선발하기 때문에, 내신이 아무리 낮아도 시험만 잘 보면 됩니다. 국어에 올인했습니다. 수특 문학 작품 하나하나 시의 상황과 반응을 정리하고, 독서 지문마다 구조도를 그렸습니다. <em>국어 9문항 중 8문항</em>을 맞추고 합격 전화를 받았을 때, 저도 울었고 엄마도 울었습니다.</div>
+        <span class="rv-tag">핵심: 내신 무관 + 국어 올인 전략</span>
+      </div>
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">09</span>
+        <div class="rv-profile"><div class="rv-avatar">강○</div><div><div class="rv-name">강○우</div><div class="rv-meta">내신 4.0 · 상명대 사회복지학과 합격</div></div></div>
+        <div class="rv-title">"수능국어 3등급이 약술형 국어 덕분에 나왔습니다"</div>
+        <div class="rv-body">약술 준비하면서 느낀 건, <em>약술 국어 공부가 곧 수능국어 공부</em>라는 것입니다. EBS 수특·수완 지문을 반복해서 분석하니, 수능 시험장에서 연계 지문이 바로 눈에 들어왔습니다. "어? 이거 약술 준비하면서 분석했던 지문이네!" 수능최저도 여유롭게 충족하고, 논술도 합격하고. 진짜 <em>일석이조</em>였습니다.</div>
+        <span class="rv-tag">핵심: 약술 국어 = 수능국어 동시 대비</span>
+      </div>
+
+      <div class="rv-card purple reveal">
+        <span class="rv-num">10</span>
+        <div class="rv-profile"><div class="rv-avatar">임○</div><div><div class="rv-name">임○하</div><div class="rv-meta">N수생 · 가천대 소프트웨어학과 합격</div></div></div>
+        <div class="rv-title">"재수 실패 후, 약술형이 저를 구했습니다"</div>
+        <div class="rv-body">재수했는데 수능이 또 망했습니다. 정시로는 갈 곳이 없었고, 삼수는 할 수 없었습니다. 9월에 시대학원에서 약술형을 처음 알게 됐습니다. <em>국어 하나만 제대로 하면 된다</em>는 말에 매달렸습니다. 재수하면서 수능국어를 꽤 공부했던 게 밑바탕이 되어, 약술형 국어에 빠르게 적응했습니다. 결국 수능보다 약술형이 저에게 맞는 시험이었습니다. <em>포기하지 않으면, 길은 반드시 있습니다.</em></div>
+        <span class="rv-tag">핵심: N수생 전환 전략 성공</span>
+      </div>
+
+    </div>
+
+    <div class="rv-bottom-msg reveal">
+      <p>💡 약술형 국어의 핵심은 <strong>EBS 지문 완벽 분석</strong>입니다. 수능특강·수능완성에서 100% 연계 출제되므로, 지문을 깊이 이해한 학생이 반드시 합격합니다. 시대학원은 <strong>EBS 지문별 변형문제 + 서술형 답안 첨삭</strong>으로 합격을 설계합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 약술수학 공부법 후기 ========== -->
+<section class="reviews-section rv-math" id="reviews-math">
+  <div class="container">
+    <div class="rv-header reveal">
+      <div class="rv-icon">📐</div>
+      <h2>약술수학, 이렇게 정복했습니다</h2>
+      <p class="rv-sub">수Ⅰ·수Ⅱ 두 과목이면 충분하다 — 수포자도 역전한 실전 공부법</p>
+      <span class="rv-count red">공부법 후기 10선</span>
+    </div>
+
+    <div class="rv-grid">
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">01</span>
+        <div class="rv-profile"><div class="rv-avatar">조○</div><div><div class="rv-name">조○현</div><div class="rv-meta">내신 5.3 · 가천대 전자공학부 합격</div></div></div>
+        <div class="rv-title">"수학 6등급이었는데, 범위가 좁으니까 가능했습니다"</div>
+        <div class="rv-body">수능수학은 수Ⅰ·수Ⅱ에 선택과목까지 해야 하지만, 약술형은 <em>수Ⅰ·수Ⅱ만</em>입니다. 범위가 절반으로 줄어드니, 6등급이었던 제가 집중할 수 있었습니다. 지수로그, 삼각함수, 수열, 미분, 적분. 이 5개 단원만 미친 듯이 파고들었습니다. <em>3개월 만에 수학이 내 편</em>이 된 느낌은 평생 처음이었습니다.</div>
+        <span class="rv-tag">핵심: 수Ⅰ+수Ⅱ 범위 집중 → 단기 성장</span>
+      </div>
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">02</span>
+        <div class="rv-profile"><div class="rv-avatar">김○</div><div><div class="rv-name">김○석</div><div class="rv-meta">내신 4.7 · 가천대 기계공학과 합격</div></div></div>
+        <div class="rv-title">"교과서 개념 → 수특 → 수완, 이 순서가 정답이었습니다"</div>
+        <div class="rv-body">처음부터 기출문제를 풀려다가 멘탈이 박살났습니다. 선생님이 <em>"교과서 개념부터 다시 하라"</em>고 하셨을 때, 솔직히 자존심이 상했습니다. 하지만 개념을 잡고 수특 레벨1→레벨2→수완 3점 순서로 올라가니, 풀 수 있는 문제가 눈에 보이기 시작했습니다. <em>기초부터 다시 시작하는 것</em>이 가장 빠른 길이었습니다.</div>
+        <span class="rv-tag">핵심: 교과서 → 수특 레벨업 → 수완 단계적 학습</span>
+      </div>
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">03</span>
+        <div class="rv-profile"><div class="rv-avatar">이○</div><div><div class="rv-name">이○진</div><div class="rv-meta">내신 3.9 · 고려대(세종) 전자및정보공학 합격</div></div></div>
+        <div class="rv-title">"답만 쓰면 0점, 풀이과정을 '서술'해야 만점입니다"</div>
+        <div class="rv-body">수학을 꽤 잘한다고 생각했는데, 첫 모의 논술에서 충격을 받았습니다. 답은 맞았는데 <em>서술이 부족해서 감점</em>이었습니다. 약술형 수학은 답이 아니라 <em>과정을 채점</em>합니다. "삼각함수의 덧셈정리에 의해"처럼 정확한 수학 용어와 기호를 써서 논리적으로 전개해야 합니다. 이 차이를 깨닫고 나서, 매일 풀이를 '글'로 쓰는 연습을 했습니다.</div>
+        <span class="rv-tag">핵심: 풀이과정 서술 훈련이 핵심</span>
+      </div>
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">04</span>
+        <div class="rv-profile"><div class="rv-avatar">박○</div><div><div class="rv-name">박○영</div><div class="rv-meta">내신 5.0 · 을지대 간호학과 합격</div></div></div>
+        <div class="rv-title">"쉬운 문제를 절대 틀리지 않는 것이 합격 비결이었습니다"</div>
+        <div class="rv-body">어려운 문제를 맞추는 게 실력이라고 생각했습니다. 틀렸습니다. 선생님이 말씀하신 <em>"쉬운 문제를 빠르고 정확하게"</em>가 진짜 전략이었습니다. 기본 유형에서 실수를 0으로 만드는 연습에 2개월을 투자했습니다. 시험장에서 쉬운 문제를 2분 안에 끝내고, 남은 시간을 중난도 문제에 쏟으니 <em>총점이 30점이나 올랐습니다.</em></div>
+        <span class="rv-tag">핵심: 기본 유형 실수 제로 → 시간 배분</span>
+      </div>
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">05</span>
+        <div class="rv-profile"><div class="rv-avatar">송○</div><div><div class="rv-name">송○호</div><div class="rv-meta">내신 4.3 · 가천대 바이오나노학과 합격</div></div></div>
+        <div class="rv-title">"기출문제를 5번 풀었더니, 출제 패턴이 보였습니다"</div>
+        <div class="rv-body">가천대 기출을 1회 풀었을 때는 아무것도 몰랐습니다. 3회 풀었을 때 유형이 보이기 시작했고, <em>5회 풀었을 때 출제자의 의도</em>가 읽혔습니다. "이 단원에서는 이런 식으로 묻는구나." 패턴을 알면 처음 보는 문제도 접근법이 떠오릅니다. 기출은 가장 정직한 교과서였습니다.</div>
+        <span class="rv-tag">핵심: 기출 5회독으로 출제 패턴 체화</span>
+      </div>
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">06</span>
+        <div class="rv-profile"><div class="rv-avatar">장○</div><div><div class="rv-name">장○미</div><div class="rv-meta">내신 6.0 · 한국공학대 합격</div></div></div>
+        <div class="rv-title">"인문계인데 수학이 변별력이라니, 처음엔 절망했습니다"</div>
+        <div class="rv-body">인문계라서 국어 9문항에만 집중하려 했습니다. 그런데 선생님이 <em>"인문도 수학 6문항이 당락을 가른다"</em>고 딱 잘라 말씀하셨습니다. 국어는 다들 잘 보지만, 수학에서 2~3문항 차이가 나면 그게 곧 합불입니다. 인문계지만 수학을 포기하지 않고, 기본 유형만이라도 확실히 잡으려고 노력했습니다. <em>수학 6문항 중 4개</em>를 맞춘 게 합격의 결정적 한 수였습니다.</div>
+        <span class="rv-tag">핵심: 인문계도 수학이 변별력</span>
+      </div>
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">07</span>
+        <div class="rv-profile"><div class="rv-avatar">오○</div><div><div class="rv-name">오○준</div><div class="rv-meta">내신 3.5 · 가천대 의예과 합격</div></div></div>
+        <div class="rv-title">"수특 레벨3 + 수완 4점, 이 구간이 합격선이었습니다"</div>
+        <div class="rv-body">의예과는 수학 8문항 단독 시험입니다. 기본은 당연하고, <em>수특 레벨3과 수완 4점 난이도</em>까지 완벽해야 했습니다. 이 구간의 문제를 시간 내에 풀어내는 것이 관건이었죠. 매일 타이머를 맞춰놓고 중난도 문제를 실전처럼 풀었습니다. <em>연습에서 실전의 긴장감을 만드는 것</em>, 그것이 의예과 합격의 비결이었습니다.</div>
+        <span class="rv-tag">핵심: 중난도 타이머 실전 훈련</span>
+      </div>
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">08</span>
+        <div class="rv-profile"><div class="rv-avatar">유○</div><div><div class="rv-name">유○라</div><div class="rv-meta">내신 5.8 · 수원대 건축학과 합격</div></div></div>
+        <div class="rv-title">"미분·적분을 포기하려다가, 오히려 최고 득점원이 됐습니다"</div>
+        <div class="rv-body">미분이라는 단어만 들어도 식은땀이 났습니다. 포기하려 했는데, 선생님이 <em>"약술형 미분은 수능보다 훨씬 쉽다"</em>고 하셨습니다. 정말이었습니다. 도함수 구하고, 접선 방정식 세우고, 증감표 그리는 기본만 확실히 하면 풀 수 있는 수준이었습니다. <em>두려움이 가장 큰 적</em>이었습니다. 막상 해보니 충분히 가능한 난이도였습니다.</div>
+        <span class="rv-tag">핵심: 미분·적분 기본기만으로 충분</span>
+      </div>
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">09</span>
+        <div class="rv-profile"><div class="rv-avatar">신○</div><div><div class="rv-name">신○후</div><div class="rv-meta">내신 4.5 · 한신대 정보통신학과 합격</div></div></div>
+        <div class="rv-title">"하루 10문제, 정확하게 서술하는 훈련이 전부였습니다"</div>
+        <div class="rv-body">많이 푸는 게 답이라고 생각해서 하루에 50문제씩 풀었는데 성적이 안 올랐습니다. 시대학원에서 <em>"하루 10문제, 풀이과정을 완벽하게 쓰라"</em>고 방향을 바꿔주셨습니다. 양보다 질이었습니다. 10문제를 풀 때 <em>풀이 한 줄 한 줄에 수학 용어와 근거</em>를 써넣는 훈련. 한 달 뒤에 채점 결과가 확 달라졌습니다.</div>
+        <span class="rv-tag">핵심: 양보다 질 — 하루 10문제 완벽 서술</span>
+      </div>
+
+      <div class="rv-card red reveal">
+        <span class="rv-num">10</span>
+        <div class="rv-profile"><div class="rv-avatar">권○</div><div><div class="rv-name">권○빈</div><div class="rv-meta">N수생 · 삼육대 컴퓨터공학과 합격</div></div></div>
+        <div class="rv-title">"약술 수학 덕분에 수능 수학도 3등급이 나왔습니다"</div>
+        <div class="rv-body">재수하면서 수학이 4등급에서 안 올라갔습니다. 약술형을 준비하면서 <em>수Ⅰ·수Ⅱ 기본 개념을 다시 잡았는데</em>, 이게 수능 공통과목 점수를 끌어올리는 효과가 있었습니다. 약술형 수학의 서술 훈련이 수능에서도 실수를 줄여줬고, 결국 수능 수학 3등급으로 <em>수능최저도 충족</em>. 약술과 수능, 둘 다 잡은 셈입니다.</div>
+        <span class="rv-tag">핵심: 약술 수학 = 수능 공통과목 동시 대비</span>
+      </div>
+
+    </div>
+
+    <div class="rv-bottom-msg reveal">
+      <p>💡 약술형 수학은 <strong>수Ⅰ·수Ⅱ 두 과목</strong>이면 충분합니다. 교과서 개념 → EBS 수특 → 수완 단계별 학습으로, <strong>수포자도 3개월이면 합격권</strong>에 진입할 수 있습니다. 시대학원은 <strong>서술형 풀이과정 첨삭 + 기출 패턴 분석</strong>으로 수학 합격을 완성합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 합격자 후기 ========== -->
+<section class="reviews-section rv-pass" id="reviews-pass">
+  <div class="container">
+    <div class="rv-header reveal">
+      <div class="rv-icon">🏆</div>
+      <h2>시대학원과 함께 합격했습니다</h2>
+      <p class="rv-sub">내신이 부족해도, 수능이 불안해도 — 약술형 논술로 인생을 바꾼 이야기들</p>
+      <span class="rv-count green">합격 수기 10선</span>
+    </div>
+
+    <div class="rv-grid">
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">01</span>
+        <div class="rv-profile"><div class="rv-avatar">민○</div><div><div class="rv-name">민○경</div><div class="rv-meta">내신 6.2 → 가천대 간호학과</div></div></div>
+        <div class="rv-title">"엄마가 '불가능하다'고 했던 간호학과, 합격증을 보여드렸습니다"</div>
+        <div class="rv-body">내신 6.2로 간호학과는 누구도 가능하다고 말해주지 않았습니다. 정시로는 백분위가 한참 부족했고, 학생부 전형은 꿈도 꿀 수 없었죠. 시대학원에서 <em>가천대 논술 100% 전형</em>을 알게 됐습니다. 6개월간 EBS 국어·수학에 올인했습니다. 수능최저 1과목 3등급은 영어로 충족했고, 논술 시험에서 <em>15문항 중 12문항</em>을 맞추었습니다. 합격 통지를 받은 날, 울면서 엄마한테 전화했습니다. "엄마, 나 간호학과 갔어."</div>
+        <div class="rv-quote">"내신이 전부가 아닙니다. 간호학과의 꿈을 포기하지 마세요."</div>
+        <span class="rv-tag">내신 6.2 → 가천대 간호 합격</span>
+      </div>
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">02</span>
+        <div class="rv-profile"><div class="rv-avatar">황○</div><div><div class="rv-name">황○준</div><div class="rv-meta">내신 5.1 → 고려대(세종) 경영학과</div></div></div>
+        <div class="rv-title">"고려대라는 이름을 달 수 있을 줄은 꿈에도 몰랐습니다"</div>
+        <div class="rv-body">내신 5등급으로 '고려대'는 다른 세계 이야기였습니다. 그런데 고려대 세종캠퍼스가 약술형 논술로 선발한다는 걸 시대학원에서 알게 됐습니다. <em>논술 100%, 내신 반영 없음.</em> 3학년 여름방학부터 시작해서, 수능 전까지 약 5개월을 약술형 하나에 집중했습니다. 국어 실력이 올라가면서 수능국어도 3등급을 받아 수능최저도 무난히 통과. <em>고려대 합격증</em>을 받았을 때, 세상이 다르게 보였습니다.</div>
+        <div class="rv-quote">"5등급도 고려대에 갈 수 있습니다. 전략이 노력보다 중요합니다."</div>
+        <span class="rv-tag">내신 5.1 → 고려대(세종) 합격</span>
+      </div>
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">03</span>
+        <div class="rv-profile"><div class="rv-avatar">나○</div><div><div class="rv-name">나○원</div><div class="rv-meta">N수 1년 → 가천대 소프트웨어학과</div></div></div>
+        <div class="rv-title">"재수 실패의 절망 속에서, 약술형이 마지막 희망이었습니다"</div>
+        <div class="rv-body">재수를 했지만 수능 성적이 오히려 떨어졌습니다. 삼수는 가정 형편상 불가능했고, 정시로는 원하는 대학에 갈 수 없었습니다. 9월에 시대학원의 약술형 반에 합류했습니다. 재수하며 쌓아둔 국어·수학 기초가 있어서, <em>약술형에 빠르게 적응</em>할 수 있었습니다. 수능 후 1주일 뒤 치른 시험에서 좋은 결과를 받았습니다. <em>포기가 끝이 아니라, 방향 전환이 시작</em>이었습니다.</div>
+        <div class="rv-quote">"수능이 끝이 아닙니다. 약술형이라는 두 번째 기회가 있습니다."</div>
+        <span class="rv-tag">N수생 → 약술 전환 합격</span>
+      </div>
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">04</span>
+        <div class="rv-profile"><div class="rv-avatar">하○</div><div><div class="rv-name">하○연</div><div class="rv-meta">내신 4.8 → 을지대 물리치료학과</div></div></div>
+        <div class="rv-title">"보건계열의 꿈, 약술형이 아니었으면 포기했을 겁니다"</div>
+        <div class="rv-body">물리치료학과는 인기가 높아서 내신 4.8로는 어디서든 힘든 상황이었습니다. 을지대가 약술형을 신설했다는 소식을 듣고 바로 준비를 시작했습니다. <em>수능최저가 없는 대학</em>이라는 점이 결정적이었습니다. 국어 7문항, 수학 7문항 총 14문항. 시대학원에서 을지대 출제 경향에 맞춘 집중 훈련을 받았고, <em>국어에서 6개, 수학에서 5개</em>를 맞추고 합격했습니다.</div>
+        <div class="rv-quote">"수능최저 없는 대학을 노리세요. 논술 실력만이 승부처입니다."</div>
+        <span class="rv-tag">내신 4.8 → 을지대 물리치료 합격</span>
+      </div>
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">05</span>
+        <div class="rv-profile"><div class="rv-avatar">배○</div><div><div class="rv-name">배○수</div><div class="rv-meta">내신 3.8 → 한국외대(글로벌) 영어학과</div></div></div>
+        <div class="rv-title">"한국외대라는 간판, 약술형 덕분에 달았습니다"</div>
+        <div class="rv-body">한국외대 글로벌캠퍼스가 약술형으로 선발한다는 건 많은 사람이 모릅니다. <em>논술 100% + 수능최저 1과목 3등급.</em> 내신 3.8이면 외대 학생부 전형에서는 불리했지만, 약술형에서는 충분한 경쟁력이었습니다. 국어 지문 분석 능력을 키우면서 동시에 영어도 탄탄히 준비해 수능최저를 충족했습니다. <em>"공부를 많이 하는 것보다, 올바른 전형을 선택하는 것"</em>이 합격의 절반이라는 걸 깨달았습니다.</div>
+        <div class="rv-quote">"전형 선택이 노력의 방향을 결정합니다."</div>
+        <span class="rv-tag">내신 3.8 → 한국외대(글로벌) 합격</span>
+      </div>
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">06</span>
+        <div class="rv-profile"><div class="rv-avatar">문○</div><div><div class="rv-name">문○재</div><div class="rv-meta">내신 7.1 → 삼육대 경영학과</div></div></div>
+        <div class="rv-title">"내신 7등급에서 대학을 갔습니다. 거짓말이 아닙니다"</div>
+        <div class="rv-body">내신 7.1. 학교 선생님도, 학원도, 심지어 저도 대학 진학을 포기한 성적이었습니다. 그런데 삼육대가 <em>논술 100% 전형</em>으로 바뀌었다는 소식을 들었습니다. 내신이 9등급이어도 논술만 잘 보면 합격할 수 있다는 뜻이었습니다. 어차피 잃을 것이 없었기에 올인했습니다. 4개월간 매일 6시간씩 EBS만 팠습니다. <em>수능최저 1과목 3등급</em>은 수학으로 충족했고, 논술에서도 좋은 점수를 받았습니다. 포기했던 사람에게도 기회는 옵니다.</div>
+        <div class="rv-quote">"7등급도 대학에 갑니다. 포기만 안 하면 됩니다."</div>
+        <span class="rv-tag">내신 7.1 → 삼육대 합격</span>
+      </div>
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">07</span>
+        <div class="rv-profile"><div class="rv-avatar">양○</div><div><div class="rv-name">양○희</div><div class="rv-meta">내신 4.0 → 가천대 바이오로직스 합격</div></div></div>
+        <div class="rv-title">"다대학 동시 지원으로 합격 확률을 3배로 올렸습니다"</div>
+        <div class="rv-body">시대학원에서 배운 가장 중요한 전략은 <em>"가천대 중심으로 준비하되, 복수 지원하라"</em>는 것이었습니다. 가천대 약술형을 기준으로 공부하면 수원대, 을지대, 삼육대까지 동시에 대비됩니다. 시험 범위와 출제 형식이 비슷하기 때문이죠. 저는 4개 대학에 지원해서 <em>3곳에서 합격</em> 통보를 받았습니다. 선택권이 생기니, 가장 원하는 학과로 갈 수 있었습니다.</div>
+        <div class="rv-quote">"한 과목만 잘 준비하면, 여러 대학이 동시에 열립니다."</div>
+        <span class="rv-tag">4개교 지원 → 3개교 복수 합격</span>
+      </div>
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">08</span>
+        <div class="rv-profile"><div class="rv-avatar">전○</div><div><div class="rv-name">전○서</div><div class="rv-meta">내신 5.5 → 상명대 금융경제학과</div></div></div>
+        <div class="rv-title">"수능최저 없는 상명대, 오직 실력만으로 증명했습니다"</div>
+        <div class="rv-body">수능에 자신이 없어서 수능최저가 없는 대학을 찾았습니다. 상명대는 약술형 논술을 신설하면서 <em>수능최저를 요구하지 않는</em> 파격적인 전형을 만들었습니다. 논술 실력만으로 승부할 수 있다는 것이 큰 메리트였습니다. 인문계열 국어 8문항, 수학 2문항이라서 <em>국어에 집중 투자</em>할 수 있었고, 수학 부담도 최소한이었습니다. 수능최저 걱정 없이 오로지 논술 준비에만 집중하니 마음도 편했습니다.</div>
+        <div class="rv-quote">"수능이 불안하면, 수능최저 없는 대학부터 공략하세요."</div>
+        <span class="rv-tag">수능최저 無 → 상명대 합격</span>
+      </div>
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">09</span>
+        <div class="rv-profile"><div class="rv-avatar">홍○</div><div><div class="rv-name">홍○진</div><div class="rv-meta">내신 4.2 → 홍익대(세종) 금속공예디자인 합격</div></div></div>
+        <div class="rv-title">"여름방학에 시작해서 11월에 합격했습니다"</div>
+        <div class="rv-body">3학년 여름방학까지 약술형이 뭔지도 몰랐습니다. 7월에 시대학원에 상담 오면서 처음 알게 됐고, 바로 시작했습니다. <em>7~8월: 개념+EBS 기초, 9~10월: 기출 반복+모의 논술, 11월: 파이널 실전.</em> 약 5개월이라는 짧은 기간이었지만, 범위가 좁고 EBS 연계율이 높기 때문에 충분했습니다. <em>시작이 늦었다고 포기하지 마세요.</em> 5개월이면 됩니다.</div>
+        <div class="rv-quote">"약술형은 5개월이면 충분합니다. 지금 시작하세요."</div>
+        <span class="rv-tag">7월 시작 → 5개월 만에 합격</span>
+      </div>
+
+      <div class="rv-card green reveal">
+        <span class="rv-num">10</span>
+        <div class="rv-profile"><div class="rv-avatar">차○</div><div><div class="rv-name">차○린</div><div class="rv-meta">내신 3.5 → 가천대 의예과 합격</div></div></div>
+        <div class="rv-title">"의대의 문을 약술형으로 열었습니다"</div>
+        <div class="rv-body">의예과는 수능 정시 혹은 학생부 종합으로만 가는 줄 알았습니다. 가천대 의예과가 <em>약술형 논술로 선발</em>한다는 것을 알았을 때, 새로운 길이 보였습니다. 물론 의예과는 수능최저가 3개 영역 1등급으로 매우 까다롭고, 수학 시험도 높은 수준입니다. 하지만 수능 한 번의 결과가 아니라, <em>논술이라는 추가 기회</em>가 있다는 사실만으로도 큰 힘이 됐습니다. 시대학원에서 의예과 대비 특화 훈련을 받으며, 결국 합격의 꿈을 이뤘습니다.</div>
+        <div class="rv-quote">"의대도 약술형이라는 경로가 있습니다. 길은 하나가 아닙니다."</div>
+        <span class="rv-tag">내신 3.5 → 가천대 의예과 합격</span>
+      </div>
+
+    </div>
+
+    <div class="rv-bottom-msg reveal">
+      <p>🎓 2026학년도 시대학원 약술형 논술 <strong>총 156명 합격</strong> — 의약학계 11명, SKY+특수대 24명, 성한서이 24명, 주요대학 47명. 여러분의 이름이 다음 합격 리스트에 올라갈 차례입니다. <strong>지금 상담하세요.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- 강사진 소개 -->
+<section class="instructors" id="instructors">
+  <div class="container reveal">
+    <div class="inst-header">
+      <h2>시대학원 <span>강사진</span></h2>
+      <p>약술형 논술의 본질을 꿰뚫는 전문가 4인.<br>단순한 강의가 아닌, 합격을 설계하는 팀입니다.</p>
+    </div>
+
+    <div class="inst-grid">
+
+      <!-- 김휘창 원장 -->
+      <div class="inst-card director">
+        <div class="inst-top">
+          <div class="inst-avatar">김</div>
+          <div class="inst-name">김휘창</div>
+          <div class="inst-role">원장 · 입시전략총괄</div>
+          <div class="inst-quote">"입시는 단순한 지식이 아니라,<br>변수를 통제하는 전략입니다."</div>
+          <div class="inst-divider"></div>
+        </div>
+        <div class="inst-body">
+          <div class="inst-tag">전문 영역</div>
+          <ul>
+            <li>데이터 기반 맞춤형 입시 컨설팅</li>
+            <li>수시·정시 통합 전략 설계</li>
+            <li>수험생 강점 분석 → 최적 전형 매칭</li>
+            <li>대입 환경 변화 대응 (의대 증원, 무전공, 5등급제)</li>
+            <li>과학적 데이터 분석 + 실전 경험 결합</li>
+          </ul>
+          <div class="inst-highlight">축구 감독이 데이터로 전략을 세우듯, 입시도 변수를 통제하고 최적의 전략을 수립해야 합니다.</div>
+        </div>
+      </div>
+
+      <!-- 김선영 국어 -->
+      <div class="inst-card korean">
+        <div class="inst-top">
+          <div class="inst-avatar">김</div>
+          <div class="inst-name">김선영</div>
+          <div class="inst-role">약술형 국어 대표강사</div>
+          <div class="inst-quote">"과거 성적은 중요하지 않습니다.<br>누구나 합격을 향해 갈 수 있습니다."</div>
+          <div class="inst-divider"></div>
+        </div>
+        <div class="inst-body">
+          <div class="inst-tag">강의 특징</div>
+          <ul>
+            <li>핵심 출제 포인트 선형적 학습법</li>
+            <li>단원별 출제 요소 · 기출 · 연계 작품 철저 정리</li>
+            <li>약술형 국어 All in One (예습→복습→실전)</li>
+            <li>객관식 · 서술형 · 약술형 완벽 대비</li>
+            <li>약술형 논술 + 수능 국어 동시 대비</li>
+          </ul>
+          <div class="inst-highlight">흔들림 없는 학습으로 실력을 만들어내는 데 주력. 개인 맞춤 학습으로 누구에게나 최적의 환경을 제공합니다.</div>
+        </div>
+      </div>
+
+      <!-- 조종혁 수학 -->
+      <div class="inst-card math">
+        <div class="inst-top">
+          <div class="inst-avatar">정</div>
+          <div class="inst-name">정도근</div>
+          <div class="inst-role">약술형 수학 대표강사</div>
+          <div class="inst-quote">"문제 풀이가 아닌 사고력을 길러야<br>수능과 약술형을 동시에 잡습니다."</div>
+          <div class="inst-divider"></div>
+        </div>
+        <div class="inst-body">
+          <div class="inst-tag">강의 특징</div>
+          <ul>
+            <li>개념 중심 학습 — 공식 암기 ✕, 논리적 흐름 이해</li>
+            <li>출제자 사고 추적 — 문제 구조 해석 + 의도 파악</li>
+            <li>개념 간 유기적 연결 (미분↔적분, 함수↔미분)</li>
+            <li>3점·4점 고난도 논리적 사고력 훈련</li>
+            <li>평가원·교육청·사관학교 기출 패턴 분석</li>
+          </ul>
+          <div class="inst-highlight">개념의 본질을 이해하고 출제자의 관점을 익히는 방식. 문제 변형에도 강한 내구성을 길러줍니다.</div>
+        </div>
+      </div>
+
+      <!-- 정도근 수학 -->
+      <div class="inst-card strategy">
+        <div class="inst-top">
+          <div class="inst-avatar">조</div>
+          <div class="inst-name">조종혁</div>
+          <div class="inst-role">수능·내신수학 전문강사</div>
+          <div class="inst-quote">"내신 수학은 실수 싸움입니다.<br>반복과 이해가 곧 1등급입니다."</div>
+          <div class="inst-divider"></div>
+        </div>
+        <div class="inst-body">
+          <div class="inst-tag">강의 특징</div>
+          <ul>
+            <li>수학박사 출신 — 개념의 본질부터 정확히 전달</li>
+            <li>내신 실수 제로 전략 — 계산·공식·오개념 실수 근절</li>
+            <li>학교별 출제 경향 맞춤 분석</li>
+            <li>유인물·기출 시험지 기반 실전 대비</li>
+            <li>반복 학습 시스템으로 완전 이해 보장</li>
+          </ul>
+          <div class="inst-highlight">애매한 문제를 확실히 이해하고 넘어가야 합니다. 완전히 모르면 오개념이 생겨 실수 가능성이 높아집니다.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="inst-bottom-msg">
+      <p>시대학원의 4인 강사진은 각자의 전문 영역에서<br><strong>약술형 논술 합격</strong>이라는 하나의 목표를 향해 팀으로 움직입니다.<br>전략 설계부터 국어·수학 실력 완성까지 — <strong>원스톱 합격 시스템.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- 2027 수시전략 프로모션 -->
+<section class="susi-promo" id="susi-strategy">
+  <div class="susi-inner">
+    <div class="susi-top">
+      <div class="susi-text">
+        <div class="susi-badge"><span class="sdot"></span> NEW — 2027학년도 수시 핵심 전략</div>
+        <h2>수시 6장, 아직도<br><span class="s-fire">'감'</span>으로 쓰시나요?<br><span class="s-hl">이제는 전략이 답입니다.</span></h2>
+        <p class="s-desc">30년 입시전문가가 공개하는 11가지 핵심 질문, 7단계 고도화 분석법, 수시 6장 시나리오 배분 전략. 2027학년도 변수를 완벽 분석한 실전 가이드를 확인하세요.</p>
+        <div class="susi-stats">
+          <div class="susi-stat"><div class="ss-num">11</div><div class="ss-label">핵심 질문</div></div>
+          <div class="susi-stat"><div class="ss-num">7</div><div class="ss-label">단계 분석</div></div>
+          <div class="susi-stat"><div class="ss-num">6장</div><div class="ss-label">배분 전략</div></div>
+        </div>
+        <div class="susi-actions">
+          <a href="2027_수시지원전략.html" class="btn btn-gold" style="font-size:0.95rem">📋 수시전략 핵심체크 보기 →</a>
+          <a href="2027_수시지원전략.html#contact" class="btn btn-outline" style="font-size:0.85rem">📞 설명회 예약</a>
+        </div>
+      </div>
+      <div class="susi-cards">
+        <div class="sc-card"><div class="sc-icon">❓</div><div><h4>입시결과 기준의 함정</h4><p>최초합? 최종합? 70%컷? 기준이 다르면 판단이 틀어집니다</p></div></div>
+        <div class="sc-card"><div class="sc-icon">📊</div><div><h4>3개년 입결 회귀 패턴</h4><p>정원·최저 변경 없으면 회귀 가능성 80% 이상</p></div></div>
+        <div class="sc-card"><div class="sc-icon">🔄</div><div><h4>전형요소 변화 = 입결 변동</h4><p>수능최저 한 줄이 컷을 0.5등급 바꿉니다</p></div></div>
+        <div class="sc-card"><div class="sc-icon">⚡</div><div><h4>합불의 역설</h4><p>내신 1.6이 왜 2.2에게 역전당하는가</p></div></div>
+        <div class="sc-card"><div class="sc-icon">🎯</div><div><h4>6장 = 시나리오</h4><p>안정2+적정2+상향2 공식의 한계를 넘는 실전 배분법</p></div></div>
+      </div>
+    </div>
+    <div class="susi-event">
+      <div class="se-info">📣 <strong>2027 수시합격전략 설명회</strong> — 고2·고3 학생 및 학부모 대상, 무료 사전예약</div>
+      <div class="se-date">📅 2026. 6. 21 (토) 오후 2시</div>
+    </div>
+  </div>
+</section>
+
+<!-- Subject pages -->
+<section class="subject-nav" id="subjects">
+  <div class="container reveal">
+    <h2 class="section-title">학습 프로그램 & 수시 전략 가이드</h2>
+    <p>약술형 논술 과목별 학습법과 2027 수시지원전략을 확인하세요.</p>
+    <div class="subject-cards">
+      <a href="국어약술형_랜딩페이지.html" class="subj-card kor">
+        <div class="subj-icon">📖</div>
+        <h3>국어 약술형</h3>
+        <p>사고력 · 독해력 · 서술력 기반<br>EBS 독서 지문 재해석 + 서술 템플릿<br>5일 루틴 학습법 + 4단계 PHASE 커리큘럼</p>
+        <span class="subj-link">국어 학습법 보기 →</span>
+      </a>
+      <a href="수학약술형_랜딩페이지.html" class="subj-card math">
+        <div class="subj-icon">📐</div>
+        <h3>수학 약술형</h3>
+        <p>"설명하는 수학"으로 전환<br>풀이 과정 논리적 서술 훈련<br>단원별 유형 패턴 + 4단계 PHASE 커리큘럼</p>
+        <span class="subj-link">수학 학습법 보기 →</span>
+      </a>
+      <a href="2027_수시지원전략.html" class="subj-card susi">
+        <div class="subj-icon">🎯</div>
+        <h3>수시지원전략</h3>
+        <p>11가지 핵심 질문 · 7단계 분석법<br>수시 6장 시나리오 배분 전략<br>8개 인터랙티브 차트 + AI 합격예측</p>
+        <span class="subj-link">🔥 수시전략 보기 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2>지금 바로 상담하세요!</h2>
+  <p class="sub">약술형 논술은 당신의 마지막 역전 카드입니다</p>
+  <div class="cta-phone"><a href="tel:031-978-1117" style="color:inherit;text-decoration:none">📞 031) 978-1117</a></div>
+  <div class="cta-info">
+    <div class="cta-info-item"><span class="icon">📍</span> 경기도 고양시 덕양구 백양로51 네이버타운 8층</div>
+    <div class="cta-info-item"><span class="icon">🏫</span> 시대학원</div>
+  </div>
+  <div style="margin-top:1.5rem;position:relative;z-index:2">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="btn btn-gold" style="font-size:1.1rem;padding:1rem 2.5rem">📋 온라인 상담신청</a>
+    <a href="tel:031-978-1117" class="btn btn-gold" style="font-size:1.1rem;padding:1rem 2.5rem;background:#d97706">📞 전화 상담하기</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 시대학원. All rights reserved. | 약술형 논술 전문 | 경기도 고양시 덕양구 백양로51 네이버타운 8층</p>
+  <p style="margin-top:0.5rem"><a href="2027_수시지원전략.html">🔥 수시전략</a> · <a href="국어약술형_랜딩페이지.html">국어 약술형</a> · <a href="수학약술형_랜딩페이지.html">수학 약술형</a></p>
+</footer>
+
+<script>
+// Nav scroll effect
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50);
+});
+// Reveal on scroll
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+
+// Toggle results category accordion
+function toggleCat(el){
+  const body = el.nextElementSibling;
+  el.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// Toggle tool iframe visibility
+function toggleTool(type){
+  const frameId = type === 'calc' ? 'calcFrame' : 'searchFrame';
+  const cardId = type === 'calc' ? 'calcCard' : 'searchCard';
+  const frame = document.getElementById(frameId);
+  const card = document.getElementById(cardId);
+  const btn = card.querySelector('.tool-btn.toggle');
+  const isCollapsed = card.classList.contains('tool-collapsed');
+  if(isCollapsed){
+    card.classList.remove('tool-collapsed');
+    btn.classList.add('active');
+    btn.textContent = '▼ 미리보기';
+  } else {
+    card.classList.add('tool-collapsed');
+    btn.classList.remove('active');
+    btn.textContent = '▶ 미리보기 열기';
+  }
+}
+</script>
+</body>
+</html>

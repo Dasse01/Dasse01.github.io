@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수학 약술형 학습법 & 커리큘럼 | 시대학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Do+Hyeon&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bk:#0a0a0a;--dk:#111;--dk2:#1a1a1a;--dk3:#222;--dk4:#2a2a2a;
+  --red:#dc2626;--cherry:#b91c1c;--fire:#ef4444;--lred:#fca5a5;
+  --blue:#3b82f6;--teal:#14b8a6;--purple:#6c5ce7;
+  --gold:#f59e0b;--lgold:#fcd34d;--dgold:#d97706;
+  --white:#fff;--off:#f5f5f5;--gray:#9ca3af;--lgray:#d1d5db;--dgray:#6b7280;
+  --font-display:'Do Hyeon',sans-serif;
+  --font-body:'Noto Sans KR',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bk);color:var(--white);font-family:var(--font-body);overflow-x:hidden;line-height:1.6}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.8rem 2rem;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);background:rgba(10,10,10,0.9);border-bottom:1px solid rgba(220,38,38,0.2)}
+.nav-brand{font-family:var(--font-display);font-size:1.4rem;color:var(--fire);text-decoration:none}
+.nav-brand span{color:var(--gray);font-size:0.85rem;margin-left:0.5rem;font-family:var(--font-body);font-weight:300}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.3s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem;border-radius:4px;font-weight:700!important}
+.nav-cta:hover{background:var(--fire)!important}
+
+section{padding:5rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.tag{display:inline-block;background:rgba(220,38,38,0.15);color:var(--fire);padding:0.3rem 1rem;border-radius:3px;font-size:0.75rem;font-weight:700;letter-spacing:2px;margin-bottom:1rem}
+.stitle{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:0.5rem}
+.ssub{color:var(--gray);font-size:1rem;max-width:600px;margin-bottom:3rem}
+
+.hero{min-height:70vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:6rem}
+.hero::before{content:'';position:absolute;top:-30%;right:-10%;width:60%;height:160%;background:radial-gradient(ellipse,rgba(220,38,38,0.1),transparent 70%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;padding:4rem 2rem;position:relative;z-index:2}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.15;margin-bottom:1rem}
+.hero h1 .accent{color:var(--fire)}
+.hero h1 .gold{color:var(--lgold)}
+.hero-sub{font-size:1.1rem;color:var(--gray);max-width:550px;margin-bottom:2rem;font-weight:300}
+.hero-keywords{display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.hero-keywords span{background:var(--dk2);border:1px solid rgba(220,38,38,0.2);padding:0.4rem 1rem;border-radius:50px;font-size:0.85rem;color:var(--lred)}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.8rem 1.8rem;border-radius:4px;font-size:0.95rem;font-weight:700;text-decoration:none;transition:all 0.3s;font-family:var(--font-body);border:none;cursor:pointer}
+.btn-red{background:var(--red);color:var(--white);box-shadow:0 4px 20px rgba(220,38,38,0.4)}
+.btn-red:hover{background:var(--fire);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2)}
+.btn-outline:hover{border-color:var(--red);color:var(--fire)}
+
+/* Curriculum */
+.curriculum{background:var(--dk)}
+.phase-timeline{position:relative;padding-left:3rem}
+.phase-timeline::before{content:'';position:absolute;left:1rem;top:0;bottom:0;width:3px;background:linear-gradient(var(--purple),var(--blue),var(--dgold),var(--red))}
+.phase{position:relative;margin-bottom:2.5rem;background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:2rem 2rem 2rem 2.5rem;transition:all 0.4s}
+.phase:hover{border-color:rgba(220,38,38,0.3);transform:translateX(6px)}
+.phase-dot{position:absolute;left:-2.55rem;top:2rem;width:1.2rem;height:1.2rem;border-radius:50%;border:3px solid var(--bk)}
+.phase:nth-child(1) .phase-dot{background:var(--purple)}
+.phase:nth-child(2) .phase-dot{background:var(--blue)}
+.phase:nth-child(3) .phase-dot{background:var(--dgold)}
+.phase:nth-child(4) .phase-dot{background:var(--red)}
+.phase-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.phase-badge{padding:0.25rem 0.8rem;font-size:0.8rem;font-weight:700;color:var(--white);border-radius:3px}
+.phase:nth-child(1) .phase-badge{background:var(--purple)}
+.phase:nth-child(2) .phase-badge{background:var(--blue)}
+.phase:nth-child(3) .phase-badge{background:var(--dgold)}
+.phase:nth-child(4) .phase-badge{background:var(--red)}
+.phase-period{font-size:0.85rem;color:var(--dgray)}
+.phase h3{font-size:1.15rem;font-weight:700}
+.phase-items{list-style:none;display:grid;gap:0.5rem}
+.phase-items li{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.9rem;color:var(--lgray);line-height:1.6}
+.phase-items li::before{content:'✓';font-weight:700;flex-shrink:0}
+.phase:nth-child(1) .phase-items li::before{color:var(--purple)}
+.phase:nth-child(2) .phase-items li::before{color:var(--blue)}
+.phase:nth-child(3) .phase-items li::before{color:var(--dgold)}
+.phase:nth-child(4) .phase-items li::before{color:var(--red)}
+
+/* Methods */
+.methods{background:var(--bk)}
+.method-grid{display:flex;flex-direction:column;gap:1.5rem}
+.method-card{display:flex;gap:1.5rem;background:var(--dk2);padding:2rem;border-left:4px solid;transition:all 0.4s}
+.method-card:hover{transform:translateX(8px);background:var(--dk3)}
+.method-card:nth-child(1){border-color:var(--red)}
+.method-card:nth-child(2){border-color:var(--dgold)}
+.method-card:nth-child(3){border-color:var(--blue)}
+.method-card:nth-child(4){border-color:var(--purple)}
+.method-num{font-family:var(--font-display);font-size:2rem;opacity:0.3;flex-shrink:0;width:2.5rem}
+.method-card h3{font-size:1.05rem;font-weight:700;margin-bottom:0.5rem}
+.method-card p{font-size:0.9rem;color:var(--gray);line-height:1.7}
+
+/* Unit types */
+.unit-types{background:var(--dk)}
+.unit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.unit-card{background:var(--dk2);padding:1.5rem;border-top:3px solid var(--red);text-align:center;transition:all 0.4s}
+.unit-card:hover{transform:translateY(-4px);background:var(--dk3)}
+.unit-card h4{font-size:0.95rem;font-weight:700;color:var(--lgold);margin-bottom:0.5rem}
+.unit-card p{font-size:0.82rem;color:var(--gray);line-height:1.5}
+
+/* 3 Questions routine */
+.questions{background:var(--bk)}
+.q-box{background:var(--dk2);border:1px solid rgba(220,38,38,0.15);padding:2.5rem;margin-bottom:2rem}
+.q-box h3{font-family:var(--font-display);font-size:1.3rem;margin-bottom:0.5rem;color:var(--lgold)}
+.q-box .subtitle{font-size:0.9rem;color:var(--gray);margin-bottom:1.5rem}
+.q-list{display:grid;gap:1rem}
+.q-item{display:flex;gap:1rem;align-items:flex-start}
+.q-item .q-num{background:var(--red);color:var(--white);width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:700;flex-shrink:0}
+.q-item .q-text{font-size:0.95rem;color:var(--lgray);line-height:1.6}
+
+/* Notebooks */
+.notebooks{background:var(--dk)}
+.nb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2rem}
+.nb-card{background:var(--dk2);padding:2rem;border-left:4px solid;transition:all 0.4s}
+.nb-card:hover{transform:translateY(-4px);background:var(--dk3)}
+.nb-card:nth-child(1){border-color:var(--red)}
+.nb-card:nth-child(2){border-color:var(--dgold)}
+.nb-card:nth-child(3){border-color:var(--blue)}
+.nb-card .nb-icon{font-size:1.5rem;margin-bottom:0.8rem}
+.nb-card h4{font-size:1rem;font-weight:700;margin-bottom:0.5rem}
+.nb-card p{font-size:0.85rem;color:var(--gray);line-height:1.7}
+
+/* Strategies */
+.strat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0.8rem}
+.strat-box{background:var(--dk2);padding:1.2rem 0.8rem;text-align:center;border-top:3px solid var(--dgold);transition:all 0.4s}
+.strat-box:hover{transform:translateY(-4px)}
+.strat-box .st-icon{font-size:1.3rem;margin-bottom:0.5rem}
+.strat-box h4{font-size:0.8rem;font-weight:700;margin-bottom:0.3rem;color:var(--lgold)}
+.strat-box p{font-size:0.72rem;color:var(--gray);line-height:1.4}
+
+/* Warning */
+.warning{background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.3);padding:1.5rem;display:flex;align-items:center;gap:1rem;margin-top:1.5rem}
+.warning .w-icon{font-size:1.5rem;flex-shrink:0}
+.warning p{font-size:0.9rem;color:var(--lgray)}
+
+/* CTA */
+.cta{background:var(--cherry);text-align:center;padding:4rem 2rem;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;top:-50%;right:-20%;width:60%;height:200%;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);pointer-events:none}
+.cta h2{font-family:var(--font-display);font-size:2.5rem;margin-bottom:0.5rem;position:relative;z-index:2}
+.cta p{font-size:1rem;color:rgba(255,255,255,0.8);margin-bottom:1.5rem;position:relative;z-index:2}
+.cta-phone{font-family:var(--font-display);font-size:2rem;margin-bottom:1rem;position:relative;z-index:2}
+.btn-white{background:var(--white);color:var(--cherry);font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+
+footer{background:var(--dk);padding:1.5rem;text-align:center;font-size:0.8rem;color:var(--dgray);border-top:1px solid rgba(255,255,255,0.05)}
+footer a{color:var(--gray);text-decoration:none;margin:0 0.5rem}
+
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.8s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .unit-grid,.nb-grid{grid-template-columns:1fr}
+  .strat-grid{grid-template-columns:repeat(2,1fr)}
+  .method-card{flex-direction:column;gap:0.5rem}
+  .phase{padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">시대학원 <span>수학 약술형</span></a>
+  <div class="nav-links">
+    <a href="index.html">메인</a>
+    <a href="#curriculum">커리큘럼</a>
+    <a href="#methods">학습법</a>
+    <a href="#units">단원별 유형</a>
+    <a href="#notebooks">훈련 노트</a>
+    <a href="국어약술형_랜딩페이지.html">국어 약술</a>
+    <a href="#cta" class="nav-cta">상담신청</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="tag">수학 약술형 전문</span>
+    <h1>수학 약술형,<br><span class="accent">"설명"이 답이다</span></h1>
+    <p class="hero-sub">약술형 수학은 답을 구하는 것이 아니라, 풀이 과정을 논리적으로 설명하는 능력을 평가합니다. "왜?"라는 질문에 글로 답하는 훈련이 핵심입니다.</p>
+    <div class="hero-keywords">
+      <span>📐 개념 정의 서술</span><span>🔢 풀이 과정 설명</span><span>📊 EBS 논술 전환</span><span>📝 서술 훈련 노트</span>
+    </div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap">
+      <a href="#curriculum" class="btn btn-red">커리큘럼 보기 →</a>
+      <a href="#methods" class="btn btn-outline">학습법 알아보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- 커리큘럼 -->
+<section class="curriculum" id="curriculum">
+  <div class="container">
+    <div class="reveal"><span class="tag">4단계 PHASE</span><h2 class="stitle">수학 약술형 커리큘럼</h2><p class="ssub">개념 이해에서 실전까지, 체계적 로드맵으로 합격까지 이끕니다.</p></div>
+    <div class="phase-timeline">
+      <div class="phase reveal"><div class="phase-dot"></div><div class="phase-header"><span class="phase-badge">PHASE 1</span><span class="phase-period">3~4월</span><h3>개념 재정립</h3></div><ul class="phase-items"><li>수학Ⅰ — 지수·로그, 삼각함수 핵심 개념 완성</li><li>수학Ⅱ — 미분·적분 기초부터 핵심 정리</li><li>서술형 답안 기본 — 풀이 과정 논리적 작성법</li><li>4~6등급 취약 단원 집중 보강 (수준별 맞춤)</li></ul></div>
+      <div class="phase reveal"><div class="phase-dot"></div><div class="phase-header"><span class="phase-badge">PHASE 2</span><span class="phase-period">5~7월</span><h3>EBS 연계 훈련</h3></div><ul class="phase-items"><li>수능특강 수학 — 단원별 핵심 유형 분류·반복</li><li>약술형 빈출 유형 집중 — 함수, 미분 활용 문제</li><li>서술형 답안 작성 실전 — 수식+설명 병행 훈련</li><li>주간 테스트 — 약술형 실전 문제 15문항 연습</li></ul></div>
+      <div class="phase reveal"><div class="phase-dot"></div><div class="phase-header"><span class="phase-badge">PHASE 3</span><span class="phase-period">8~9월</span><h3>대학별 기출 집중</h3></div><ul class="phase-items"><li>가천대·수원대·을지대 등 기출 완전 분석</li><li>수능완성 연계 — 고난도 서술형 대비</li><li>대학별 출제 패턴별 맞춤 전략 수립</li><li>오답노트 기반 취약점 개별 첨삭</li></ul></div>
+      <div class="phase reveal"><div class="phase-dot"></div><div class="phase-header"><span class="phase-badge">PHASE 4</span><span class="phase-period">10~11월</span><h3>실전 파이널</h3></div><ul class="phase-items"><li>대학별 예상 문제 실전 모의 (시간 제한)</li><li>합격선 도달 전략 — 15문항 중 12개+ 목표</li><li>실수 방지 — 계산 실수·서술 감점 제로 훈련</li><li>수능 + 논술 D-day 최종 마무리</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 학습법 -->
+<section class="methods" id="methods">
+  <div class="container">
+    <div class="reveal"><span class="tag">핵심 학습법</span><h2 class="stitle">수학 약술형 이렇게 공부하세요!</h2><p class="ssub">"답"이 아니라 "풀이 과정을 설명하는 능력"을 평가합니다.</p></div>
+    <div class="method-grid">
+      <div class="method-card reveal"><div class="method-num">01</div><div><h3>"설명하는 수학"으로 전환하라</h3><p>공식 암기에서 벗어나 개념 정의를 '말로 설명하기' 훈련을 합니다. "왜 이 공식이 이렇게 되는가?"를 설명하고, 시작 → 전개 → 결론의 전체 흐름을 서술하는 것이 핵심입니다. 개념마다 '정의 → 성질 → 예시' 구조로 정리하고, 서술형 정의 연습장을 매일 작성하세요.</p></div></div>
+      <div class="method-card reveal"><div class="method-num">02</div><div><h3>풀이 설명 문장 만들기 루틴</h3><p>"계산이 아니라 설명이 답이다" — 문제를 푼 후 항상 3가지 질문으로 마무리하세요: ① 왜 이 공식을 썼는가? ② 이 식을 쓰기 위한 조건은 무엇인가? ③ 다음 단계로 넘어가는 논리는 무엇인가? 이 습관이 약술형 서술의 핵심입니다.</p></div></div>
+      <div class="method-card reveal"><div class="method-num">03</div><div><h3>수능특강 문제를 논술형으로 바꾸기</h3><p>수능 객관식 → 약술형 서술식 전환이 핵심입니다. EBS 수능특강의 대표 유형(단원별 3~5개)을 골라서 "이 문제를 서술형으로 바꾼다면?"이라고 질문하고, 직접 변형하여 풀어보세요. 이 훈련을 반복하면 어떤 유형이든 서술로 풀 수 있습니다.</p></div></div>
+      <div class="method-card reveal"><div class="method-num">04</div><div><h3>서술 훈련 노트 3종 만들기</h3><p>① 개념 말하기 노트: 정의·성질·공식을 1~3줄 설명으로 정리. ② 문제 풀이 전개노트: EBS/교과서 문제를 서술형으로 다시 쓰기. ③ 틀린 이유 해설노트: 논리 누락·개념 오용을 패턴별로 분류. 이 3종 노트가 합격의 무기입니다.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 Questions -->
+<section class="questions" id="questions">
+  <div class="container">
+    <div class="reveal"><span class="tag">풀이 설명 루틴</span><h2 class="stitle">문제 푼 뒤 반드시 물어보세요</h2><p class="ssub">"계산이 아니라 설명이 답이다" — 매 문제 풀이 후 이 3가지 질문을 던지세요.</p></div>
+    <div class="q-box reveal">
+      <h3>🔥 풀이 설명 3단 질문법</h3>
+      <p class="subtitle">약술형 수학의 핵심 — 풀이 과정을 논리적으로 서술하는 능력</p>
+      <div class="q-list">
+        <div class="q-item"><div class="q-num">1</div><div class="q-text"><strong>왜 이 공식을 썼는가?</strong><br>공식 선택의 근거를 명확히 서술합니다. "주어진 조건이 ○○이므로, △△ 공식을 적용할 수 있다."</div></div>
+        <div class="q-item"><div class="q-num">2</div><div class="q-text"><strong>이 식을 쓰기 위한 조건은 무엇인가?</strong><br>공식 적용의 전제조건을 확인합니다. "이 공식이 성립하려면 ○○ 조건이 필요하며, 문제에서 이 조건이 충족되었다."</div></div>
+        <div class="q-item"><div class="q-num">3</div><div class="q-text"><strong>다음 단계로 넘어가는 논리는 무엇인가?</strong><br>풀이 흐름의 연결고리를 설명합니다. "앞에서 구한 결과로부터 ○○를 알 수 있으므로, 다음으로 △△를 구한다."</div></div>
+      </div>
+    </div>
+    <div class="reveal" style="background:var(--dk2);padding:1.5rem;border-left:4px solid var(--lgold)">
+      <p style="font-size:0.9rem;color:var(--lgray)">💡 <strong>실습 예시</strong> — 함수 f(x)가 x=2에서 연속일 때, a의 값을 구하시오. → "함수가 x=2에서 연속이기 위해서는 좌극한과 우극한, 그리고 함수값이 모두 같아야 한다. 즉, lim(x→2⁻) f(x) = lim(x→2⁺) f(x) = f(2) 조건을 만족해야 하므로, 이 조건에 따라 a의 값을 구할 수 있다."</p>
+    </div>
+  </div>
+</section>
+
+<!-- 단원별 유형 -->
+<section class="unit-types" id="units">
+  <div class="container">
+    <div class="reveal"><span class="tag">단원별 패턴</span><h2 class="stitle">단원별 서술 유형 패턴</h2><p class="ssub">각 단원마다 자주 출제되는 서술 유형을 파악하고 대비하세요.</p></div>
+    <div class="unit-grid reveal">
+      <div class="unit-card"><h4>지수/로그함수</h4><p>성질 적용 이유 서술<br>치환 이유 설명</p></div>
+      <div class="unit-card"><h4>삼각함수</h4><p>그래프 해석 기반<br>삼각비 정의 활용</p></div>
+      <div class="unit-card"><h4>수열</h4><p>귀납적 성질 서술<br>일반항 도출 과정</p></div>
+      <div class="unit-card"><h4>극한과 연속</h4><p>극한의 정의<br>연속 조건에 따른 a값</p></div>
+      <div class="unit-card"><h4>미분</h4><p>도함수의 의미<br>증가·감소 해석 설명</p></div>
+      <div class="unit-card"><h4>적분</h4><p>면적 해석<br>정적분 정의의 의미 서술</p></div>
+    </div>
+    <div class="reveal" style="background:var(--dk2);padding:1.5rem;border-left:4px solid var(--blue)">
+      <p style="font-size:0.9rem;color:var(--lgray)">📌 <strong>EBS 전환 훈련법</strong> — ① EBS 대표 유형 선별(단원별 3~5개) → ② "이 문제를 서술형으로 바꾼다면?" 질문 → ③ 직접 서술형 문제로 변형하고 풀어보기 → 피드백 반복. 고교 내신 서술형은 가천대 약술형과 채점 기준이 유사합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 훈련 노트 -->
+<section class="notebooks" id="notebooks">
+  <div class="container">
+    <div class="reveal"><span class="tag">훈련 노트</span><h2 class="stitle">약술형 수학 전용 서술 훈련 노트 3종</h2><p class="ssub">이 3종 노트를 매일 작성하면 서술 능력이 비약적으로 향상됩니다.</p></div>
+    <div class="nb-grid reveal">
+      <div class="nb-card"><div class="nb-icon">📕</div><h4>개념 말하기 노트</h4><p>정의·성질·공식을 1~3줄 설명으로 정리합니다. 매일 1개념씩 '정의 → 성질 → 예시' 순서로 작성하세요. 공식을 외우지 말고 정의를 써보는 것이 핵심입니다.</p></div>
+      <div class="nb-card"><div class="nb-icon">📗</div><h4>문제 풀이 전개노트</h4><p>EBS/교과서 문제를 서술형으로 재작성합니다. 각 단계에 '왜?'를 기록하고, 풀이 과정의 논리적 흐름을 글로 설명하세요.</p></div>
+      <div class="nb-card"><div class="nb-icon">📘</div><h4>틀린 이유 해설노트</h4><p>논리 누락·개념 오용을 정리합니다. 감점 사유를 패턴별로 분류하고, 같은 실수를 반복하지 않도록 체크리스트를 만드세요.</p></div>
+    </div>
+
+    <div class="reveal"><h3 style="font-family:var(--font-display);font-size:1.5rem;margin:2rem 0 1.5rem">수학 약술형 핵심 전략 5가지</h3></div>
+    <div class="strat-grid reveal">
+      <div class="strat-box"><div class="st-icon">💡</div><h4>개념이해</h4><p>공식을 외우지 말고 정의를 써보자</p></div>
+      <div class="strat-box"><div class="st-icon">✍️</div><h4>풀이과정 서술</h4><p>왜? 어떻게? 라는 질문에 글로 답하자</p></div>
+      <div class="strat-box"><div class="st-icon">📚</div><h4>출제연계 활용</h4><p>수능특강 문제를 논술형으로 바꿔 풀자</p></div>
+      <div class="strat-box"><div class="st-icon">🎯</div><h4>실전대비</h4><p>내신 서술형 기출을 논술처럼 다시 써보자</p></div>
+      <div class="strat-box"><div class="st-icon">🔥</div><h4>모의논술</h4><p>모의논술은 연습이 아니라 실전 시뮬레이션</p></div>
+    </div>
+
+    <div class="warning reveal">
+      <div class="w-icon">⚠️</div>
+      <p><strong>주의:</strong> 역함수 적분 공식 등 교과서에 없는 공식을 외워 사용하면 감점됩니다! 반드시 교과서 개념 기반으로 직접 풀이하세요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <h2>수학 약술형, 시대학원과 함께!</h2>
+  <p>"설명하는 수학" + 서술 훈련 노트 3종 + 1:1 첨삭 지도</p>
+  <div class="cta-phone">📞 031) 978-1117</div>
+  <p style="font-size:0.9rem;opacity:0.8;position:relative;z-index:2">경기도 고양시 덕양구 백양로51 네이버타운 8층</p>
+  <div style="margin-top:1.5rem;position:relative;z-index:2;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <a href="tel:031-978-1117" class="btn btn-white">📞 전화 상담하기</a>
+    <a href="국어약술형_랜딩페이지.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4)">국어 약술형 보기 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 시대학원 | <a href="index.html">메인</a> · <a href="국어약술형_랜딩페이지.html">국어 약술형</a> · <a href="#cta">상담신청</a></p>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target)}})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

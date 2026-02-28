@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>약술형 논술 합불판단기</title>
+  
+  <!-- Pretendard 폰트 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  
+  <style>
+    :root{
+      --bg:#080d19;
+      --bg-card:rgba(15,23,42,0.85);
+      --bg-card-hover:rgba(20,30,55,0.95);
+      --txt:#f1f5f9;
+      --txt-muted:#94a3b8;
+      --txt-dim:#64748b;
+      
+      --line:rgba(148,163,184,0.12);
+      --line-hover:rgba(148,163,184,0.25);
+      
+      --accent:#f59e0b;
+      --accent-glow:rgba(245,158,11,0.35);
+      
+      --good:#10b981;
+      --good-bg:rgba(220,38,38,0.08);
+      --mid:#f59e0b;
+      --mid-bg:rgba(245,158,11,0.12);
+      --bad:#ef4444;
+      --bad-bg:rgba(239,68,68,0.12);
+      --info:#3b82f6;
+      --info-bg:rgba(59,130,246,0.12);
+      
+      --shadow-sm:0 2px 8px rgba(0,0,0,0.25);
+      --shadow-md:0 8px 24px rgba(0,0,0,0.35);
+      
+      --radius-sm:10px;
+      --radius-md:16px;
+      --radius-lg:24px;
+      --radius-full:9999px;
+      
+      --transition-fast:0.15s cubic-bezier(0.4,0,0.2,1);
+      --transition-normal:0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    
+    *{box-sizing:border-box; margin:0; padding:0}
+    html{scroll-behavior:smooth}
+    
+    body{
+      color:var(--txt);
+      background: 
+        radial-gradient(ellipse 80% 50% at 20% -20%, rgba(220,38,38,0.08), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(245,158,11,0.06), transparent),
+        linear-gradient(180deg, var(--bg) 0%, #0f172a 100%);
+      background-attachment: fixed;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size:14px;
+      line-height:1.6;
+      min-height:100vh;
+    }
+    
+    ::-webkit-scrollbar{width:8px;height:8px}
+    ::-webkit-scrollbar-track{background:rgba(0,0,0,0.2);border-radius:4px}
+    ::-webkit-scrollbar-thumb{background:rgba(148,163,184,0.3);border-radius:4px}
+    ::-webkit-scrollbar-thumb:hover{background:rgba(148,163,184,0.5)}
+    
+    header{max-width:1200px;margin:0 auto;padding:32px 24px 16px}
+    
+    h1{
+      font-size:clamp(22px, 4vw, 28px);
+      font-weight:700;
+      letter-spacing:-0.5px;
+      background:linear-gradient(135deg, #f59e0b 0%, #fcd34d 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      margin-bottom:8px;
+    }
+    
+    .sub{color:var(--txt-muted);font-size:14px;line-height:1.5}
+    .sub b{color:var(--accent);font-weight:600}
+    
+    .wrap{max-width:1200px;margin:0 auto;padding:0 24px 48px}
+    .grid{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+    @media(min-width:900px){.grid{grid-template-columns:380px 1fr}}
+    
+    .panel{
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      overflow:hidden;
+      transition: all var(--transition-normal);
+    }
+    .panel:hover{border-color:var(--line-hover)}
+    .panel .hd{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px 20px;
+      border-bottom:1px solid var(--line);
+      background:rgba(0,0,0,0.15);
+    }
+    .panel .hd b{font-size:15px;font-weight:600}
+    .panel .bd{padding:20px}
+    
+    .card{
+      background:rgba(0,0,0,0.2);
+      border:1px solid var(--line);
+      border-radius:var(--radius-md);
+      padding:16px;
+    }
+    
+    .label{
+      font-size:12px;
+      font-weight:600;
+      color:var(--txt-muted);
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+      margin-bottom:6px;
+    }
+    
+    .hint{
+      font-size:12px;
+      color:var(--txt-dim);
+      margin-top:4px;
+    }
+    
+    input, select{
+      width:100%;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:var(--radius-sm);
+      background:rgba(0,0,0,0.3);
+      color:var(--txt);
+      font-size:14px;
+      font-family:inherit;
+      transition:all var(--transition-fast);
+    }
+    input:focus, select:focus{
+      outline:none;
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px var(--accent-glow);
+    }
+    
+    button{
+      padding:10px 18px;
+      border:1px solid var(--line);
+      border-radius:var(--radius-sm);
+      background:rgba(255,255,255,0.05);
+      color:var(--txt);
+      font-size:13px;
+      font-weight:500;
+      font-family:inherit;
+      cursor:pointer;
+      transition:all var(--transition-fast);
+    }
+    button:hover{background:rgba(255,255,255,0.1);border-color:var(--line-hover)}
+    button.primary{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
+    button.primary:hover{background:#059669;border-color:#059669}
+    
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:4px 10px;
+      border-radius:var(--radius-full);
+      background:var(--accent-glow);
+      color:var(--txt);
+      font-size:11px;
+      font-weight:600;
+    }
+    
+    .row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:600px){.two{grid-template-columns:1fr}}
+    
+    .gap-sm{gap:8px}
+    .mt-sm{margin-top:8px}
+    .mt-md{margin-top:16px}
+    .mt-lg{margin-top:24px}
+    
+    .kpi{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(90px, 1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+    .kpi .box{
+      background:rgba(0,0,0,0.25);
+      border:1px solid var(--line);
+      border-radius:var(--radius-md);
+      padding:14px;
+      text-align:center;
+    }
+    .kpi .big{font-size:18px;font-weight:700;color:var(--txt)}
+    .kpi .small{font-size:10px;color:var(--txt-muted);margin-top:4px}
+    
+    .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .scroll-hint{font-size:11px;color:var(--txt-dim);text-align:right}
+    
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    th,td{
+      padding:10px 12px;
+      text-align:left;
+      border-bottom:1px solid var(--line);
+    }
+    th{
+      font-weight:600;
+      color:var(--txt-muted);
+      background:rgba(0,0,0,0.2);
+      position:sticky;
+      top:0;
+      z-index:1;
+    }
+    td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+    tr:hover{background:rgba(255,255,255,0.02)}
+    
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:var(--radius-full);
+      font-size:12px;
+      font-weight:600;
+    }
+    .status.안정,.status.가능{background:var(--good-bg);color:var(--good)}
+    .status.적정,.status.경쟁{background:var(--mid-bg);color:var(--mid)}
+    .status.도전{background:var(--info-bg);color:var(--info)}
+    .status.위험{background:var(--bad-bg);color:var(--bad)}
+    
+    .pdot{width:8px;height:8px;border-radius:50%}
+    
+    .chartWrap{
+      background:rgba(0,0,0,0.15);
+      border-radius:var(--radius-md);
+      padding:16px;
+    }
+    .chartTitle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:12px;
+    }
+    .chartTitle b{font-size:13px}
+    .chartLegend{display:flex;gap:16px;font-size:11px;color:var(--txt-muted)}
+    .lgItem{display:flex;align-items:center;gap:6px}
+    .lgSw{width:12px;height:12px;border-radius:3px}
+    
+    .svgChart{display:block;width:100%;height:auto}
+    
+    .modal-overlay{
+      display:none;
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(0,0,0,0.75);
+      z-index:1000;
+      overflow-y:auto;
+      padding:24px;
+    }
+    .modal-overlay.show{display:flex;justify-content:center;align-items:flex-start}
+    .modal-content{
+      width:100%;
+      max-width:900px;
+      margin:auto;
+    }
+    
+    .footer{
+      text-align:center;
+      padding:32px;
+      color:var(--txt-dim);
+      font-size:12px;
+    }
+
+    .info-box{
+      background:var(--info-bg);
+      border:1px solid rgba(59,130,246,0.3);
+      border-radius:var(--radius-md);
+      padding:14px;
+      margin-bottom:16px;
+    }
+    .info-box .title{font-weight:600;color:var(--info);margin-bottom:6px}
+    .info-box ul{margin:0;padding-left:18px;color:var(--txt-muted);font-size:13px}
+    .info-box li{margin:4px 0}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📝 약술형 논술 합불판단기</h1>
+  <p class="sub">
+    <b>v1.0</b> 2027학년도 약술형 논술 전용 · 내신 환산 + 예상점수 계산 · 대학별 비교 분석
+  </p>
+</header>
+
+<div class="wrap">
+
+  <div class="info-box">
+    <div class="title">💡 약술형 논술이란?</div>
+    <ul>
+      <li>국어 + 수학 혼합 출제 (단답형/짧은 서술형)</li>
+      <li>고사 시간: 60~80분 (수리논술 대비 짧음)</li>
+      <li>난이도: 수능 연계 수준 (수리논술 대비 낮음)</li>
+      <li>대상: 중위권 대학 (가천대, 수원대, 을지대 등)</li>
+      <li>논술 100% 대학 다수 → 내신 약점 보완 가능</li>
+    </ul>
+  </div>
+
+  <div class="grid">
+
+    <!-- 입력 패널 -->
+    <section class="panel" id="inputPanel">
+      <div class="hd">
+        <b>📊 입력</b>
+        <span class="badge">약술형 전용</span>
+      </div>
+      <div class="bd">
+
+        <div class="card">
+          <div class="two">
+            <div>
+              <div class="label">내신 등급 (1.0~9.0)</div>
+              <input id="inGpa" type="number" min="1" max="9" step="0.1" value="5.5">
+              <div class="hint">국수영탐 평균 등급</div>
+            </div>
+            <div>
+              <div class="label">약술형 논술 점수 (0~100)</div>
+              <input id="inEssay" type="number" min="0" max="100" step="0.1" value="75">
+              <div class="hint">모의 또는 예상 점수</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-md">
+          <div class="two">
+            <div>
+              <div class="label">필터</div>
+              <select id="inFilter">
+                <option value="">전체</option>
+                <option value="essay100">논술 100%</option>
+                <option value="gpa20">내신 20% 이하</option>
+                <option value="seoul">수도권</option>
+              </select>
+            </div>
+            <div>
+              <div class="label">대학 선택</div>
+              <select id="inUni"></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-md" style="justify-content:flex-end">
+          <button id="btnCalc" class="primary" type="button">계산</button>
+          <button id="btnRanking" type="button">전체 랭킹</button>
+          <button id="btnEdit" type="button">DB 편집</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 결과 패널 -->
+    <section class="panel" id="resultPanel">
+      <div class="hd">
+        <b>📋 분석 결과</b>
+        <span class="badge" id="badgeUni">-</span>
+      </div>
+      <div class="bd">
+
+        <div class="kpi">
+          <div class="box"><div class="big" id="kpiTotal">-</div><div class="small">예상 합산점수</div></div>
+          <div class="box"><div class="big" id="kpiVerdict">-</div><div class="small">판정</div></div>
+          <div class="box"><div class="big" id="kpiWeights">-</div><div class="small">가중치</div></div>
+          <div class="box"><div class="big" id="kpiCut">-</div><div class="small">컷오프</div></div>
+          <div class="box"><div class="big" id="kpiMargin">-</div><div class="small">마진</div></div>
+        </div>
+
+        <div class="card mt-lg" id="topCard">
+          <div class="label">TOP 추천 (예상점수 - 컷오프 마진 순)</div>
+          <div class="scroll-hint">👉 좌우로 스크롤하세요</div>
+          <div class="scroll mt-sm">
+            <table id="tblTop">
+              <thead>
+                <tr><th>#</th><th>대학</th><th class="num">예상점수</th><th class="num">컷오프</th><th class="num">마진</th><th>판정</th><th>메모</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-lg">
+          <div class="label">전체 대학 비교</div>
+          <div class="scroll-hint">👉 좌우로 스크롤하세요</div>
+          <div class="scroll mt-sm">
+            <table id="tblAll">
+              <thead>
+                <tr><th>대학</th><th class="num">논술%</th><th class="num">내신%</th><th class="num">내신(환산)</th><th class="num">예상점수</th><th class="num">컷오프</th><th class="num">마진</th><th>판정</th><th>태그</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-lg">
+          <div class="label">비교 차트</div>
+          <div class="chartWrap mt-sm">
+            <div class="chartTitle">
+              <b>예상점수 vs 컷오프</b>
+              <div class="chartLegend">
+                <span class="lgItem"><span class="lgSw" style="background:var(--good)"></span>예상점수</span>
+                <span class="lgItem"><span class="lgSw" style="background:var(--mid)"></span>컷오프</span>
+              </div>
+            </div>
+            <div id="svgChart"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 2027 약술형 대학 현황 -->
+  <section class="panel mt-lg" id="dataCard">
+    <div class="hd">
+      <b>🔍 2027 약술형 논술 대학 현황</b>
+      <span class="badge" id="dataBadge">15개 대학</span>
+    </div>
+    <div class="bd">
+      <div class="scroll-hint">👉 좌우로 스크롤하세요</div>
+      <div class="scroll mt-sm">
+        <table id="tblData">
+          <thead>
+            <tr><th>대학</th><th>고사 시간</th><th>모집단위</th><th>출제 유형</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- DB 편집 모달 -->
+<div id="editModal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="panel">
+      <div class="hd">
+        <b>📋 약술형 논술 DB 편집</b>
+        <div class="row gap-sm">
+          <button id="btnSave" class="primary" type="button">저장</button>
+          <button id="btnClose" type="button">닫기</button>
+        </div>
+      </div>
+      <div class="bd">
+        <div class="hint">• 설정은 브라우저에 저장됩니다 (LocalStorage)</div>
+        <div class="scroll mt-md">
+          <table id="tblEdit">
+            <thead><tr><th>대학</th><th class="num">논술%</th><th class="num">내신%</th><th class="num">컷오프</th><th>내신환산</th><th>태그</th><th>메모</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="row gap-sm mt-md">
+          <button id="btnAddUni" type="button">대학 추가</button>
+          <button id="btnReset" type="button">기본값 초기화</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  약술형 논술 합불판단기 | 2027학년도 약술형 논술 전용
+</footer>
+
+<script>
+// ============================================
+// 약술형 논술 대학 DB
+// ============================================
+const DEFAULT_DB = [
+  { u: "가천대", essayW: 100, gpaW: 0, cut: 78, gpaTable: "등급별", tags: ["논술100%", "수도권"], memo: "국어6+수학9문항" },
+  { u: "강남대", essayW: 100, gpaW: 0, cut: 72, gpaTable: "등급별", tags: ["논술100%", "수도권"], memo: "국어3+수학7문항, 60분" },
+  { u: "국민대", essayW: 100, gpaW: 0, cut: 76, gpaTable: "등급별", tags: ["논술100%", "수도권"], memo: "국어2+수학9문항, 90분" },
+  { u: "삼육대", essayW: 100, gpaW: 0, cut: 70, gpaTable: "등급별", tags: ["논술100%", "수도권"], memo: "국어6+수학9문항, 80분" },
+  { u: "상명대", essayW: 100, gpaW: 0, cut: 74, gpaTable: "등급별", tags: ["논술100%", "수도권"], memo: "국어2+수학8문항, 60분" },
+  { u: "서경대", essayW: 100, gpaW: 0, cut: 68, gpaTable: "등급별", tags: ["논술100%", "수도권"], memo: "국어4+수학4문항, 60분" },
+  { u: "수원대", essayW: 100, gpaW: 0, cut: 65, gpaTable: "등급별", tags: ["논술100%"], memo: "국어5+수학10문항, 80분" },
+  { u: "신한대(의정부)", essayW: 100, gpaW: 0, cut: 62, gpaTable: "등급별", tags: ["논술100%", "수도권"], memo: "국어6+수학9문항, 80분" },
+  { u: "을지대(성남)", essayW: 100, gpaW: 0, cut: 68, gpaTable: "등급별", tags: ["논술100%", "수도권"], memo: "국어7+수학7문항, 70분" },
+  { u: "한국공학대", essayW: 100, gpaW: 0, cut: 72, gpaTable: "등급별", tags: ["논술100%"], memo: "수학9문항, 90분" },
+  { u: "한국기술교육대", essayW: 100, gpaW: 0, cut: 70, gpaTable: "등급별", tags: ["논술100%"], memo: "수학10문항, 80분" },
+  { u: "한신대", essayW: 100, gpaW: 0, cut: 64, gpaTable: "등급별", tags: ["논술100%"], memo: "국어5+수학10문항, 80분" },
+  { u: "홍익대(세종)", essayW: 100, gpaW: 0, cut: 74, gpaTable: "등급별", tags: ["논술100%"], memo: "수학7문항, 70분" }
+];
+
+// 2027 약술형 대학 현황 데이터
+const DATA_2027 = [
+  { 대학: "가천대 (성남)", 고사시간: "80분", 모집단위: "자연", 출제유형: "국어 6문항 + 수학 9문항, 150점(각 10점) + 650점(기본점수) = 800점" },
+  { 대학: "강남대 (용인)", 고사시간: "60분", 모집단위: "자연", 출제유형: "국어(문학, 독서) 3문항 + 수학(수학Ⅰ, 수학Ⅱ) 7문항" },
+  { 대학: "국민대", 고사시간: "90분", 모집단위: "자연", 출제유형: "국어(국어, 문학, 독서) 2문항 + 수학(수학, 수학Ⅰ, 수학Ⅱ, 미적분) 9문항" },
+  { 대학: "삼육대", 고사시간: "80분", 모집단위: "자연", 출제유형: "국어 6문항 + 수학 9문항, 150점(각 10점) + 550점(기본점수) = 700점" },
+  { 대학: "상명대", 고사시간: "60분", 모집단위: "자연", 출제유형: "국어 2문항 + 수학 8문항, 100점(각 10점), 환산점수 900점 만점" },
+  { 대학: "서경대", 고사시간: "60분", 모집단위: "미래융합학부", 출제유형: "국어 4문항 + 수학 4문항, 문항당 10점, 총점 80점(환산점수 800점)" },
+  { 대학: "수원대 (화성)", 고사시간: "80분", 모집단위: "자연", 출제유형: "국어 5문항 + 수학 10문항, 150점(각 10점) + 450점(기본점수) = 600점" },
+  { 대학: "신한대 (의정부)", 고사시간: "80분", 모집단위: "자연", 출제유형: "국어 6문항 + 수학 9문항 = 15문항, 750점 기본점수 = 900점" },
+  { 대학: "을지대 (성남)", 고사시간: "70분", 모집단위: "자연", 출제유형: "국어 7문항 + 수학 7문항 = 14문항, 핵심어로 이루어진 문장이나 수식으로 간략하게 답변" },
+  { 대학: "한국공학대 (시흥)", 고사시간: "90분", 모집단위: "자연", 출제유형: "수학 9문항, 150점 + 250점(기본점수)=400점" },
+  { 대학: "한국기술교육대 (천안)", 고사시간: "80분", 모집단위: "자연", 출제유형: "수리논술 문항 10개 내외(단문형 지문, 단답형/약술형 서술)" },
+  { 대학: "한신대 (오산)", 고사시간: "80분", 모집단위: "자연", 출제유형: "국어 5문항 + 수학 10문항, 120점(각 8점) + 480점(기본점수) = 600점" },
+  { 대학: "홍익대 (세종)", 고사시간: "70분", 모집단위: "자연", 출제유형: "교과서, EBS 수능교재 등을 변형한 수학 서술형 7문항" }
+];
+
+const STORAGE_KEY = "shortEssayDB_v1";
+
+// ============================================
+// 유틸리티 함수
+// ============================================
+const $ = id => document.getElementById(id);
+const safeNum = (v, d) => { const n = parseFloat(v); return isFinite(n) ? n : d; };
+
+// ============================================
+// DB 관리
+// ============================================
+let DB = [];
+
+function loadDB() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      DB = JSON.parse(saved);
+    } else {
+      DB = JSON.parse(JSON.stringify(DEFAULT_DB));
+    }
+  } catch (e) {
+    DB = JSON.parse(JSON.stringify(DEFAULT_DB));
+  }
+}
+
+function saveDB() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
+}
+
+function resetDB() {
+  if (confirm("기본값으로 초기화하시겠습니까?")) {
+    DB = JSON.parse(JSON.stringify(DEFAULT_DB));
+    saveDB();
+    buildUniOptions();
+    renderEditTable();
+    calculate();
+  }
+}
+
+// ============================================
+// 내신 환산 함수
+// ============================================
+function convertGpa(gpa, gpaW) {
+  if (gpaW === 0) return 100;
+  
+  const table = { 1: 100, 2: 98, 3: 95, 4: 90, 5: 85, 6: 75, 7: 60, 8: 40, 9: 0 };
+  
+  const floor = Math.floor(gpa);
+  const ceil = Math.ceil(gpa);
+  
+  if (floor === ceil || ceil > 9) return table[floor] || 0;
+  
+  const ratio = gpa - floor;
+  const low = table[floor] || 0;
+  const high = table[ceil] || 0;
+  
+  return low + (high - low) * ratio;
+}
+
+// ============================================
+// 점수 계산
+// ============================================
+function calcScore(uni, gpa, essay) {
+  const gpa100 = convertGpa(gpa, uni.gpaW);
+  const essayScore = essay * (uni.essayW / 100);
+  const gpaScore = gpa100 * (uni.gpaW / 100);
+  const total = essayScore + gpaScore;
+  
+  return { gpa100: +gpa100.toFixed(1), total: +total.toFixed(1), cut: uni.cut || 0 };
+}
+
+function getVerdict(total, cut) {
+  if (!cut || cut === 0) return { name: "-", color: "var(--txt-dim)" };
+  const margin = total - cut;
+  if (margin >= 5) return { name: "안정", color: "var(--good)" };
+  if (margin >= 0) return { name: "적정", color: "var(--mid)" };
+  if (margin >= -5) return { name: "도전", color: "var(--info)" };
+  return { name: "위험", color: "var(--bad)" };
+}
+
+// ============================================
+// UI 빌드
+// ============================================
+function buildUniOptions() {
+  const sel = $("inUni");
+  const filter = $("inFilter").value;
+  
+  sel.innerHTML = "";
+  
+  let items = DB.slice();
+  if (filter === "essay100") items = items.filter(x => x.essayW === 100);
+  if (filter === "gpa20") items = items.filter(x => x.gpaW <= 20);
+  if (filter === "seoul") items = items.filter(x => (x.tags || []).includes("수도권"));
+  
+  items.sort((a, b) => a.u.localeCompare(b.u, 'ko'));
+  
+  for (const it of items) {
+    const o = document.createElement("option");
+    o.value = it.u;
+    o.textContent = it.u;
+    sel.appendChild(o);
+  }
+}
+
+function renderDataTable() {
+  const tbody = document.querySelector("#tblData tbody");
+  tbody.innerHTML = "";
+  
+  for (const r of DATA_2027) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><b>${r.대학}</b></td>
+      <td>${r.고사시간}</td>
+      <td>${r.모집단위}</td>
+      <td style="white-space:normal;max-width:400px;line-height:1.5">${r.출제유형}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+  
+  $("dataBadge").textContent = `${DATA_2027.length}개 대학`;
+}
+
+// ============================================
+// 계산 및 렌더링
+// ============================================
+function calculate() {
+  const gpa = safeNum($("inGpa").value, 5.5);
+  const essay = safeNum($("inEssay").value, 75);
+  const selectedUni = $("inUni").value;
+  
+  const uni = DB.find(x => x.u === selectedUni);
+  
+  if (uni) {
+    const { gpa100, total, cut } = calcScore(uni, gpa, essay);
+    const v = getVerdict(total, cut);
+    const margin = cut ? (total - cut).toFixed(1) : "-";
+    
+    $("kpiTotal").textContent = total;
+    $("kpiVerdict").textContent = v.name;
+    $("kpiVerdict").style.color = v.color;
+    $("kpiWeights").textContent = `${uni.essayW}/${uni.gpaW}`;
+    $("kpiCut").textContent = cut || "-";
+    $("kpiMargin").textContent = margin;
+    $("kpiMargin").style.color = parseFloat(margin) >= 0 ? "var(--good)" : "var(--bad)";
+    $("badgeUni").textContent = uni.u;
+  }
+  
+  renderAllTable(gpa, essay);
+  renderTopTable(gpa, essay);
+  renderChart(gpa, essay);
+}
+
+function renderAllTable(gpa, essay) {
+  const tbody = document.querySelector("#tblAll tbody");
+  tbody.innerHTML = "";
+  
+  const results = DB.map(uni => {
+    const { gpa100, total, cut } = calcScore(uni, gpa, essay);
+    const margin = cut ? total - cut : 0;
+    return { uni, gpa100, total, cut, margin, v: getVerdict(total, cut) };
+  }).sort((a, b) => b.margin - a.margin);
+  
+  for (const r of results) {
+    const tr = document.createElement("tr");
+    const marginClass = r.margin >= 0 ? "style='color:var(--good)'" : "style='color:var(--bad)'";
+    const marginSign = r.margin >= 0 ? "+" : "";
+    
+    tr.innerHTML = `
+      <td><b>${r.uni.u}</b></td>
+      <td class="num">${r.uni.essayW}</td>
+      <td class="num">${r.uni.gpaW}</td>
+      <td class="num">${r.gpa100}</td>
+      <td class="num"><b>${r.total}</b></td>
+      <td class="num">${r.cut || "-"}</td>
+      <td class="num" ${marginClass}>${r.cut ? marginSign + r.margin.toFixed(1) : "-"}</td>
+      <td><span class="status ${r.v.name}"><span class="pdot" style="background:${r.v.color}"></span>${r.v.name}</span></td>
+      <td>${(r.uni.tags || []).map(t => `<span class="badge" style="font-size:10px;padding:2px 6px;margin:1px">${t}</span>`).join('')}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
+function renderTopTable(gpa, essay) {
+  const tbody = document.querySelector("#tblTop tbody");
+  tbody.innerHTML = "";
+  
+  const results = DB.map(uni => {
+    const { total, cut } = calcScore(uni, gpa, essay);
+    const margin = cut ? total - cut : -999;
+    return { uni, total, cut, margin, v: getVerdict(total, cut) };
+  })
+  .filter(r => r.margin > -999)
+  .sort((a, b) => b.margin - a.margin)
+  .slice(0, 10);
+  
+  let rank = 0;
+  for (const r of results) {
+    rank++;
+    const tr = document.createElement("tr");
+    const marginClass = r.margin >= 0 ? "style='color:var(--good)'" : "style='color:var(--bad)'";
+    const marginSign = r.margin >= 0 ? "+" : "";
+    
+    tr.innerHTML = `
+      <td>${rank}</td>
+      <td><b>${r.uni.u}</b></td>
+      <td class="num"><b>${r.total}</b></td>
+      <td class="num">${r.cut}</td>
+      <td class="num" ${marginClass}>${marginSign}${r.margin.toFixed(1)}</td>
+      <td><span class="status ${r.v.name}"><span class="pdot" style="background:${r.v.color}"></span>${r.v.name}</span></td>
+      <td>${r.uni.memo || ""}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
+function renderChart(gpa, essay) {
+  const container = $("svgChart");
+  
+  const results = DB.map(uni => {
+    const { total, cut } = calcScore(uni, gpa, essay);
+    return { name: uni.u, total, cut };
+  })
+  .filter(r => r.cut > 0)
+  .sort((a, b) => b.total - a.total)
+  .slice(0, 12);
+  
+  const rowH = 32;
+  const leftW = 120;
+  const barW = 350;
+  const h = results.length * rowH + 30;
+  const w = leftW + barW + 80;
+  
+  const maxVal = Math.max(...results.map(r => Math.max(r.total, r.cut)), 100);
+  
+  let svg = `<svg class="svgChart" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
+  svg += `<rect x="0" y="0" width="${w}" height="${h}" rx="12" fill="rgba(0,0,0,0.15)"/>`;
+  
+  for (let i = 0; i < results.length; i++) {
+    const r = results[i];
+    const y = 20 + i * rowH;
+    
+    const totalW = (r.total / maxVal) * barW;
+    const cutW = (r.cut / maxVal) * barW;
+    
+    svg += `<text x="10" y="${y + 14}" font-size="12" fill="rgba(234,240,255,0.9)">${r.name}</text>`;
+    svg += `<rect x="${leftW}" y="${y + 2}" width="${cutW}" height="10" rx="3" fill="rgba(245,158,11,0.5)"/>`;
+    svg += `<rect x="${leftW}" y="${y + 14}" width="${totalW}" height="10" rx="3" fill="rgba(16,185,129,0.8)"/>`;
+    svg += `<text x="${leftW + Math.max(totalW, cutW) + 6}" y="${y + 14}" font-size="10" fill="rgba(234,240,255,0.7)">${r.total} / ${r.cut}</text>`;
+  }
+  
+  svg += `</svg>`;
+  container.innerHTML = svg;
+}
+
+// ============================================
+// DB 편집 모달
+// ============================================
+function openModal() {
+  renderEditTable();
+  $("editModal").classList.add("show");
+}
+
+function closeModal() {
+  $("editModal").classList.remove("show");
+}
+
+function renderEditTable() {
+  const tbody = document.querySelector("#tblEdit tbody");
+  tbody.innerHTML = "";
+  
+  for (let i = 0; i < DB.length; i++) {
+    const uni = DB[i];
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><input type="text" value="${uni.u}" data-idx="${i}" data-field="u" style="width:100px"/></td>
+      <td><input type="number" value="${uni.essayW}" data-idx="${i}" data-field="essayW" style="width:60px"/></td>
+      <td><input type="number" value="${uni.gpaW}" data-idx="${i}" data-field="gpaW" style="width:60px"/></td>
+      <td><input type="number" value="${uni.cut || 0}" data-idx="${i}" data-field="cut" style="width:60px"/></td>
+      <td><input type="text" value="${uni.gpaTable || ''}" data-idx="${i}" data-field="gpaTable" style="width:80px"/></td>
+      <td><input type="text" value="${(uni.tags || []).join(',')}" data-idx="${i}" data-field="tags" style="width:100px"/></td>
+      <td><input type="text" value="${uni.memo || ''}" data-idx="${i}" data-field="memo" style="width:150px"/></td>
+    `;
+    tbody.appendChild(tr);
+  }
+  
+  tbody.querySelectorAll("input").forEach(inp => {
+    inp.addEventListener("change", e => {
+      const idx = parseInt(e.target.dataset.idx);
+      const field = e.target.dataset.field;
+      let val = e.target.value;
+      
+      if (field === "essayW" || field === "gpaW" || field === "cut") {
+        val = parseFloat(val) || 0;
+      } else if (field === "tags") {
+        val = val.split(",").map(s => s.trim()).filter(s => s);
+      }
+      
+      DB[idx][field] = val;
+    });
+  });
+}
+
+function addUni() {
+  DB.push({ u: "새 대학", essayW: 100, gpaW: 0, cut: 70, gpaTable: "등급별", tags: [], memo: "" });
+  renderEditTable();
+}
+
+function saveAndClose() {
+  saveDB();
+  buildUniOptions();
+  calculate();
+  closeModal();
+}
+
+// ============================================
+// 이벤트 바인딩
+// ============================================
+document.addEventListener("DOMContentLoaded", () => {
+  loadDB();
+  buildUniOptions();
+  renderDataTable();
+  calculate();
+  
+  $("inFilter").addEventListener("change", () => { buildUniOptions(); calculate(); });
+  $("inUni").addEventListener("change", calculate);
+  $("inGpa").addEventListener("input", calculate);
+  $("inEssay").addEventListener("input", calculate);
+  
+  $("btnCalc").addEventListener("click", calculate);
+  $("btnRanking").addEventListener("click", () => {
+    $("topCard").scrollIntoView({ behavior: "smooth" });
+  });
+  $("btnEdit").addEventListener("click", openModal);
+  
+  $("btnClose").addEventListener("click", closeModal);
+  $("btnSave").addEventListener("click", saveAndClose);
+  $("btnAddUni").addEventListener("click", addUni);
+  $("btnReset").addEventListener("click", resetDB);
+  
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+# 시대학원 robots.txt
+# https://시대학원.com/
+
+# 모든 검색엔진 크롤링 허용
+User-agent: *
+Allow: /
+
+# 사이트맵 위치
+Sitemap: https://시대학원.com/sitemap.xml
+
+# 네이버 검색봇 허용
+User-agent: Yeti
+Allow: /
+
+# 구글 검색봇 허용
+User-agent: Googlebot
+Allow: /
+
+# 다음 검색봇 허용
+User-agent: Daumoa
+Allow: /

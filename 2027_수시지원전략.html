@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2027 수시지원전략 핵심체크 총정리 | 시대학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Do+Hyeon&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bk:#0a0a0a;--dk:#111;--dk2:#1a1a1a;--dk3:#222;--dk4:#2a2a2a;
+  --red:#dc2626;--cherry:#b91c1c;--dcherry:#991b1b;--fire:#ef4444;
+  --gold:#f59e0b;--lgold:#fcd34d;--dgold:#d97706;
+  --white:#fff;--off:#f5f5f5;--gray:#9ca3af;--lgray:#d1d5db;--dgray:#6b7280;
+  --blue:#3b82f6;--teal:#14b8a6;--purple:#6c5ce7;--cyan:#06b6d4;
+  --green:#10b981;--pink:#ec4899;--orange:#f97316;
+  --font-display:'Do Hyeon',sans-serif;
+  --font-body:'Noto Sans KR',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bk);color:var(--white);font-family:var(--font-body);overflow-x:hidden;line-height:1.6}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+::selection{background:var(--gold);color:var(--bk)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bk)}::-webkit-scrollbar-thumb{background:var(--dgray);border-radius:3px}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.8rem 2rem;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);background:rgba(10,10,10,0.85);border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.3s}
+.nav.scrolled{padding:0.5rem 2rem;box-shadow:0 4px 30px rgba(0,0,0,0.5)}
+.nav-brand{font-family:var(--font-display);font-size:1.5rem;color:var(--gold);text-decoration:none;letter-spacing:1px}
+.nav-brand span{color:var(--white);font-size:0.9rem;margin-left:0.5rem;font-family:var(--font-body);font-weight:300}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.3s;position:relative}
+.nav-links a:hover{color:var(--white)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width 0.3s}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem;border-radius:4px;font-weight:700!important;font-size:0.85rem!important}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{background:var(--fire)!important}
+.nav-back{color:var(--lgold)!important;font-weight:700!important}
+.nav-back::after{background:var(--lgold)!important}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(245,158,11,0.1) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent,var(--bk));pointer-events:none;z-index:2}
+.hero-inner{max-width:1200px;margin:0 auto;padding:8rem 2rem 4rem;position:relative;z-index:3}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);padding:0.4rem 1rem;border-radius:50px;font-size:0.8rem;color:var(--lgold);margin-bottom:2rem;animation:fadeInUp 0.8s ease}
+.hero-badge .dot{width:8px;height:8px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.5rem,7vw,4.5rem);line-height:1.45;margin-bottom:1.5rem;animation:fadeInUp .8s ease .1s both;letter-spacing:4px}
+.hero h1 .accent{color:var(--fire)}
+.hero h1 .gold{color:var(--lgold)}
+.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--lgray);max-width:600px;margin-bottom:2.5rem;animation:fadeInUp .8s ease .2s both;line-height:1.8}
+.hero-stats{display:flex;gap:2rem;margin-bottom:3rem;animation:fadeInUp .8s ease .3s both;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-family:var(--font-display);font-size:2.5rem;color:var(--gold);display:block}
+.hero-stat .label{font-size:0.8rem;color:var(--dgray);margin-top:0.2rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.9rem 2rem;border-radius:4px;font-size:0.95rem;font-weight:700;text-decoration:none;transition:all 0.3s;border:none;cursor:pointer;font-family:var(--font-body)}
+.btn-primary{background:var(--dgold);color:var(--white);box-shadow:0 4px 20px rgba(245,158,11,0.3)}
+.btn-primary:hover{background:var(--gold);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Section */
+section{padding:5rem 2rem}
+.container{max-width:1200px;margin:0 auto}
+.section-tag{display:inline-block;background:rgba(245,158,11,0.15);color:var(--lgold);padding:0.3rem 1rem;border-radius:3px;font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem}
+.section-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,3rem);margin-bottom:0.5rem}
+.section-title .hl{color:var(--lgold)}
+.section-sub{color:var(--gray);font-size:1rem;max-width:700px;margin-bottom:3rem}
+
+/* Divider */
+.divider{height:1px;max-width:1200px;margin:0 auto;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent)}
+
+/* Cards */
+.card{background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:1.5rem 2rem;border-left:4px solid var(--gold);transition:all 0.4s}
+.card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.1);background:var(--dk3)}
+.card h3{font-size:1.05rem;font-weight:700;margin-bottom:0.4rem}
+.card p{font-size:0.88rem;color:var(--gray);line-height:1.7}
+.card.red{border-left-color:var(--red)}.card.blue{border-left-color:var(--blue)}
+.card.green{border-left-color:var(--green)}.card.purple{border-left-color:var(--purple)}
+.card.pink{border-left-color:var(--pink)}.card.orange{border-left-color:var(--orange)}
+.card.cyan{border-left-color:var(--cyan)}.card.fire{border-left-color:var(--fire)}
+
+/* Grids */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+
+/* Q badge */
+.qtag{display:inline-block;padding:0.2rem 0.7rem;border-radius:3px;font-family:var(--font-display);font-size:0.85rem;margin-bottom:0.5rem}
+.qtag.gold{background:rgba(245,158,11,0.2);color:var(--lgold)}
+.qtag.red{background:rgba(220,38,38,0.15);color:var(--fire)}
+.qtag.green{background:rgba(16,185,129,0.15);color:#6ee7b7}
+.qtag.blue{background:rgba(59,130,246,0.15);color:#93c5fd}
+.qtag.purple{background:rgba(108,92,231,0.15);color:#a29bfe}
+.qtag.orange{background:rgba(249,115,22,0.15);color:#fdba74}
+.qtag.cyan{background:rgba(6,182,212,0.15);color:#67e8f9}
+.qtag.pink{background:rgba(236,72,153,0.15);color:#f9a8d4}
+
+/* 11 Questions Grid */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem}
+.q-item{display:flex;align-items:flex-start;gap:1rem;background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:1rem 1.2rem;border-left:4px solid var(--gold);transition:all 0.3s}
+.q-item:hover{background:var(--dk3);border-left-color:var(--fire)}
+.q-num{font-family:var(--font-display);font-size:0.8rem;padding:0.2rem 0.6rem;border-radius:3px;flex-shrink:0}
+.q-item h4{font-size:0.9rem;font-weight:700;margin-bottom:0.15rem}
+.q-item p{font-size:0.78rem;color:var(--dgray)}
+
+/* VS Panel */
+.vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.vs-panel{padding:1.5rem 2rem;border-top:4px solid}
+.vs-panel.problem{background:linear-gradient(135deg,#1a0a0a,var(--dk2));border-color:var(--red)}
+.vs-panel.solution{background:linear-gradient(135deg,#0a1a0f,var(--dk2));border-color:var(--green)}
+.vs-panel h3{font-size:1rem;font-weight:700;margin-bottom:1rem}
+.vs-panel.problem h3{color:var(--fire)}
+.vs-panel.solution h3{color:#6ee7b7}
+.vs-item{padding:0.6rem 1rem;margin-bottom:0.5rem;font-size:0.85rem;color:var(--lgray);border-left:3px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);line-height:1.5}
+.vs-panel.problem .vs-item{border-color:rgba(239,68,68,0.3)}
+.vs-panel.solution .vs-item{border-color:rgba(16,185,129,0.3)}
+
+/* Chart */
+.chart-box{background:var(--dk2);border:1px solid rgba(255,255,255,0.05);padding:1.5rem 2rem;margin-bottom:1.5rem}
+.chart-box h3{font-size:1rem;font-weight:700;margin-bottom:0.2rem}
+.chart-box .chart-desc{font-size:0.78rem;color:var(--dgray);margin-bottom:1rem}
+.chart-wrap{position:relative;max-height:300px}
+
+/* Data table */
+.data-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:0.8rem}
+.data-table th{background:var(--dk3);color:var(--lgold);padding:0.6rem 0.8rem;text-align:left;font-weight:700;border-bottom:2px solid var(--dgold)}
+.data-table td{padding:0.6rem 0.8rem;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--lgray)}
+.data-table tr:hover td{background:rgba(245,158,11,0.03)}
+.data-table .hl{color:var(--lgold);font-weight:700}
+
+/* Timeline */
+.timeline{display:flex;gap:0;position:relative;margin-top:2rem}
+.timeline::before{content:'';position:absolute;top:26px;left:0;right:0;height:3px;background:var(--dk3)}
+.step{flex:1;text-align:center;position:relative;padding:0 6px}
+.step-num{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.3rem;margin:0 auto 0.8rem;position:relative;z-index:1;border:2px solid rgba(255,255,255,0.1)}
+.step h4{font-size:0.75rem;color:var(--white);margin-bottom:0.2rem;font-weight:700;line-height:1.3}
+.step p{font-size:0.68rem;color:var(--dgray);line-height:1.3}
+
+/* Alloc bar */
+.alloc-bar{display:flex;height:50px;margin:1.5rem 0;overflow:hidden;border-radius:4px}
+.alloc-seg{display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:0.9rem;transition:flex .5s}
+.alloc-legend{display:flex;gap:1.2rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.alloc-legend-item{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--lgray)}
+.alloc-legend-item .dot{width:10px;height:10px;border-radius:2px}
+
+/* Alert bar */
+.alert-bar{background:linear-gradient(90deg,var(--dcherry),var(--cherry));padding:1.2rem 2rem;text-align:center;font-family:var(--font-display);font-size:clamp(0.9rem,2vw,1.2rem);color:var(--white)}
+.alert-bar span{color:var(--lgold)}
+
+/* CTA */
+.cta-section{background:var(--cherry);position:relative;overflow:hidden;text-align:center;padding:5rem 2rem}
+.cta-section::before{content:'';position:absolute;top:-50%;right:-30%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(0,0,0,0.3),transparent 70%);pointer-events:none}
+.cta-section h2{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);margin-bottom:0.5rem;position:relative;z-index:2}
+.cta-section .sub{font-size:1.1rem;color:var(--lgold);margin-bottom:2rem;position:relative;z-index:2}
+.cta-phone{font-family:var(--font-display);font-size:clamp(1.5rem,4vw,2.5rem);margin-bottom:0.5rem;position:relative;z-index:2}
+.cta-info{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;position:relative;z-index:2;flex-wrap:wrap;font-size:0.95rem}
+
+/* Footer */
+footer{background:var(--dk);padding:2rem;text-align:center;font-size:0.8rem;color:var(--dgray);border-top:1px solid rgba(255,255,255,0.05)}
+footer a{color:var(--gray);text-decoration:none;transition:color .3s}
+footer a:hover{color:var(--lgold)}
+
+/* Flow pills */
+.flow-row{display:flex;align-items:center;justify-content:center;gap:0;margin:1rem 0;flex-wrap:wrap}
+.flow-pill{padding:0.5rem 1.2rem;border-radius:20px;font-weight:700;font-size:0.8rem}
+.flow-arrow{font-size:1.2rem;color:var(--dgray);padding:0 0.3rem}
+
+/* Key message box */
+.key-msg{background:var(--dk2);border-top:4px solid var(--gold);padding:1.5rem 2rem;text-align:center;margin-top:1.5rem}
+.key-msg h3{font-family:var(--font-display);font-size:1.3rem;color:var(--lgold);margin-bottom:0.3rem}
+.key-msg p{font-size:0.88rem;color:var(--gray)}
+
+/* Scroll animation */
+.reveal{opacity:0;transform:translateY(40px);transition:all 0.8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Responsive */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .grid-2,.grid-3,.grid-4,.q-grid,.vs-grid{grid-template-columns:1fr}
+  .hero-stats{gap:1rem}.hero-stat .num{font-size:1.8rem}
+  .timeline{flex-wrap:wrap;gap:0.8rem}.timeline::before{display:none}.step{flex:none;width:calc(50% - 0.4rem)}
+  .alloc-bar{flex-direction:column;height:auto}.alloc-seg{height:40px}
+  .cta-info{flex-direction:column;align-items:center;gap:0.5rem}
+}
+
+/* 모바일 플로팅 전화 버튼 */
+.float-phone{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;gap:8px}
+.float-btn{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,0.4);transition:transform .3s,box-shadow .3s;border:none;cursor:pointer}
+.float-btn:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(0,0,0,0.5)}
+.float-btn.phone{background:var(--green);color:var(--white)}
+.float-btn.form{background:var(--dgold);color:var(--white);font-size:1.2rem}
+.float-btn .float-label{position:absolute;right:64px;background:var(--dk2);color:var(--lgray);padding:4px 10px;border-radius:4px;font-size:0.72rem;font-weight:600;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+.float-btn:hover .float-label{opacity:1}
+@media(min-width:769px){.float-phone{bottom:30px;right:30px}}
+
+/* 전화번호 링크 스타일 */
+a.tel-link{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,0.2);transition:all .3s}
+a.tel-link:hover{color:var(--lgold);border-color:var(--lgold)}
+
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-brand">시대학원 <span>수시지원전략</span></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-back">← 메인으로</a>
+    <a href="#questions">11가지 질문</a>
+    <a href="#q1">입결 기준</a>
+    <a href="#q2">전형요소</a>
+    <a href="#q3">입결 회귀</a>
+    <a href="#q10">합불 역설</a>
+    <a href="#steps7">7단계 분석</a>
+    <a href="#alloc6">6장 배분</a>
+    <a href="tel:031-978-1117" style="color:#6ee7b7!important">📞 전화</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSduBRbDNO-sJi3betXEVz-42BZLa1OEhjBamJPCRB0m9LKUow/viewform?usp=sharing&ouid=117232600250974259705" target="_blank" class="nav-cta">상담신청</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span> 2027학년도 수시 핵심 전략</div>
+    <h1>수시지원전략<br><span class="gold">핵심체크 총정리</span></h1>
+    <p class="hero-sub">"수시는 감으로 쓰는 게 아닙니다. 이제는 전략이 답입니다."<br>— 김휘창 | 맥에듀테크 · 시대학원 AI입시연구소</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">11</span><span class="label">핵심 질문</span></div>
+      <div class="hero-stat"><span class="num">7</span><span class="label">단계 분석</span></div>
+      <div class="hero-stat"><span class="num">6</span><span class="label">장 배분</span></div>
+      <div class="hero-stat"><span class="num">30년</span><span class="label">입시 경험</span></div>
+    </div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;animation:fadeInUp .8s ease .4s both">
+      <a href="#questions" class="btn btn-primary">📋 11가지 핵심 질문 보기</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPnKem3XLwcT34Sk77bbyvZ3BUtX7ZrDizaAR3RbpJte3iOg/viewform" target="_blank" class="btn btn-outline">📋 설명회 예약 →</a>
+      <a href="tel:031-978-1117" class="btn btn-outline" style="border-color:rgba(16,185,129,0.4);color:#6ee7b7">📞 전화상담하기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 전략이 필요합니다 ============ -->
+<section style="padding:5rem 2rem;background:linear-gradient(180deg,var(--bk),#0d0d0d)" id="intro">
+  <div class="container reveal">
+    <div class="section-tag">SECTION 01</div>
+    <h2 class="section-title">수시, 진짜 <span class="hl">전략</span>이 필요합니다</h2>
+    <p class="section-sub">수시에서 성공하는 사람은 '제대로 된 정보'로 무장한 사람입니다.</p>
+
+    <div class="vs-grid">
+      <div class="vs-panel problem">
+        <h3>❌ 현실: 대부분의 수험생이 겪는 문제</h3>
+        <div class="vs-item">'감'으로 수시 6장을 작성 → 전략적 근거 없음</div>
+        <div class="vs-item">'누가 붙었더라' 식 비과학적 정보 의존</div>
+        <div class="vs-item">단순 등급 비교 → 대학별 환산점수 차이 무시</div>
+        <div class="vs-item">입시결과를 그대로 믿음 → 최초합/최종합 기준 차이 무시</div>
+      </div>
+      <div class="vs-panel solution">
+        <h3>✅ 해답: 11가지 질문으로 본질을 파헤치다</h3>
+        <div class="vs-item">발표된 입시결과의 진짜 기준을 파악</div>
+        <div class="vs-item">전형요소 변화에 따른 입결 변동 예측</div>
+        <div class="vs-item">3개년 입결 데이터의 회귀 패턴 분석</div>
+        <div class="vs-item">고교유형별 실질 합격선 구간 파악</div>
+      </div>
+    </div>
+
+    <div class="key-msg">
+      <h3>입시는 '정보력'이 아니라 '해석력'이 성패를 가릅니다</h3>
+      <p>정보는 누구나 갖는다. 해석과 시뮬레이션이 합격을 결정한다.</p>
+      <div class="flow-row">
+        <span class="flow-pill" style="background:var(--cyan);color:var(--bk)">정보</span><span class="flow-arrow">→</span>
+        <span class="flow-pill" style="background:var(--gold);color:var(--bk)">분석</span><span class="flow-arrow">→</span>
+        <span class="flow-pill" style="background:var(--fire);color:var(--white)">전략</span><span class="flow-arrow">→</span>
+        <span class="flow-pill" style="background:var(--green);color:var(--bk)">합격</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ 11가지 핵심 질문 ============ -->
+<section style="padding:5rem 2rem;background:var(--dk)" id="questions">
+  <div class="container reveal">
+    <div class="section-tag">SECTION 02</div>
+    <h2 class="section-title">수시지원전략 <span class="hl">11가지</span> 핵심 질문</h2>
+    <p class="section-sub">웬만한 입시컨설턴트도 제대로 알지 못하는 핵심 분석 프레임워크</p>
+
+    <div class="q-grid">
+      <div class="q-item"><div class="q-num qtag cyan">Q1</div><div><h4>발표된 입시결과는 어떤 기준인가?</h4><p>환산점수·최초합·최종합 기준 해석</p></div></div>
+      <div class="q-item"><div class="q-num qtag pink">Q2</div><div><h4>전형요소 변화 시 입결은 어떻게?</h4><p>수능최저·교과산정·추천인원 변화</p></div></div>
+      <div class="q-item"><div class="q-num qtag green">Q3</div><div><h4>3개년 입결의 회귀 패턴은?</h4><p>낮았던/높았던 학과의 반등·하락 예측</p></div></div>
+      <div class="q-item"><div class="q-num qtag gold">Q4</div><div><h4>자유전공 입결은 올해 어떻게?</h4><p>모집인원 변화와 포지셔닝</p></div></div>
+      <div class="q-item"><div class="q-num qtag purple">Q5</div><div><h4>사탐런이 수능최저 충족에 미치는 영향?</h4><p>충족률 변화 → 컷라인 이동</p></div></div>
+      <div class="q-item"><div class="q-num qtag orange">Q6</div><div><h4>신설학과 입결은 어떻게 예측?</h4><p>유사학과 기반 사분위수 분석</p></div></div>
+      <div class="q-item"><div class="q-num qtag cyan">Q7</div><div><h4>고3 인원 10% 증가의 영향?</h4><p>전형별 상승폭 추정</p></div></div>
+      <div class="q-item"><div class="q-num qtag pink">Q8</div><div><h4>검정고시 환산점수 변경의 영향?</h4><p>경쟁력 구조 변화</p></div></div>
+      <div class="q-item"><div class="q-num qtag green">Q9</div><div><h4>일반고 vs 자사고·특목고 실질 입결?</h4><p>고교유형별 합격선 격차</p></div></div>
+      <div class="q-item"><div class="q-num qtag gold">Q10</div><div><h4>성적 높은 학생이 왜 떨어지나?</h4><p>합불 역설 분석</p></div></div>
+      <div class="q-item" style="grid-column:1/-1"><div class="q-num qtag purple">Q11</div><div><h4>3개년 입결이 일정하지 않은 이유?</h4><p>6가지 구조적 변수 — 경쟁률, 수능최저, 교과산정, 추천인원, 평가요소, 고교프로파일</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ Q1: 입시결과 기준 ============ -->
+<section style="padding:5rem 2rem" id="q1">
+  <div class="container reveal">
+    <div class="section-tag">Q1 DEEP DIVE</div>
+    <h2 class="section-title">발표된 입시결과는 <span class="hl">어떤 기준</span>인가?</h2>
+    <p class="section-sub">대학별 입시결과 해석 시 반드시 고려해야 할 5가지 핵심 기준</p>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div class="card cyan"><div class="qtag cyan">1</div><h3>교과전형: 단순 등급이 아닌 환산점수</h3><p>반영과목 수, 진로선택 처리방식, 가중치 구조가 대학마다 달라 — 대학별 환산점수 기준으로 재계산 필수</p></div>
+      <div class="card"><div class="qtag gold">2</div><h3>종합전형: 내신만 보고 상향지원은 위험</h3><p>서류+면접+수능최저 등 복합 변수 작용. 내신 1.6이 서류·면접 약하면 내신 2.2에게 역전당하는 구조</p></div>
+      <div class="card pink"><div class="qtag pink">3</div><h3>어디가 등 입결자료: 기준 통일 안 됨</h3><p>대교협, 어디가, 개별 대학의 입결 기준이 모두 다름 (최초합/최종합, 70%컷/80%컷) → 단순 비교 무의미</p></div>
+      <div class="card green"><div class="qtag green">4</div><h3>교과전형 내 세분화 필수</h3><p>교과100%, 수능최저 유무, 서류 병행 여부에 따라 같은 '교과전형'이라도 전략이 완전히 달라짐</p></div>
+      <div class="card purple"><div class="qtag purple">5</div><h3>실질 비교법: 환산점수 직접 계산</h3><p>① 대학별 교과 환산표 확보 → ② 자기 성적 환산 계산 → ③ 종합전형은 정량+정성 평가 동시 고려</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ Q2: 전형요소 변화 + 차트 ============ -->
+<section style="padding:5rem 2rem;background:var(--dk)" id="q2">
+  <div class="container reveal">
+    <div class="section-tag">Q2 DEEP DIVE</div>
+    <h2 class="section-title">전형요소 변화에 따른 <span class="hl">입결 변동</span></h2>
+    <p class="section-sub">수능최저·교과산정·추천인원 변화가 입시결과에 미치는 영향</p>
+
+    <div class="chart-box">
+      <h3>📊 수능최저 변화 시나리오별 입결 영향</h3>
+      <div class="chart-desc">완화·신설·폐지에 따른 충족률 및 커트라인 변동 예측</div>
+      <div class="chart-wrap"><canvas id="chartMinCh" height="260"></canvas></div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card green"><div class="qtag green">완화</div><h3>2합5→2합6</h3><p>충족 인원 증가 → 상위권 진입↑<br>충족률 40%→60% 시 <strong style="color:var(--lgold)">컷 급등</strong></p></div>
+      <div class="card"><div class="qtag gold">신설</div><h3>없음→2합5</h3><p>충족률 60~70% 학과는 상위권 쏠림 가능<br>예측: <strong style="color:var(--lgold)">하락↓ or 상승↑</strong></p></div>
+      <div class="card fire"><div class="qtag red">폐지</div><h3>2합5→없음</h3><p>내신 우수 일반고 대거 유입<br>경쟁률↑, 학종-교과 <strong style="color:var(--lgold)">경계 붕괴</strong></p></div>
+    </div>
+
+    <div class="chart-box" style="margin-top:1.5rem">
+      <h3>📊 진로선택과목 반영방식 변경 영향</h3>
+      <div class="chart-desc">3과목→전과목 반영 시 합격자 평균 등급 변화 예측</div>
+      <div class="chart-wrap"><canvas id="chartSubject" height="260"></canvas></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:1.5rem">
+      <div class="card blue"><h3>B. 교과 산정 변경</h3><p>진로선택과목 3과목→전과목 반영 전환<br>과거 합격자 1.3 → 전과목 시 약 1.6<br><strong style="color:var(--lgold)">올해 0.3등급 상승 예측</strong></p></div>
+      <div class="card purple"><h3>C. 추천인원 10→20명</h3><p>중상위권 학생 대거 진입 → 실질 컷 상승<br><strong style="color:var(--lgold)">핵심: 지원가능군의 질적 변화로 해석</strong></p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ Q3: 3개년 입결 + 차트 ============ -->
+<section style="padding:5rem 2rem" id="q3">
+  <div class="container reveal">
+    <div class="section-tag">Q3 DEEP DIVE</div>
+    <h2 class="section-title">3개년 입결 추이로 <span class="hl">올해를 예측</span></h2>
+    <p class="section-sub">입결의 '일정하지 않음'은 '변수의 누적 결과'</p>
+
+    <div class="chart-box">
+      <h3>📊 3개년 입결 회귀 패턴 시뮬레이션</h3>
+      <div class="chart-desc">전년도 낮았던 학과(반등)와 높았던 학과(하락)의 등급 변동 예측</div>
+      <div class="chart-wrap"><canvas id="chartRegress" height="270"></canvas></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card green"><h3>패턴① 반등 가능성</h3><p><strong style="color:var(--lgold)">원인:</strong> 신설학과 초기, 인지도 부족<br><strong style="color:var(--lgold)">예시:</strong> 70%컷 3.2 → 올해 2.8~2.9 반등</p></div>
+      <div class="card fire"><h3>패턴② 하락 가능성</h3><p><strong style="color:var(--lgold)">원인:</strong> 일시적 쏠림 현상<br><strong style="color:var(--lgold)">핵심:</strong> 정원·최저 변경 없으면 <strong style="color:#67e8f9">회귀 가능성 80%+</strong></p></div>
+    </div>
+
+    <!-- 6대 요소 -->
+    <div style="background:var(--dgold);padding:0.8rem 1.5rem;margin-top:1.5rem;text-align:center;font-family:var(--font-display);font-size:1.1rem;color:var(--bk)">입결 예측 6대 핵심 요소</div>
+    <div class="grid-3" style="margin-top:0">
+      <div class="card cyan" style="border-top:3px solid var(--cyan);border-left:none"><h3 style="color:#67e8f9">입결 변동 해석</h3><p>합불사례 분포, 등급 3칸 위 전략의 근거와 한계</p></div>
+      <div class="card fire" style="border-top:3px solid var(--fire);border-left:none"><h3 style="color:var(--fire)">수능최저 변화</h3><p>충족률과 연동해야 정확한 예측 가능</p></div>
+      <div class="card green" style="border-top:3px solid var(--green);border-left:none"><h3 style="color:#6ee7b7">교과 산정 변경</h3><p>진로선택 확대 → 등급 현실화</p></div>
+      <div class="card" style="border-top:3px solid var(--gold);border-left:none"><h3 style="color:var(--lgold)">추천인원 변화</h3><p>단순 증가 ≠ 경쟁 완화</p></div>
+      <div class="card purple" style="border-top:3px solid var(--purple);border-left:none"><h3 style="color:#a29bfe">3개년 회귀 패턴</h3><p>기저 수준으로 평균값 회귀</p></div>
+      <div class="card orange" style="border-top:3px solid var(--orange);border-left:none"><h3 style="color:#fdba74">합불 분포 분석</h3><p>실제 합격자 군 누적 분포</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ Q4~Q7 + 차트 ============ -->
+<section style="padding:5rem 2rem;background:var(--dk)" id="q4-7">
+  <div class="container reveal">
+    <div class="section-tag">Q4~Q7</div>
+    <h2 class="section-title">자유전공·사탐런·신설학과·<span class="hl">인원증가</span></h2>
+    <p class="section-sub">2027학년도 입시에 직접적 영향을 미치는 4대 핵심 변수</p>
+
+    <div class="chart-box">
+      <h3>📊 고3 인원 증가에 따른 전형별 입결 상승폭</h3>
+      <div class="chart-desc">수험생 41만→45만 증가 시 전형별 등급 상승 예측치</div>
+      <div class="chart-wrap"><canvas id="chartImpact" height="250"></canvas></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card cyan"><div class="qtag cyan">Q4</div><h3>자유전공 입시결과 전망</h3><p>모집인원 감소 시 입결 상승 유력 (20% 감소 시 70%컷 2.8→2.4~2.5)</p></div>
+      <div class="card pink"><div class="qtag pink">Q5</div><h3>사탐런의 수능최저 충족 영향</h3><p>자연계 사탐 선택 → 최저 충족 증가 → 교과+최저 전형 컷 상승</p></div>
+      <div class="card green"><div class="qtag green">Q6</div><h3>신설학과 입결 예측법</h3><p>유사학과 3개년 입결 기반 사분위수 분석. AI·바이오·반도체 등 예외</p></div>
+      <div class="card"><div class="qtag gold">Q7</div><h3>고3 인원 ~10% 증가</h3><p>교과 0.1~0.3↑ | 종합 0.1~0.2↑ | 상위권 선호+안전지원 심리 확산</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ Q8~Q9 ============ -->
+<section style="padding:5rem 2rem" id="q8-9">
+  <div class="container reveal">
+    <div class="section-tag">Q8~Q9</div>
+    <h2 class="section-title">검정고시·고교유형별 <span class="hl">실질 입결</span></h2>
+    <p class="section-sub">제도적 허용 ≠ 실질 가능성 — 숨겨진 구조를 읽어야 합니다</p>
+
+    <div class="chart-box">
+      <h3>📊 고교유형별 전형별 실질 합격 내신</h3>
+      <div class="chart-desc">일반고 vs 자사고·특목고 종합전형 합격 내신 비교</div>
+      <div class="chart-wrap"><canvas id="chartSchool" height="240"></canvas></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card fire"><div class="qtag red">Q8</div><h3>검정고시 환산점수 변경</h3><p>대부분 교과전형 지원 불가. 환산 상향 시 종합전형 경쟁 가능, 하향 시 서류 좋아도 불리.<br><strong style="color:#67e8f9">현실적 전략: 논술, 면접형, 정시 중심</strong></p></div>
+      <div class="card green">
+        <div class="qtag green">Q9</div><h3>일반고 vs 자사고·특목고</h3>
+        <table class="data-table">
+          <tr><th>전형</th><th>일반고</th><th>자사고·특목고</th></tr>
+          <tr><td>교과</td><td>사실상 일반고 전용</td><td>지원 자체 적음</td></tr>
+          <tr><td>종합</td><td>서울 1.5~2.5</td><td class="hl">0.5~1.0등급 낮아도 합격</td></tr>
+          <tr><td>논술</td><td colspan="2">고교유형 영향 적음. 수능최저가 핵심</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ Q10: 합불 역설 + 차트 ============ -->
+<section style="padding:5rem 2rem;background:var(--dk)" id="q10">
+  <div class="container reveal">
+    <div class="section-tag">Q10 DEEP DIVE</div>
+    <h2 class="section-title">종합전형 <span class="hl">합불의 역설</span></h2>
+    <p class="section-sub">성적 우수자는 왜 불합격? 성적 중하위는 어떻게 합격?</p>
+
+    <div class="chart-box">
+      <h3>📊 종합전형 합불 결정 요인 비중</h3>
+      <div class="chart-desc">성적 외 요소가 합불을 좌우하는 비중 (전문가 평가 기반)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem"><div class="chart-wrap"><canvas id="chartFail"></canvas></div><div class="chart-wrap"><canvas id="chartPass"></canvas></div></div>
+    </div>
+
+    <div class="vs-grid">
+      <div class="vs-panel problem">
+        <h3>❌ 성적 높았는데 떨어진 6가지 원인</h3>
+        <div class="vs-item"><strong>1.</strong> 전공적합성 부족 — 세특이 전공과 무관</div>
+        <div class="vs-item"><strong>2.</strong> 교과목 선택 불일치 — 이과생 문과 과목 미이수</div>
+        <div class="vs-item"><strong>3.</strong> 서류 깊이 부족 — 활동은 많으나 표면적</div>
+        <div class="vs-item"><strong>4.</strong> 등록 가능성 낮음 판단</div>
+        <div class="vs-item"><strong>5.</strong> 특정 교과 편중 — 국영수만 우수</div>
+        <div class="vs-item"><strong>6.</strong> 고교유형 차이 — 자사고/특목고에 역전</div>
+      </div>
+      <div class="vs-panel solution">
+        <h3>✅ 성적 낮은데 합격한 5가지 요인</h3>
+        <div class="vs-item"><strong>1.</strong> 전공적합성 깊이·지속성</div>
+        <div class="vs-item"><strong>2.</strong> 학교 수준 대비 상대적 성취</div>
+        <div class="vs-item"><strong>3.</strong> 탐구·활동 스토리 연결 — 하나의 서사</div>
+        <div class="vs-item"><strong>4.</strong> 독창적 차별화 경험</div>
+        <div class="vs-item"><strong>5.</strong> 주도적 기획·실행</div>
+      </div>
+    </div>
+
+    <div class="key-msg" style="border-color:var(--fire)">
+      <h3 style="color:var(--fire)">핵심 결론: 성적보다 중요한 것은 서류의 전략성</h3>
+      <p>학종은 "성적이 높다"보다 "이 성적이 왜 의미 있는가"를 평가합니다.</p>
+    </div>
+  </div>
+</section>
+
+<div class="alert-bar">⏰ 8월말이 지나면 전략 보완 사실상 불가능 → <span>6~7월이 유일한 골든타임</span></div>
+
+<div class="divider"></div>
+
+<!-- ============ Q11: 6가지 원인 + 레이더 ============ -->
+<section style="padding:5rem 2rem" id="q11">
+  <div class="container reveal">
+    <div class="section-tag">Q11 DEEP DIVE</div>
+    <h2 class="section-title">3개년 입결이 <span class="hl">일정하지 않은</span> 이유</h2>
+    <p class="section-sub">6가지 구조적 원인 — 입결은 충분히 해석 가능한 영역입니다</p>
+
+    <div class="chart-box">
+      <h3>📊 입결 변동 6대 구조적 변수 영향도</h3>
+      <div class="chart-desc">각 변수의 영향력 vs 예측 가능성 (전문가 분석)</div>
+      <div class="chart-wrap"><canvas id="chartFactors" height="280"></canvas></div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card cyan"><h3 style="color:#67e8f9">1. 경쟁률 변화</h3><p>지원자 심리에 의한 쏠림/분산. ±3 이상 급변 시 심리적 요인</p></div>
+      <div class="card fire"><h3 style="color:var(--fire)">2. 수능최저 변화</h3><p>충족률 변동이 컷에 직접 영향. 유무보다 충족률 변화가 핵심</p></div>
+      <div class="card green"><h3 style="color:#6ee7b7">3. 교과 산정 변경</h3><p>같은 학생이어도 환산점수 달라짐. 전년도 기준 그대로 적용 불가</p></div>
+      <div class="card"><h3 style="color:var(--lgold)">4. 지원자격·추천 변경</h3><p>전형안내 단 1줄의 조건이 입결을 뒤흔드는 경우 빈번</p></div>
+      <div class="card purple"><h3 style="color:#a29bfe">5. 평가요소 변화</h3><p>구성비 변경 시 단순 내신 비교 무의미. 전형 총합 해석</p></div>
+      <div class="card orange"><h3 style="color:#fdba74">6. 고교 프로파일</h3><p>비공개이나 사정관 평가 DB에 간접 영향</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ 7단계 분석법 ============ -->
+<section style="padding:5rem 2rem;background:var(--dk)" id="steps7">
+  <div class="container reveal">
+    <div class="section-tag">STRATEGY</div>
+    <h2 class="section-title">고도화 수시전략 <span class="hl">7단계</span> 분석법</h2>
+    <p class="section-sub">단순 일정 확인이 아닌, 정밀 설계가 합격을 결정합니다</p>
+
+    <div class="timeline">
+      <div class="step"><div class="step-num" style="background:var(--cyan);color:var(--bk)">1</div><h4>내신 상세지표<br>+ 원점수 분석</h4><p>과목별 등급변화, 상위누적, 과목군 강세</p></div>
+      <div class="step"><div class="step-num" style="background:var(--fire);color:var(--white)">2</div><h4>전형별<br>평가방식 역추적</h4><p>학종 정량/정성, 교과 유불리, 논술 출제</p></div>
+      <div class="step"><div class="step-num" style="background:var(--green);color:var(--bk)">3</div><h4>무전공<br>활용 전략</h4><p>유형1: 미확정/정시대비<br>유형2: 복수카드</p></div>
+      <div class="step"><div class="step-num" style="background:var(--gold);color:var(--bk)">4</div><h4>6·9월 모평<br>정시 시뮬레이션</h4><p>백분위 총점→지원가능대학</p></div>
+      <div class="step"><div class="step-num" style="background:var(--purple);color:var(--white)">5</div><h4>고사/면접/논술<br>일정 매핑</h4><p>발표일 병렬 비교→카드 손실 제거</p></div>
+      <div class="step"><div class="step-num" style="background:var(--orange);color:var(--bk)">6</div><h4>3개년 충원율<br>+ 예비합격</h4><p>예비30번 합격 여부, 충원패턴</p></div>
+      <div class="step"><div class="step-num" style="background:var(--blue);color:var(--white)">7</div><h4>원서 작성<br>Top+Bottom</h4><p>현실 역산 + 목표→스펙점검</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ 수시 6장 배분 + 차트 ============ -->
+<section style="padding:5rem 2rem" id="alloc6">
+  <div class="container reveal">
+    <div class="section-tag">ALLOCATION</div>
+    <h2 class="section-title">수시 <span class="hl">6장 배분</span> 전략</h2>
+    <p class="section-sub">"수시 6장은 카드가 아니라 시나리오입니다"</p>
+
+    <div class="alloc-bar">
+      <div class="alloc-seg" style="flex:2;background:var(--blue);color:var(--white)">교과 2장</div>
+      <div class="alloc-seg" style="flex:2;background:var(--purple);color:var(--white)">종합 2장</div>
+      <div class="alloc-seg" style="flex:1;background:var(--orange);color:var(--bk)">논술 1장</div>
+      <div class="alloc-seg" style="flex:1;background:var(--green);color:var(--bk)">보험 1장</div>
+    </div>
+    <div class="alloc-legend">
+      <div class="alloc-legend-item"><div class="dot" style="background:var(--blue)"></div>교과전형 — 안정·적정</div>
+      <div class="alloc-legend-item"><div class="dot" style="background:var(--purple)"></div>종합전형 — 소신·상향</div>
+      <div class="alloc-legend-item"><div class="dot" style="background:var(--orange)"></div>논술전형 — 역전 카드</div>
+      <div class="alloc-legend-item"><div class="dot" style="background:var(--green)"></div>무전공/보험 — 안전망</div>
+    </div>
+
+    <div class="chart-box">
+      <h3>📊 수시 6장 배분 전략 비교</h3>
+      <div class="chart-desc">기존 공식 vs 전형 유형별 배분의 전략적 차이</div>
+      <div class="chart-wrap"><canvas id="chartAlloc" height="260"></canvas></div>
+    </div>
+
+    <div style="background:var(--dgold);padding:0.8rem 1.5rem;text-align:center;font-family:var(--font-display);font-size:1.1rem;color:var(--bk)">수시 — 정시 병행 핵심 전략</div>
+    <div class="grid-4" style="margin-top:0">
+      <div class="card"><h3>① 안정선</h3><p>9월 모평 기준 정시가능 대학 커트라인으로 수시 안정선 설정</p></div>
+      <div class="card fire"><h3>② 수시 우선</h3><p>정시 예비라인보다 수시 합격 가능성 높은 대학 반드시 배치</p></div>
+      <div class="card green"><h3>③ 보험카드</h3><p>무전공 논술·충원율 높은 학과로 정시실패 대비</p></div>
+      <div class="card"><h3>④ 시나리오</h3><p>병렬 선택지가 아닌 시간축+조건 전략 시나리오</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ 클로징 ============ -->
+<section style="padding:5rem 2rem;background:var(--dk);text-align:center" id="closing">
+  <div class="container reveal">
+    <div style="font-family:var(--font-display);font-size:clamp(1.2rem,3vw,1.6rem);color:var(--gray);margin-bottom:0.3rem">2027학년도 수시,</div>
+    <div style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);margin-bottom:2.5rem">이것만 기억하십시오</div>
+    <div style="display:flex;flex-direction:column;gap:1rem;max-width:800px;margin:0 auto;text-align:left">
+      <div class="card cyan"><h3 style="color:#67e8f9">입시는 '정보력'이 아니라 '해석력'이다</h3><p>정보는 누구나 갖는다. 해석과 시뮬레이션이 합격을 결정한다.</p></div>
+      <div class="card"><h3 style="color:var(--lgold)">수시 6장은 '카드'가 아니라 '시나리오'다</h3><p>시간축과 조건에 따라 작동하는 전략적 구조물이다.</p></div>
+      <div class="card pink"><h3 style="color:#f9a8d4">정시는 점수로, 수시는 구조로 승부한다</h3><p>내 점수는 정시가 말해주고, 전략은 수시가 완성해준다.</p></div>
+      <div class="card fire"><h3 style="color:var(--fire)">8월말 이후 전략 보완은 불가능하다</h3><p>지금이 학생부 실질 입결을 바꿀 유일한 골든타임이다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2>2027 수시합격전략 설명회</h2>
+  <p class="sub">📅 2026. 6. 21 (토) 오후 2시 | 무료 · 사전예약 필수</p>
+  <div class="cta-phone"><a href="tel:031-978-1117" class="tel-link" style="color:inherit;border:none">📞 031) 978-1117</a></div>
+  <div class="cta-info">
+    <span>📍 시대학원 대강의실</span>
+    <span>🎯 고2·고3 학생 및 학부모</span>
+  </div>
+  <div style="margin-top:1rem;position:relative;z-index:2;font-size:0.95rem;color:var(--lgold)">🎁 수시 배치표 + 1:1 상담권 + AI 분석리포트 증정</div>
+  <div style="margin-top:1.5rem;position:relative;z-index:2;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPnKem3XLwcT34Sk77bbyvZ3BUtX7ZrDizaAR3RbpJte3iOg/viewform" target="_blank" class="btn btn-primary" style="background:var(--dgold);font-size:1.1rem;padding:1rem 2.5rem">📋 온라인 사전예약</a>
+    <a href="tel:031-978-1117" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);font-size:1rem;padding:0.9rem 2rem">📞 전화 예약</a>
+    <a href="index.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3)">← 시대학원 메인으로</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 시대학원. All rights reserved. | 경기도 고양시 덕양구 백양로51 네이버타운 8층</p>
+  <p style="margin-top:0.5rem"><a href="index.html">메인</a> · <a href="국어약술형_랜딩페이지.html">국어 약술형</a> · <a href="수학약술형_랜딩페이지.html">수학 약술형</a></p>
+</footer>
+
+<!-- ============ CHARTS ============ -->
+<script>
+Chart.defaults.color='#9ca3af';Chart.defaults.borderColor='rgba(255,255,255,0.05)';Chart.defaults.font.family="'Noto Sans KR',sans-serif";
+const G='#f59e0b',R='#ef4444',B='#3b82f6',GN='#10b981',P='#6c5ce7',C='#06b6d4',PK='#ec4899',O='#f97316';
+
+new Chart(document.getElementById('chartMinCh'),{type:'bar',data:{labels:['완화 (2합5→6)','신설 (없음→2합5)','폐지 (2합5→없음)'],datasets:[{label:'충족률 변화(%p)',data:[20,15,30],backgroundColor:'rgba(6,182,212,0.6)',borderRadius:4},{label:'컷 변동(등급)',data:[0.4,0.2,0.5],backgroundColor:'rgba(245,158,11,0.6)',borderRadius:4},{label:'경쟁률 변동(배)',data:[1.5,0.8,2.0],backgroundColor:'rgba(239,68,68,0.6)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded'}}}}});
+
+new Chart(document.getElementById('chartSubject'),{type:'line',data:{labels:['2024','2025','2026','2027 예측'],datasets:[{label:'3과목 반영 합격선',data:[1.3,1.35,1.3,null],borderColor:B,backgroundColor:'rgba(59,130,246,0.08)',fill:true,tension:.3,pointRadius:5},{label:'전과목 전환 시',data:[null,null,null,1.6],borderColor:R,pointRadius:8,pointStyle:'star',borderDash:[5,5]},{label:'전과목 기준(환산)',data:[1.55,1.58,1.55,1.6],borderColor:'rgba(245,158,11,0.5)',borderDash:[4,4],pointRadius:3,tension:.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true}}},scales:{y:{reverse:true,title:{display:true,text:'내신 등급',color:'#6b7280'},min:1.0,max:2.0}}}});
+
+new Chart(document.getElementById('chartRegress'),{type:'line',data:{labels:['2024','2025','2026','2027 예측'],datasets:[{label:'A학과 (반등)',data:[2.8,2.6,3.2,2.85],borderColor:GN,backgroundColor:'rgba(16,185,129,0.08)',fill:true,tension:.3,pointRadius:5},{label:'B학과 (하락)',data:[2.5,2.7,1.9,2.4],borderColor:R,backgroundColor:'rgba(239,68,68,0.08)',fill:true,tension:.3,pointRadius:5},{label:'3개년 평균',data:[2.65,2.65,2.65,2.65],borderColor:'rgba(245,158,11,0.4)',borderDash:[6,4],pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true}}},scales:{y:{reverse:true,title:{display:true,text:'내신 등급(70%컷)',color:'#6b7280'},min:1.5,max:3.5}}}});
+
+new Chart(document.getElementById('chartImpact'),{type:'bar',data:{labels:['교과전형','종합전형','논술전형'],datasets:[{label:'최소 상승(등급)',data:[0.1,0.1,0.05],backgroundColor:'rgba(6,182,212,0.5)',borderRadius:4},{label:'최대 상승(등급)',data:[0.3,0.2,0.15],backgroundColor:'rgba(239,68,68,0.6)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded'}}},scales:{y:{title:{display:true,text:'등급 상승폭'}}}}});
+
+new Chart(document.getElementById('chartSchool'),{type:'bar',data:{labels:['교과전형','종합(서울)','종합(수도권)','논술전형'],datasets:[{label:'일반고',data:[1.8,2.0,2.7,2.5],backgroundColor:'rgba(59,130,246,0.6)',borderRadius:4},{label:'자사고/특목고',data:[null,2.8,3.5,2.5],backgroundColor:'rgba(108,92,231,0.6)',borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded'}}},scales:{x:{title:{display:true,text:'내신 등급'},min:0,max:4}}}});
+
+new Chart(document.getElementById('chartFail'),{type:'doughnut',data:{labels:['전공적합성','교과목 불일치','서류 깊이','등록가능성','교과 편중','고교유형'],datasets:[{data:[25,15,22,13,15,10],backgroundColor:[R,O,G,P,PK,'#8b5cf6'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:true,plugins:{title:{display:true,text:'❌ 불합격 원인',color:R,font:{size:13,weight:'bold'}},legend:{position:'bottom',labels:{padding:6,font:{size:9},usePointStyle:true}}}}});
+new Chart(document.getElementById('chartPass'),{type:'doughnut',data:{labels:['전공적합성','상대적 성취','스토리 연결','차별화 경험','주도적 기획'],datasets:[{data:[30,15,25,15,15],backgroundColor:[GN,'#34d399','#10b981',C,B],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:true,plugins:{title:{display:true,text:'✅ 합격 요인',color:GN,font:{size:13,weight:'bold'}},legend:{position:'bottom',labels:{padding:6,font:{size:9},usePointStyle:true}}}}});
+
+new Chart(document.getElementById('chartFactors'),{type:'radar',data:{labels:['경쟁률','수능최저','교과산정','지원자격·추천','평가요소','고교프로파일'],datasets:[{label:'영향력(10점)',data:[7,9,8,6,5,4],backgroundColor:'rgba(6,182,212,0.12)',borderColor:C,pointBackgroundColor:C,pointRadius:4},{label:'예측가능성',data:[5,8,7,4,3,2],backgroundColor:'rgba(245,158,11,0.08)',borderColor:G,pointBackgroundColor:G,pointRadius:3,borderDash:[4,4]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true}}},scales:{r:{angleLines:{color:'rgba(255,255,255,0.06)'},grid:{color:'rgba(255,255,255,0.05)'},pointLabels:{color:'#d1d5db',font:{size:11}},ticks:{display:false},suggestedMin:0,suggestedMax:10}}}});
+
+new Chart(document.getElementById('chartAlloc'),{type:'bar',data:{labels:['안정','적정','소신','상향','역전','보험'],datasets:[{label:'기존 공식 (2+2+2)',data:[2,2,0,2,0,0],backgroundColor:'rgba(107,127,160,0.3)',borderRadius:4},{label:'전형별 배분 (2+2+1+1)',data:[1,1,1,1,1,1],backgroundColor:[`rgba(59,130,246,0.6)`,`rgba(59,130,246,0.6)`,`rgba(108,92,231,0.6)`,`rgba(108,92,231,0.6)`,`rgba(249,115,22,0.6)`,`rgba(16,185,129,0.6)`],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,pointStyle:'rectRounded'}}},scales:{y:{title:{display:true,text:'카드 수'},max:3}}}});
+
+// Nav scroll + Reveal
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50)});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+
+<!-- 플로팅 전화/예약 버튼 -->
+<div class="float-phone">
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPnKem3XLwcT34Sk77bbyvZ3BUtX7ZrDizaAR3RbpJte3iOg/viewform" target="_blank" class="float-btn form" title="온라인 예약">
+    📋
+    <span class="float-label">온라인 예약</span>
+  </a>
+  <a href="tel:031-978-1117" class="float-btn phone" title="전화 상담">
+    📞
+    <span class="float-label">031) 978-1117</span>
+  </a>
+</div>
+
+</body>
+</html>
