@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시대학원 - 고등수학 강좌 안내</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F1B3D;--navy-light:#1A2B55;--gold:#C9993A;--gold-light:#F5E6C4;--gold-glow:#E8B94D;--white:#FFF;--off-white:#F8F6F1;--cream:#FFF8E7;--dark-text:#1F2937;--gray:#6B7280;--light-gray:#E5E7EB;--blue:#2563EB;--teal:#0D9488;--red:#DC2626;--green:#16A34A;--orange:#EA580C;--purple:#7C3AED}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Noto Sans KR',sans-serif;color:var(--dark-text);background:var(--off-white);overflow-x:hidden}
+
+.hero{position:relative;min-height:100vh;background:linear-gradient(135deg,var(--navy)0%,var(--navy-light)50%,#0D2E6B 100%);display:flex;align-items:center;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,rgba(201,153,58,.15)0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(37,99,235,.1)0%,transparent 50%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,153,58,.05)1px,transparent 1px),linear-gradient(90deg,rgba(201,153,58,.05)1px,transparent 1px);background-size:60px 60px;animation:gridMove 20s linear infinite}
+@keyframes gridMove{from{transform:translate(0,0)}to{transform:translate(60px,60px)}}
+.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center;width:100%}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,153,58,.15);border:1px solid rgba(201,153,58,.3);border-radius:50px;padding:.5rem 1.2rem;margin-bottom:1.5rem;animation:fadeInUp .6s ease}
+.hero-badge span{color:var(--gold);font-size:.85rem;font-weight:500}
+.hero-badge .dot{width:8px;height:8px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:900;color:var(--white);line-height:1.2;margin-bottom:1rem;animation:fadeInUp .8s ease .1s both}
+.hero h1 .accent{color:var(--gold)}
+.hero-subtitle{font-size:1.15rem;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:2rem;animation:fadeInUp .8s ease .2s both}
+.hero-cta{display:flex;gap:1rem;animation:fadeInUp .8s ease .3s both}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-glow));color:var(--navy);padding:.9rem 2rem;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .3s;text-decoration:none;font-family:'Noto Sans KR',sans-serif}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,153,58,.4)}
+.btn-outline{background:transparent;color:var(--gold);padding:.9rem 2rem;border:2px solid rgba(201,153,58,.5);border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none;font-family:'Noto Sans KR',sans-serif}
+.btn-outline:hover{border-color:var(--gold);background:rgba(201,153,58,.1)}
+.hero-visual{position:relative;animation:fadeInUp 1s ease .4s both}
+.math-card{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:2.5rem}
+.math-symbols{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.math-sym{background:rgba(201,153,58,.1);border:1px solid rgba(201,153,58,.2);border-radius:12px;padding:1rem;text-align:center;transition:all .3s;cursor:default}
+.math-sym:hover{background:rgba(201,153,58,.2);transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
+.math-sym .icon{font-size:1.5rem;margin-bottom:.3rem;color:var(--gold)}
+.math-sym .label{color:rgba(255,255,255,.6);font-size:.75rem}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.stat-item{text-align:center;padding:1rem;background:rgba(201,153,58,.08);border-radius:12px;border:1px solid rgba(201,153,58,.15)}
+.stat-num{font-family:'Noto Serif KR',serif;font-size:1.8rem;font-weight:900;color:var(--gold)}
+.stat-label{font-size:.7rem;color:rgba(255,255,255,.5);margin-top:.2rem}
+
+section{padding:5rem 2rem}.section-header{text-align:center;max-width:700px;margin:0 auto 3rem}
+.section-tag{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold-glow));color:var(--navy);font-size:.75rem;font-weight:700;padding:.35rem 1rem;border-radius:50px;letter-spacing:1px;margin-bottom:.8rem}
+.section-title{font-family:'Noto Serif KR',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;color:var(--navy);line-height:1.3;margin-bottom:.8rem}
+.section-desc{font-size:1rem;color:var(--gray);line-height:1.7}.container{max-width:1200px;margin:0 auto}
+
+.curriculum-section{background:var(--white)}
+.curriculum-chart-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.chart-container{background:var(--off-white);border-radius:20px;padding:2rem;border:1px solid var(--light-gray)}
+.chart-container canvas{max-height:350px}
+.curriculum-tree{display:flex;flex-direction:column;gap:.8rem}
+.curr-category{border-radius:16px;padding:1.2rem 1.5rem;cursor:pointer;transition:all .3s;border:2px solid transparent}
+.curr-category:hover{transform:translateX(8px)}
+.curr-category.active{border-color:var(--gold);box-shadow:0 4px 20px rgba(201,153,58,.15)}
+.curr-cat-header{display:flex;align-items:center;gap:.8rem;margin-bottom:.5rem}
+.curr-cat-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:white;font-weight:700;flex-shrink:0}
+.curr-cat-name{font-weight:700;font-size:1rem}.curr-cat-credit{font-size:.8rem;color:var(--gray)}
+.curr-subjects{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem;max-height:0;overflow:hidden;transition:max-height .4s ease}
+.curr-category.active .curr-subjects{max-height:200px}
+.subj-tag{background:rgba(255,255,255,.8);padding:.3rem .8rem;border-radius:20px;font-size:.8rem;font-weight:500;border:1px solid var(--light-gray)}
+.cat-common{background:rgba(37,99,235,.08)}.cat-common .curr-cat-icon{background:var(--blue)}.cat-common .curr-cat-name{color:var(--blue)}
+.cat-general{background:rgba(234,88,12,.08)}.cat-general .curr-cat-icon{background:var(--orange)}.cat-general .curr-cat-name{color:var(--orange)}
+.cat-career{background:rgba(22,163,74,.08)}.cat-career .curr-cat-icon{background:var(--green)}.cat-career .curr-cat-name{color:var(--green)}
+
+.steps-section{background:linear-gradient(135deg,var(--navy)0%,var(--navy-light)100%)}
+.steps-section .section-title{color:var(--white)}.steps-section .section-desc{color:rgba(255,255,255,.6)}
+.steps-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;position:relative}
+.steps-flow::before{content:'';position:absolute;top:50px;left:12%;right:12%;height:3px;background:linear-gradient(90deg,var(--blue),var(--teal),var(--orange),var(--gold));z-index:0}
+.step-card{position:relative;z-index:1;text-align:center;opacity:0;transform:translateY(30px);transition:all .6s ease}
+.step-card.visible{opacity:1;transform:translateY(0)}
+.step-num{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem;font-weight:900;color:white;position:relative}
+.step-num::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(255,255,255,.2)}
+.step-card:nth-child(1) .step-num{background:var(--blue)}.step-card:nth-child(2) .step-num{background:var(--teal)}
+.step-card:nth-child(3) .step-num{background:var(--orange)}.step-card:nth-child(4) .step-num{background:var(--gold)}
+.step-box{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:1.5rem;transition:all .3s}
+.step-box:hover{background:rgba(255,255,255,.1);transform:translateY(-4px);box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.step-title{font-weight:700;color:var(--white);font-size:1.05rem;margin-bottom:.5rem}
+.step-desc{font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.6}
+
+.mgmt-section{background:var(--off-white)}
+.mgmt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.mgmt-card{background:var(--white);border-radius:16px;padding:1.8rem;border-left:4px solid;transition:all .4s;cursor:default;opacity:0;transform:translateY(20px)}
+.mgmt-card.visible{opacity:1;transform:translateY(0)}
+.mgmt-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.08)}
+.mgmt-card:nth-child(1){border-left-color:var(--blue)}.mgmt-card:nth-child(2){border-left-color:var(--teal)}
+.mgmt-card:nth-child(3){border-left-color:var(--red)}.mgmt-card:nth-child(4){border-left-color:var(--green)}
+.mgmt-card:nth-child(5){border-left-color:var(--gold)}.mgmt-card:nth-child(6){border-left-color:var(--purple)}
+.mgmt-icon{width:45px;height:45px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem}
+.mgmt-card:nth-child(1) .mgmt-icon{background:rgba(37,99,235,.1)}.mgmt-card:nth-child(2) .mgmt-icon{background:rgba(13,148,136,.1)}
+.mgmt-card:nth-child(3) .mgmt-icon{background:rgba(220,38,38,.1)}.mgmt-card:nth-child(4) .mgmt-icon{background:rgba(22,163,74,.1)}
+.mgmt-card:nth-child(5) .mgmt-icon{background:rgba(201,153,58,.1)}.mgmt-card:nth-child(6) .mgmt-icon{background:rgba(124,58,237,.1)}
+.mgmt-title{font-weight:700;font-size:1.05rem;margin-bottom:.5rem;color:var(--navy)}
+.mgmt-desc{font-size:.85rem;color:var(--gray);line-height:1.7}
+
+.grade-section{background:var(--white)}
+.grade-tabs{display:flex;gap:.5rem;justify-content:center;margin-bottom:2rem}
+.grade-tab{padding:.8rem 2.5rem;border:2px solid var(--light-gray);border-radius:50px;background:transparent;font-size:1rem;font-weight:700;cursor:pointer;transition:all .3s;color:var(--gray);font-family:'Noto Sans KR',sans-serif}
+.grade-tab.active{background:var(--navy);border-color:var(--navy);color:var(--gold)}
+.grade-tab:hover:not(.active){border-color:var(--navy);color:var(--navy)}
+.grade-content{display:none;animation:fadeIn .4s ease}.grade-content.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.grade-chart-area{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+.grade-info-cards{display:flex;flex-direction:column;gap:1rem}
+.grade-info-card{background:var(--off-white);border-radius:14px;padding:1.3rem 1.5rem;border-left:3px solid var(--gold);transition:all .3s}
+.grade-info-card:hover{background:var(--cream)}
+.grade-info-card h4{font-weight:700;color:var(--navy);margin-bottom:.4rem}
+.grade-info-card p{font-size:.85rem;color:var(--gray);line-height:1.6}
+.grade-chart-box{background:var(--off-white);border-radius:20px;padding:2rem;border:1px solid var(--light-gray)}
+.grade-chart-box canvas{max-height:320px}
+
+.weekly-section{background:var(--off-white)}
+.timeline{position:relative;max-width:800px;margin:0 auto}
+.timeline::before{content:'';position:absolute;left:30px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--blue),var(--teal),var(--red));border-radius:3px}
+.tl-item{display:flex;gap:2rem;margin-bottom:2rem;position:relative;opacity:0;transform:translateX(-20px);transition:all .5s ease}
+.tl-item.visible{opacity:1;transform:translateX(0)}
+.tl-dot{width:24px;height:24px;border-radius:50%;flex-shrink:0;margin-top:1.5rem;margin-left:19px;position:relative;z-index:2}
+.tl-item:nth-child(1) .tl-dot{background:var(--blue);box-shadow:0 0 0 6px rgba(37,99,235,.2)}
+.tl-item:nth-child(2) .tl-dot{background:var(--teal);box-shadow:0 0 0 6px rgba(13,148,136,.2)}
+.tl-item:nth-child(3) .tl-dot{background:var(--red);box-shadow:0 0 0 6px rgba(220,38,38,.2)}
+.tl-content{flex:1;background:var(--white);border-radius:16px;padding:1.5rem 2rem;box-shadow:0 4px 20px rgba(0,0,0,.04);transition:all .3s}
+.tl-content:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.tl-week{display:inline-block;padding:.25rem .8rem;border-radius:20px;font-size:.75rem;font-weight:700;color:white;margin-bottom:.5rem}
+.tl-item:nth-child(1) .tl-week{background:var(--blue)}.tl-item:nth-child(2) .tl-week{background:var(--teal)}.tl-item:nth-child(3) .tl-week{background:var(--red)}
+.tl-title{font-weight:700;color:var(--navy);font-size:1.05rem;margin-bottom:.5rem}
+.tl-desc{font-size:.85rem;color:var(--gray);line-height:1.7}
+
+.tips-section{background:var(--white)}
+.tips-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.tip-card{background:var(--off-white);border-radius:16px;padding:1.5rem;text-align:center;transition:all .4s;cursor:default;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);transform:scaleX(0);transition:transform .4s}
+.tip-card:hover::before{transform:scaleX(1)}
+.tip-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.06);background:var(--white)}
+.tip-num{width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--gold);font-size:1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto .8rem}
+.tip-title{font-weight:700;font-size:.9rem;color:var(--navy);margin-bottom:.4rem}
+.tip-desc{font-size:.75rem;color:var(--gray);line-height:1.5}
+
+.essay-section{background:linear-gradient(135deg,var(--navy)0%,#0D2E6B 100%);position:relative}
+.essay-section::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(201,153,58,.1)0%,transparent 60%)}
+.essay-section .section-title{color:var(--white)}.essay-section .section-desc{color:rgba(255,255,255,.6)}
+.essay-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;position:relative;z-index:2}
+.essay-card{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:1.5rem;text-align:center;transition:all .4s}
+.essay-card:hover{background:rgba(255,255,255,.1);transform:translateY(-5px);box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.essay-step-badge{display:inline-block;padding:.3rem 1rem;border-radius:20px;font-size:.75rem;font-weight:700;margin-bottom:.8rem}
+.essay-card:nth-child(1) .essay-step-badge{background:var(--blue);color:white}
+.essay-card:nth-child(2) .essay-step-badge{background:var(--teal);color:white}
+.essay-card:nth-child(3) .essay-step-badge{background:var(--orange);color:white}
+.essay-card:nth-child(4) .essay-step-badge{background:var(--gold);color:var(--navy)}
+.essay-card h3{color:var(--white);font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.essay-card p{color:rgba(255,255,255,.6);font-size:.8rem;line-height:1.6}
+.essay-dur{display:inline-block;margin-top:.8rem;background:rgba(201,153,58,.2);color:var(--gold);padding:.25rem .8rem;border-radius:20px;font-size:.75rem;font-weight:600}
+
+.contact-section{background:var(--navy);text-align:center;padding:4rem 2rem}
+.contact-section h2{font-family:'Noto Serif KR',serif;font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:.5rem}
+.contact-section .sub{color:var(--gold);font-size:1.1rem;margin-bottom:2rem}
+.contact-cards{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;max-width:700px;margin:0 auto}
+.contact-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:2rem 3rem;flex:1;min-width:250px}
+.contact-card .icon{font-size:2rem;margin-bottom:.5rem}.contact-card .label{color:var(--gold);font-size:.85rem;font-weight:600;margin-bottom:.3rem}
+.contact-card .value{color:var(--white);font-size:1.1rem;font-weight:500}
+.footer-text{margin-top:2rem;color:rgba(255,255,255,.4);font-size:.8rem}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:1024px){
+.hero-content{grid-template-columns:1fr;gap:2rem}.curriculum-chart-wrapper{grid-template-columns:1fr}
+.steps-flow{grid-template-columns:repeat(2,1fr)}.steps-flow::before{display:none}
+.mgmt-grid{grid-template-columns:repeat(2,1fr)}.tips-grid{grid-template-columns:repeat(3,1fr)}
+.essay-steps{grid-template-columns:repeat(2,1fr)}.grade-chart-area{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+.steps-flow{grid-template-columns:1fr}.mgmt-grid{grid-template-columns:1fr}
+.tips-grid{grid-template-columns:repeat(2,1fr)}.essay-steps{grid-template-columns:1fr}
+.grade-tabs{flex-wrap:wrap}
+}
+.scroll-reveal{opacity:0;transform:translateY(30px);transition:all .6s ease}
+.scroll-reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(16px);background:rgba(15,27,61,.92);border-bottom:2px solid var(--gold);padding:0.8rem 2rem;display:flex;align-items:center;justify-content:space-between">
+<div style="font-size:1.1rem;font-weight:900;color:var(--gold)">시대학원</div>
+<div style="display:flex;gap:1.2rem;align-items:center">
+<a href="./index.html" style="color:#fbbf24;font-weight:700;text-decoration:none;font-size:0.85rem">🏠 메인</a>
+<a href="#curriculum" style="color:#ccc;text-decoration:none;font-size:0.85rem">교육과정</a>
+<a href="#program" style="color:#ccc;text-decoration:none;font-size:0.85rem">성적향상</a>
+<a href="#grades" style="color:#ccc;text-decoration:none;font-size:0.85rem">학년별</a>
+<a href="#contact" style="color:#ccc;text-decoration:none;font-size:0.85rem">문의</a>
+</div>
+</nav>
+
+<section class="hero" id="hero" style="padding-top:60px">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge"><div class="dot"></div><span>2022 개정 교육과정 완벽 대비</span></div>
+      <h1>대학 성패는<br><span class="accent">수학이 답이다!</span></h1>
+      <p class="hero-subtitle">2025학년도 고1부터 적용되는 새 교육과정에 맞춘<br>체계적인 수학 강좌로 내신 + 수능 + 논술까지 한 번에!</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-gold">상담 문의하기</a>
+        <a href="#curriculum" class="btn-outline">교육과정 보기</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="math-card">
+        <div class="math-symbols">
+          <div class="math-sym"><div class="icon">∑</div><div class="label">대수</div></div>
+          <div class="math-sym"><div class="icon">∫</div><div class="label">미적분</div></div>
+          <div class="math-sym"><div class="icon">P(x)</div><div class="label">확률과 통계</div></div>
+          <div class="math-sym"><div class="icon">△</div><div class="label">기하</div></div>
+          <div class="math-sym"><div class="icon">f(x)</div><div class="label">공통수학</div></div>
+          <div class="math-sym"><div class="icon">AI</div><div class="label">인공지능 수학</div></div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">입시 컨설팅 경력</div></div>
+          <div class="stat-item"><div class="stat-num">4단계</div><div class="stat-label">레벨 시스템</div></div>
+          <div class="stat-item"><div class="stat-num">1:1</div><div class="stat-label">맞춤 관리</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="curriculum-section" id="curriculum">
+  <div class="container">
+    <div class="section-header scroll-reveal">
+      <span class="section-tag">2022 개정 교육과정</span>
+      <h2 class="section-title">고등수학 과목 체계</h2>
+      <p class="section-desc">2025학년도 고1부터 적용 · 과목별 학점 및 수능 출제 범위를 한눈에 확인하세요</p>
+    </div>
+    <div class="curriculum-chart-wrapper">
+      <div class="chart-container scroll-reveal"><canvas id="curriculumChart"></canvas></div>
+      <div class="curriculum-tree scroll-reveal">
+        <div class="curr-category cat-common active" onclick="toggleCategory(this)">
+          <div class="curr-cat-header">
+            <div class="curr-cat-icon">공통</div>
+            <div><div class="curr-cat-name">공통과목</div><div class="curr-cat-credit">각 4학점 · 고1 필수 이수</div></div>
+          </div>
+          <div class="curr-subjects"><span class="subj-tag">공통수학1</span><span class="subj-tag">공통수학2</span></div>
+        </div>
+        <div class="curr-category cat-general" onclick="toggleCategory(this)">
+          <div class="curr-cat-header">
+            <div class="curr-cat-icon">일반</div>
+            <div><div class="curr-cat-name">일반선택 · 수능 출제</div><div class="curr-cat-credit">각 4학점 · 고2~3 선택</div></div>
+          </div>
+          <div class="curr-subjects"><span class="subj-tag">대수</span><span class="subj-tag">미적분Ⅰ</span><span class="subj-tag">확률과 통계</span></div>
+        </div>
+        <div class="curr-category cat-career" onclick="toggleCategory(this)">
+          <div class="curr-cat-header">
+            <div class="curr-cat-icon">진로</div>
+            <div><div class="curr-cat-name">진로선택 · 심화과정</div><div class="curr-cat-credit">각 4학점 · 진로별 선택</div></div>
+          </div>
+          <div class="curr-subjects"><span class="subj-tag">미적분Ⅱ</span><span class="subj-tag">기하</span><span class="subj-tag">인공지능 수학</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps-section" id="program">
+  <div class="container">
+    <div class="section-header scroll-reveal">
+      <span class="section-tag">성적 향상 로드맵</span>
+      <h2 class="section-title">4단계 수학 성적 향상 프로그램</h2>
+      <p class="section-desc">진단부터 1등급까지, 단계별 맞춤 시스템으로 확실하게 올려드립니다</p>
+    </div>
+    <div class="steps-flow">
+      <div class="step-card"><div class="step-num">1</div><div class="step-box"><div class="step-title">진단평가</div><div class="step-desc">수학 기초 진단 테스트로<br>현재 수준을 정확히 파악하고<br>맞춤 레벨에 배치합니다</div></div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-box"><div class="step-title">개념 완성</div><div class="step-desc">영역별 핵심 개념 정리와<br>원리 이해 중심의 수업으로<br>탄탄한 기본기를 완성합니다</div></div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-box"><div class="step-title">실전 훈련</div><div class="step-desc">기출 분석·서술형 첨삭<br>학교별 맞춤 모의고사로<br>실전 감각을 키웁니다</div></div></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-box"><div class="step-title">수학 1등급</div><div class="step-desc">내신+수능 동시 완성<br>고난도 문제 정복으로<br>수학 자신감 UP!</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="mgmt-section" id="management">
+  <div class="container">
+    <div class="section-header scroll-reveal">
+      <span class="section-tag">학사관리 시스템</span>
+      <h2 class="section-title">고등부 수학 학사관리</h2>
+      <p class="section-desc">출석부터 평가까지, 빈틈없는 6대 관리 시스템</p>
+    </div>
+    <div class="mgmt-grid">
+      <div class="mgmt-card"><div class="mgmt-icon">📋</div><div class="mgmt-title">출석 관리</div><div class="mgmt-desc">담임 체크 → 테스트 → TM → 담임 확인<br>수업 후 과제 및 보충 내용 점검</div></div>
+      <div class="mgmt-card"><div class="mgmt-icon">📝</div><div class="mgmt-title">과제 관리</div><div class="mgmt-desc">1일 과제량 70~80문항<br>수업 전 제출 → 검사 → 앱 공지 → 재검사</div></div>
+      <div class="mgmt-card"><div class="mgmt-icon">🎯</div><div class="mgmt-title">수업</div><div class="mgmt-desc">숙제 질문(문제풀이수업) → 개념 강의<br>→ 문제풀이 연습 → 서술형 훈련</div></div>
+      <div class="mgmt-card"><div class="mgmt-icon">🔄</div><div class="mgmt-title">보충</div><div class="mgmt-desc">숙제 부족 → 나머지 공부 → 재검사<br>주간 테스트 성적 저조 → 일요일 추가 보충</div></div>
+      <div class="mgmt-card"><div class="mgmt-icon">📊</div><div class="mgmt-title">평가</div><div class="mgmt-desc">주간 테스트: 매주 수업 성취도 평가<br>학력평가: 2, 5, 8, 10월 분기별 실시</div></div>
+      <div class="mgmt-card"><div class="mgmt-icon">⚡</div><div class="mgmt-title">레벨 시스템</div><div class="mgmt-desc">학력평가 기반 레벨업/다운 조치<br>연 4회 분기별 레벨 조정 시행</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="grade-section" id="grades">
+  <div class="container">
+    <div class="section-header scroll-reveal">
+      <span class="section-tag">학년별 커리큘럼</span>
+      <h2 class="section-title">학년별 맞춤 수학 커리큘럼</h2>
+      <p class="section-desc">각 학년의 목표와 수준에 맞춘 세밀한 커리큘럼을 제공합니다</p>
+    </div>
+    <div class="grade-tabs scroll-reveal">
+      <button class="grade-tab active" onclick="switchGrade(0)">고1</button>
+      <button class="grade-tab" onclick="switchGrade(1)">고2</button>
+      <button class="grade-tab" onclick="switchGrade(2)">고3</button>
+    </div>
+    <div class="grade-content active" id="grade-0">
+      <div class="grade-chart-area">
+        <div class="grade-info-cards">
+          <div class="grade-info-card"><h4>📘 공통수학1</h4><p>다항식, 방정식과 부등식, 경우의 수 등 고등수학 기본 개념 완성. 내신 1학기 핵심 과목.</p></div>
+          <div class="grade-info-card"><h4>📗 공통수학2</h4><p>도형의 방정식, 집합과 명제, 함수 영역. 2학기 내신 대비와 고2 선택과목 기반 마련.</p></div>
+          <div class="grade-info-card"><h4>🎯 내신 집중 대비</h4><p>교과서 단원별 정밀 분석, 학교별 출제 경향 반영 모의고사, 서술형 1:1 첨삭 관리.</p></div>
+        </div>
+        <div class="grade-chart-box"><canvas id="grade1Chart"></canvas></div>
+      </div>
+    </div>
+    <div class="grade-content" id="grade-1">
+      <div class="grade-chart-area">
+        <div class="grade-info-cards">
+          <div class="grade-info-card"><h4>📐 대수</h4><p>행렬, 일차변환, 복소수 등 대수학의 핵심 개념을 체계적으로 학습합니다.</p></div>
+          <div class="grade-info-card"><h4>📈 미적분Ⅰ</h4><p>수열의 극한, 급수, 미분법, 적분법. 수능 핵심 과목이자 이공계 필수.</p></div>
+          <div class="grade-info-card"><h4>🎲 확률과 통계</h4><p>순열과 조합, 확률, 통계. 수능 출제 범위에 해당하는 일반선택 과목.</p></div>
+        </div>
+        <div class="grade-chart-box"><canvas id="grade2Chart"></canvas></div>
+      </div>
+    </div>
+    <div class="grade-content" id="grade-2">
+      <div class="grade-chart-area">
+        <div class="grade-info-cards">
+          <div class="grade-info-card"><h4>🚀 수능 실전 대비</h4><p>EBS 연계 학습 + 기출 패턴 분석. 매주 실전 모의고사로 실전 감각 극대화.</p></div>
+          <div class="grade-info-card"><h4>🔥 킬러 문항 정복</h4><p>고난도 미적분·기하 킬러 문제 전문 훈련. 1등급을 가르는 변별력 문항 집중.</p></div>
+          <div class="grade-info-card"><h4>⚡ Final 직전 특강</h4><p>수능 D-30 직전 특강. 취약 유형 집중 보완 + 실전 시간 관리 훈련.</p></div>
+        </div>
+        <div class="grade-chart-box"><canvas id="grade3Chart"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="weekly-section">
+  <div class="container">
+    <div class="section-header scroll-reveal">
+      <span class="section-tag">내신관리</span>
+      <h2 class="section-title">주차별 내신 대비 수업</h2>
+      <p class="section-desc">시험 4주 전부터 체계적으로 준비하는 내신 관리 타임라인</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><span class="tl-week">1~2주차</span><div class="tl-title">단원별 내신 대비 강좌</div><div class="tl-desc">내신 경향 분석에 의한 핵심 내용 개념 강의 및 내신 특이 유형 정리. 매주 내신 실전 테스트를 통한 실전 대비 훈련. 서술형 일대일 첨삭 관리 및 성적 문자 발송. 테스트 성적이 저조한 학생은 개별 보충으로 핵심 내용 숙달.</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><span class="tl-week">3주차</span><div class="tl-title">내신 전범위 점검 및 확인</div><div class="tl-desc">최신 기출 경향 분석을 통해 각 학교별 시험 범위와 출제 경향에 맞춘 학교별 모의고사 실전 훈련. '적중 N제'를 통한 자주 출제되는 유형 및 실수가 많이 발생하는 유형에 대한 확인 점검.</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><span class="tl-week">4주차</span><div class="tl-title">최종 점검 (직전 보충)</div><div class="tl-desc">D-5, D-1일: 학생 개개인에게 필요한 개별 첨삭 및 점검. 테스트 및 직전 문제풀이로 놓치고 있는 유형에 대한 최종 점검으로 완벽 마무리.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="tips-section">
+  <div class="container">
+    <div class="section-header scroll-reveal">
+      <span class="section-tag">수학 공부법</span>
+      <h2 class="section-title">수학 성적 향상 10가지 학습법</h2>
+    </div>
+    <div class="tips-grid scroll-reveal">
+      <div class="tip-card"><div class="tip-num">1</div><div class="tip-title">복습으로 이해!</div><div class="tip-desc">그 날 배운 것을 반드시 그날 복습하여 완전학습</div></div>
+      <div class="tip-card"><div class="tip-num">2</div><div class="tip-title">손으로 익혀라!</div><div class="tip-desc">풀이 노트에 과정을 꼼꼼히 풀어서 서술형 대비</div></div>
+      <div class="tip-card"><div class="tip-num">3</div><div class="tip-title">게임처럼 즐겨라!</div><div class="tip-desc">수학에 흥미와 자신감을 갖고 재미있게 접근</div></div>
+      <div class="tip-card"><div class="tip-num">4</div><div class="tip-title">원리를 파악!</div><div class="tip-desc">개념 이해 후 원리·법칙의 근거를 명확히 파악</div></div>
+      <div class="tip-card"><div class="tip-num">5</div><div class="tip-title">무조건 외우지 마!</div><div class="tip-desc">공식을 증명하며 수학적 사고력을 길러야</div></div>
+      <div class="tip-card"><div class="tip-num">6</div><div class="tip-title">나만의 풀이법!</div><div class="tip-desc">자신만의 고민으로 풀이 방법을 습득</div></div>
+      <div class="tip-card"><div class="tip-num">7</div><div class="tip-title">오답노트 습관화!</div><div class="tip-desc">취약 부분 보완으로 수학 자신감 UP</div></div>
+      <div class="tip-card"><div class="tip-num">8</div><div class="tip-title">매일매일 수학!</div><div class="tip-desc">하루 10~20문제는 꼭 풀어 감각 유지</div></div>
+      <div class="tip-card"><div class="tip-num">9</div><div class="tip-title">문제 속 답 찾기!</div><div class="tip-desc">문제 조건을 정확히 파악하여 답을 추론</div></div>
+      <div class="tip-card"><div class="tip-num">10</div><div class="tip-title">기출로 경향 분석!</div><div class="tip-desc">기출·모의고사로 출제 경향을 파악</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="essay-section">
+  <div class="container">
+    <div class="section-header scroll-reveal">
+      <span class="section-tag" style="background:rgba(255,255,255,.15);color:var(--gold)">수리논술</span>
+      <h2 class="section-title">수리논술 단계별 커리큘럼</h2>
+      <p class="section-desc">수시 모집 수리논술전형 · 과학영재학교 출신 / SKY대 출신 강사진</p>
+    </div>
+    <div class="essay-steps scroll-reveal">
+      <div class="essay-card"><span class="essay-step-badge">Step 01</span><h3>수리논술 시작하기</h3><p>교과서에 나오는 증명 과정과 교과과정에 충실한 문항으로 수리논술 준비</p><span class="essay-dur">8주 완성</span></div>
+      <div class="essay-card"><span class="essay-step-badge">Step 02</span><h3>단원별 수리논술</h3><p>교과 단원별 내용과 주제별로 이루어진 수업. 수준별 반편성으로 개념+실전 병행</p><span class="essay-dur">16주 완성</span></div>
+      <div class="essay-card"><span class="essay-step-badge">Step 03</span><h3>실전편</h3><p>수준별 다양한 기출문제의 풀이와 직접 풀고 첨삭을 진행하는 과정</p><span class="essay-dur">8주 완성</span></div>
+      <div class="essay-card"><span class="essay-step-badge">Step 04</span><h3>대학별 Final</h3><p>대학별로 기출문제풀이와 첨삭이 진행되는 과정. 3~5개년 기출과 유사문항 훈련</p><span class="essay-dur">대학별 회차</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <h2>수학의 자신감,<br>시대학원에서 시작하세요!</h2>
+  <p class="sub">2022 개정 교육과정 완벽 대비 · 내신 + 수능 + 수리논술</p>
+  <div class="contact-cards">
+    <div class="contact-card"><div class="icon">📍</div><div class="label">찾아오시는 길</div><div class="value">고양시 덕양구 백양로51<br>네이버타운 8층</div></div>
+    <div class="contact-card"><div class="icon">📞</div><div class="label">상담 문의</div><div class="value">031-0978-1117</div></div>
+  </div>
+  <p class="footer-text">© 2025 시대학원. All Rights Reserved.</p>
+</section>
+
+<script>
+const observer=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')})},{threshold:.15});
+document.querySelectorAll('.scroll-reveal,.step-card,.mgmt-card,.tl-item').forEach(el=>observer.observe(el));
+
+const currCtx=document.getElementById('curriculumChart').getContext('2d');
+new Chart(currCtx,{type:'doughnut',data:{labels:['공통수학1','공통수학2','대수','미적분Ⅰ','확률과 통계','미적분Ⅱ','기하','인공지능 수학'],datasets:[{data:[4,4,4,4,4,4,4,4],backgroundColor:['#2563EB','#3B82F6','#EA580C','#F97316','#FB923C','#16A34A','#22C55E','#4ADE80'],borderWidth:2,borderColor:'#F8F6F1',hoverOffset:12}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{family:"'Noto Sans KR'",size:11},padding:12,usePointStyle:true,pointStyleWidth:10}},title:{display:true,text:'과목별 기본 학점 배분 (각 4학점)',font:{family:"'Noto Sans KR'",size:14,weight:'700'},color:'#0F1B3D',padding:{bottom:15}},tooltip:{callbacks:{label:c=>{const cats=['공통과목','공통과목','일반선택','일반선택','일반선택','진로선택','진로선택','진로선택'];return`${c.label}: ${c.raw}학점 (${cats[c.dataIndex]})`}}}}}});
+
+function makeRadar(id,labels,data,title){const ctx=document.getElementById(id).getContext('2d');return new Chart(ctx,{type:'radar',data:{labels,datasets:[{label:title,data,backgroundColor:'rgba(201,153,58,.15)',borderColor:'#C9993A',borderWidth:2,pointBackgroundColor:'#C9993A',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5,pointHoverRadius:7}]},options:{responsive:true,scales:{r:{beginAtZero:true,max:100,ticks:{stepSize:20,font:{size:10}},pointLabels:{font:{family:"'Noto Sans KR'",size:11,weight:'600'}},grid:{color:'rgba(0,0,0,.06)'}}},plugins:{legend:{display:false},title:{display:true,text:title,font:{family:"'Noto Sans KR'",size:13,weight:'700'},color:'#0F1B3D',padding:{bottom:10}}}}})}
+
+makeRadar('grade1Chart',['다항식','방정식','부등식','경우의 수','집합·명제','함수','도형'],[80,85,75,70,65,80,75],'고1 학습 영역 비중');
+makeRadar('grade2Chart',['대수','미적분Ⅰ','확률과 통계','내신 대비','모의고사','서술형'],[85,90,80,85,75,80],'고2 학습 영역 비중');
+makeRadar('grade3Chart',['수능 독서','미적분','기하','킬러 문항','모의고사','Final 특강'],[85,95,85,90,90,80],'고3 학습 영역 비중');
+
+function toggleCategory(el){document.querySelectorAll('.curr-category').forEach(c=>c.classList.remove('active'));el.classList.add('active')}
+function switchGrade(idx){document.querySelectorAll('.grade-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));document.querySelectorAll('.grade-content').forEach((c,i)=>c.classList.toggle('active',i===idx))}
+</script>
+</body>
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시대학원 고등국어 강좌안내</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--burgundy:#6D1A36;--dark-burgundy:#3D0F1E;--deep-burgundy:#2A0A15;
+--gold:#C9993A;--light-gold:#F5E6C4;--pale-gold:#FFF8E7;
+--cream:#FBF8F3;--warm-bg:#F9F5F0;
+--blue:#1E40AF;--teal:#0D7377;--green:#166534;--orange:#B45309;--red:#B91C1C;
+--pink:#DB2777;--indigo:#4F46E5;--cyan:#0891B2;
+--text:#1F2937;--gray:#6B7280;--light-gray:#E5E7EB;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(16px);background:rgba(61,15,30,.92);border-bottom:2px solid var(--gold);transition:all .4s}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.nav-logo{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--gold);letter-spacing:2px}
+.nav-links{display:flex;gap:1.6rem}
+.nav-links a{color:rgba(255,255,255,.75);font-size:.82rem;font-weight:500;text-decoration:none;transition:color .3s;letter-spacing:.5px}
+.nav-links a:hover{color:var(--gold)}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;background:linear-gradient(135deg,var(--deep-burgundy) 0%,var(--dark-burgundy) 40%,var(--burgundy) 100%);display:flex;align-items:center;position:relative;overflow:hidden;padding-top:60px}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5L55 30L30 55L5 30Z' fill='none' stroke='%23C9993A' stroke-width='.3' opacity='.08'/%3E%3C/svg%3E");animation:patternSlide 40s linear infinite}
+@keyframes patternSlide{to{transform:translate(60px,60px)}}
+.hero::after{content:'';position:absolute;right:-10%;top:-10%;width:60%;height:120%;background:radial-gradient(ellipse,rgba(201,153,58,.06) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1200px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,153,58,.15);border:1px solid rgba(201,153,58,.3);border-radius:50px;padding:.4rem 1rem;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .3s forwards}
+.hero-badge .dot{width:7px;height:7px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero-badge span{color:var(--light-gold);font-size:.78rem;font-weight:500;letter-spacing:1px}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:3.2rem;color:#fff;line-height:1.25;font-weight:900;margin-bottom:1rem;opacity:0;animation:fadeUp .8s .5s forwards}
+.hero h1 em{font-style:normal;color:var(--gold);display:block;font-size:2.2rem;margin-top:.3rem}
+.hero-sub{color:rgba(255,255,255,.7);font-size:1.05rem;line-height:1.8;margin-bottom:2rem;opacity:0;animation:fadeUp .8s .7s forwards}
+.hero-btns{display:flex;gap:1rem;opacity:0;animation:fadeUp .8s .9s forwards}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#D4A94E);color:var(--dark-burgundy);font-weight:700;padding:.8rem 2rem;border-radius:6px;text-decoration:none;font-size:.9rem;transition:all .3s;border:none;cursor:pointer}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,153,58,.4)}
+.btn-outline{border:1.5px solid rgba(201,153,58,.5);color:var(--light-gold);padding:.8rem 2rem;border-radius:6px;text-decoration:none;font-size:.9rem;font-weight:500;transition:all .3s;background:transparent;cursor:pointer}
+.btn-outline:hover{background:rgba(201,153,58,.1);border-color:var(--gold)}
+
+/* Hero literary card */
+.hero-card{background:rgba(109,26,54,.6);backdrop-filter:blur(12px);border:1px solid rgba(201,153,58,.2);border-radius:16px;padding:2.5rem;position:relative;opacity:0;animation:fadeUp .8s 1s forwards}
+.hero-card::before{content:'';position:absolute;top:-1px;left:2rem;right:2rem;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hero-hanja{font-family:'Noto Serif KR',serif;font-size:3.5rem;color:var(--gold);text-align:center;letter-spacing:1rem;margin-bottom:1rem;line-height:1.4}
+.hero-card-divider{width:60px;height:1px;background:var(--gold);margin:1rem auto}
+.hero-card-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin-top:1rem}
+.hero-card-tags span{font-size:.78rem;color:rgba(245,230,196,.7);padding:.3rem .8rem;border:1px solid rgba(201,153,58,.2);border-radius:20px;letter-spacing:.5px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+.hero-stat{text-align:center;padding:.8rem .5rem;background:rgba(0,0,0,.15);border-radius:8px}
+.hero-stat .num{font-family:'Noto Serif KR',serif;font-size:1.6rem;font-weight:700;color:var(--gold)}
+.hero-stat .label{font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.2rem}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}from{opacity:0;transform:translateY(24px)}}
+
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;gap:2rem}.hero h1{font-size:2.4rem}.hero h1 em{font-size:1.6rem}}
+
+/* ===== SECTION COMMON ===== */
+section{padding:5rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--burgundy);background:rgba(109,26,54,.08);padding:.35rem 1rem;border-radius:4px;margin-bottom:1rem}
+.section-title{font-family:'Noto Serif KR',serif;font-size:2.2rem;font-weight:700;color:var(--dark-burgundy);line-height:1.35;margin-bottom:.6rem}
+.section-desc{color:var(--gray);font-size:.95rem;line-height:1.7;margin-bottom:2.5rem;max-width:640px}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== WHY KOREAN ===== */
+.why-section{background:var(--cream)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem}
+.why-card{background:#fff;border-radius:14px;padding:2rem 1.6rem;box-shadow:0 2px 12px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.05);position:relative;overflow:hidden;transition:all .4s}
+.why-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(109,26,54,.1)}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:height .4s}
+.why-card:hover::before{height:4px}
+.why-card:nth-child(1)::before{background:var(--blue)}.why-card:nth-child(2)::before{background:var(--teal)}.why-card:nth-child(3)::before{background:var(--orange)}
+.why-num{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;margin-bottom:1rem}
+.why-card:nth-child(1) .why-num{background:var(--blue)}.why-card:nth-child(2) .why-num{background:var(--teal)}.why-card:nth-child(3) .why-num{background:var(--orange)}
+.why-card h3{font-size:1.05rem;font-weight:700;margin-bottom:.6rem;color:var(--dark-burgundy)}
+.why-card p{font-size:.85rem;color:var(--gray);line-height:1.7}
+@media(max-width:768px){.why-grid{grid-template-columns:1fr}}
+
+/* ===== CURRICULUM CHART ===== */
+.curri-section{background:var(--warm-bg)}
+.curri-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.chart-box{background:#fff;border-radius:16px;padding:2rem;box-shadow:0 2px 16px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.05)}
+.chart-box h3{font-family:'Noto Serif KR',serif;font-size:1.1rem;font-weight:700;color:var(--dark-burgundy);text-align:center;margin-bottom:1.5rem}
+.chart-canvas-wrap{max-width:320px;margin:0 auto}
+.curri-tree{display:flex;flex-direction:column;gap:1rem}
+.curri-group{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.05)}
+.curri-group-header{padding:1rem 1.2rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:700;font-size:.9rem;transition:background .3s;user-select:none}
+.curri-group-header:hover{filter:brightness(1.05)}
+.curri-group-header .arrow{transition:transform .3s;font-size:.75rem}
+.curri-group-header.open .arrow{transform:rotate(180deg)}
+.curri-group-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.curri-group-body.open{max-height:400px}
+.curri-subject{padding:.7rem 1.2rem .7rem 2rem;font-size:.84rem;color:var(--text);border-top:1px solid rgba(0,0,0,.04);display:flex;justify-content:space-between;align-items:center}
+.curri-subject .tag{font-size:.68rem;padding:.15rem .5rem;border-radius:10px;font-weight:600}
+@media(max-width:768px){.curri-layout{grid-template-columns:1fr}}
+
+/* ===== STEPS ===== */
+.steps-section{background:var(--cream)}
+.steps-flow{display:flex;align-items:stretch;gap:0;position:relative;margin-top:2rem}
+.steps-flow::before{content:'';position:absolute;top:50%;left:5%;right:5%;height:3px;background:linear-gradient(90deg,var(--blue),var(--teal),var(--red),var(--gold));border-radius:2px;z-index:0}
+.step-card{flex:1;background:#fff;border-radius:14px;padding:1.8rem 1.2rem;text-align:center;position:relative;z-index:1;box-shadow:0 4px 16px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.05);transition:all .4s}
+.step-card:hover{transform:translateY(-8px);box-shadow:0 12px 36px rgba(0,0,0,.1)}
+.step-num{width:48px;height:48px;border-radius:50%;margin:0 auto .8rem;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff}
+.step-card:nth-child(1) .step-num{background:var(--blue)}.step-card:nth-child(2) .step-num{background:var(--teal)}.step-card:nth-child(3) .step-num{background:var(--red)}.step-card:nth-child(4) .step-num{background:var(--gold)}
+.step-card h4{font-size:.95rem;font-weight:700;color:var(--dark-burgundy);margin-bottom:.4rem}
+.step-card p{font-size:.8rem;color:var(--gray);line-height:1.6}
+.step-arrow{flex:0 0 30px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--gold);z-index:1;font-weight:700}
+@media(max-width:768px){.steps-flow{flex-direction:column;gap:1rem}.steps-flow::before{display:none}.step-arrow{transform:rotate(90deg)}}
+
+/* ===== 2028 수능 변경 ===== */
+.change-section{background:var(--dark-burgundy);color:#fff}
+.change-section .section-tag{color:var(--gold);background:rgba(201,153,58,.15)}
+.change-section .section-title{color:#fff}
+.change-section .section-desc{color:rgba(255,255,255,.6)}
+.change-compare{display:grid;grid-template-columns:1fr auto 1fr;gap:1.5rem;align-items:stretch;margin-top:2rem}
+.change-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:2rem 1.5rem;backdrop-filter:blur(8px)}
+.change-card-header{text-align:center;padding:.8rem;border-radius:8px;margin-bottom:1.5rem;font-weight:700;font-size:1rem}
+.change-card.before .change-card-header{background:rgba(107,114,128,.3);color:rgba(255,255,255,.8)}
+.change-card.after .change-card-header{background:rgba(201,153,58,.25);color:var(--gold)}
+.change-item{padding:.6rem 0;font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.6;border-bottom:1px solid rgba(255,255,255,.06)}
+.change-item:last-child{border:none}
+.change-item strong{color:var(--gold)}
+.change-item.highlight{color:var(--gold);font-weight:600}
+.change-arrow-col{display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--gold)}
+.change-keys{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin-top:2.5rem}
+.change-key{background:rgba(201,153,58,.12);border:1px solid rgba(201,153,58,.25);border-radius:8px;padding:.6rem 1.2rem;font-size:.82rem;color:var(--light-gold);font-weight:500}
+@media(max-width:768px){.change-compare{grid-template-columns:1fr}.change-arrow-col{transform:rotate(90deg);padding:1rem 0}}
+
+/* ===== MANAGEMENT ===== */
+.mgmt-section{background:var(--cream)}
+.mgmt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+.mgmt-card{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.05);border-left:4px solid;transition:all .35s}
+.mgmt-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.mgmt-card:nth-child(1){border-left-color:var(--blue)}.mgmt-card:nth-child(2){border-left-color:var(--teal)}.mgmt-card:nth-child(3){border-left-color:var(--red)}.mgmt-card:nth-child(4){border-left-color:var(--green)}.mgmt-card:nth-child(5){border-left-color:var(--gold)}.mgmt-card:nth-child(6){border-left-color:var(--pink)}
+.mgmt-card .icon{font-size:1.5rem;margin-bottom:.6rem}
+.mgmt-card h4{font-size:.92rem;font-weight:700;color:var(--dark-burgundy);margin-bottom:.5rem}
+.mgmt-card p{font-size:.8rem;color:var(--gray);line-height:1.65}
+@media(max-width:768px){.mgmt-grid{grid-template-columns:1fr}}
+
+/* ===== GRADE TABS ===== */
+.grade-section{background:var(--warm-bg)}
+.grade-tabs{display:flex;gap:.5rem;margin-bottom:2rem}
+.grade-tab{padding:.7rem 2rem;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .3s;border:2px solid transparent;background:#fff;color:var(--gray)}
+.grade-tab.active{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
+.grade-tab:hover:not(.active){background:rgba(109,26,54,.06);color:var(--burgundy);border-color:rgba(109,26,54,.15)}
+.grade-panel{display:none;animation:fadeIn .4s}
+.grade-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.grade-info{display:flex;flex-direction:column;gap:1rem}
+.grade-info-card{background:#fff;border-radius:12px;padding:1.4rem;box-shadow:0 2px 8px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.05)}
+.grade-info-card h4{font-size:.9rem;font-weight:700;color:var(--burgundy);margin-bottom:.4rem}
+.grade-info-card p{font-size:.82rem;color:var(--gray);line-height:1.65}
+.grade-chart-box{background:#fff;border-radius:14px;padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.grade-chart-box h4{font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;text-align:center;color:var(--dark-burgundy);margin-bottom:1rem}
+@media(max-width:768px){.grade-panel.active{grid-template-columns:1fr}}
+
+/* ===== TIMELINE ===== */
+.timeline-section{background:var(--cream)}
+.timeline{position:relative;padding-left:2.5rem;margin-top:2rem}
+.timeline::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--blue),var(--teal),var(--red));border-radius:2px}
+.tl-item{position:relative;margin-bottom:2rem;padding-left:2rem}
+.tl-dot{position:absolute;left:-2.5rem;top:.3rem;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:1;box-shadow:0 0 0 4px var(--cream)}
+.tl-item:nth-child(1) .tl-dot{background:var(--blue)}.tl-item:nth-child(2) .tl-dot{background:var(--teal)}.tl-item:nth-child(3) .tl-dot{background:var(--red)}
+.tl-dot::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%}
+.tl-content{background:#fff;border-radius:12px;padding:1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.05)}
+.tl-week{font-size:.78rem;font-weight:700;letter-spacing:1px;margin-bottom:.4rem}
+.tl-item:nth-child(1) .tl-week{color:var(--blue)}.tl-item:nth-child(2) .tl-week{color:var(--teal)}.tl-item:nth-child(3) .tl-week{color:var(--red)}
+.tl-content h4{font-size:1rem;font-weight:700;color:var(--dark-burgundy);margin-bottom:.6rem}
+.tl-content ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.tl-content ul li{font-size:.84rem;color:var(--gray);padding-left:1rem;position:relative;line-height:1.6}
+.tl-content ul li::before{content:'›';position:absolute;left:0;color:var(--gold);font-weight:700}
+
+/* ===== TIPS ===== */
+.tips-section{background:var(--warm-bg)}
+.tips-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:2rem}
+.tip-card{background:#fff;border-radius:12px;padding:1.3rem 1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.05);position:relative;overflow:hidden;transition:all .35s}
+.tip-card:hover{transform:translateY(-5px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.tip-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s}
+.tip-card:hover::after{opacity:1}
+.tip-card:nth-child(1)::after,.tip-card:nth-child(6)::after{background:var(--blue)}
+.tip-card:nth-child(2)::after,.tip-card:nth-child(7)::after{background:var(--teal)}
+.tip-card:nth-child(3)::after,.tip-card:nth-child(8)::after{background:var(--green)}
+.tip-card:nth-child(4)::after,.tip-card:nth-child(9)::after{background:var(--orange)}
+.tip-card:nth-child(5)::after,.tip-card:nth-child(10)::after{background:var(--red)}
+.tip-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;font-size:.72rem;font-weight:800;color:#fff;margin-bottom:.7rem}
+.tip-card:nth-child(1) .tip-num,.tip-card:nth-child(6) .tip-num{background:var(--blue)}
+.tip-card:nth-child(2) .tip-num,.tip-card:nth-child(7) .tip-num{background:var(--teal)}
+.tip-card:nth-child(3) .tip-num,.tip-card:nth-child(8) .tip-num{background:var(--green)}
+.tip-card:nth-child(4) .tip-num,.tip-card:nth-child(9) .tip-num{background:var(--orange)}
+.tip-card:nth-child(5) .tip-num,.tip-card:nth-child(10) .tip-num{background:var(--red)}
+.tip-card h5{font-size:.82rem;font-weight:700;color:var(--dark-burgundy);margin-bottom:.4rem;line-height:1.4}
+.tip-card p{font-size:.72rem;color:var(--gray);line-height:1.5}
+@media(max-width:1024px){.tips-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.tips-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== ESSAY ===== */
+.essay-section{background:var(--cream)}
+.essay-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:2rem}
+.essay-card{background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:1.6rem 1.2rem;text-align:center;transition:all .4s;position:relative}
+.essay-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(109,26,54,.08);background:#fff}
+.essay-step{font-size:.7rem;font-weight:700;letter-spacing:1px;margin-bottom:.5rem;padding:.25rem .8rem;border-radius:20px;display:inline-block}
+.essay-card:nth-child(1) .essay-step{background:rgba(30,64,175,.1);color:var(--blue)}
+.essay-card:nth-child(2) .essay-step{background:rgba(13,115,119,.1);color:var(--teal)}
+.essay-card:nth-child(3) .essay-step{background:rgba(185,28,28,.1);color:var(--red)}
+.essay-card:nth-child(4) .essay-step{background:rgba(201,153,58,.15);color:var(--gold)}
+.essay-card h4{font-size:.95rem;font-weight:700;color:var(--dark-burgundy);margin-bottom:.5rem}
+.essay-card p{font-size:.8rem;color:var(--gray);line-height:1.6;margin-bottom:.8rem}
+.essay-dur{font-size:.72rem;font-weight:600;padding:.3rem .7rem;border-radius:6px;background:rgba(109,26,54,.06);color:var(--burgundy);display:inline-block}
+@media(max-width:768px){.essay-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== CONTACT ===== */
+.contact-section{background:var(--dark-burgundy);color:#fff;text-align:center}
+.contact-section .section-tag{color:var(--gold);background:rgba(201,153,58,.15)}
+.contact-section .section-title{color:#fff}
+.contact-cards{display:flex;gap:2rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
+.contact-card{background:rgba(255,255,255,.06);border:1px solid rgba(201,153,58,.2);border-radius:14px;padding:2rem 2.5rem;backdrop-filter:blur(8px);transition:all .3s;min-width:260px}
+.contact-card:hover{background:rgba(201,153,58,.08);transform:translateY(-4px)}
+.contact-card .emoji{font-size:2rem;margin-bottom:.8rem}
+.contact-card h4{font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:.5rem}
+.contact-card p{font-size:.9rem;color:rgba(255,255,255,.7);line-height:1.6}
+.contact-card p strong{color:#fff;font-size:1.2rem}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--deep-burgundy);padding:1.5rem 2rem;text-align:center;border-top:2px solid var(--gold)}
+.footer p{font-size:.78rem;color:rgba(255,255,255,.4)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+<div class="nav-inner">
+<div class="nav-logo">시대학원</div>
+<div class="nav-links">
+<a href="./index.html" style="color:#fbbf24;font-weight:700">🏠 메인</a>
+<a href="#why">왜 국어인가</a>
+<a href="#curri">교육과정</a>
+<a href="#steps">성적향상</a>
+<a href="#change">2028수능</a>
+<a href="#grade">학년별</a>
+<a href="#tips">학습법</a>
+<a href="#contact">문의</a>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-inner">
+<div>
+<div class="hero-badge"><span class="dot"></span><span>2022 개정 교육과정 · 2028 수능 완벽 대비</span></div>
+<h1>고등국어 강좌<em>국어가 바뀌면 대학이 바뀐다!</em></h1>
+<p class="hero-sub">2028 수능부터 화법과 언어, 독서와 작문, 문학 전 과목 공통 출제!<br>내신 + 수능 + 인문논술을 한 번에 완성하는 통합 커리큘럼</p>
+<div class="hero-btns">
+<a href="#contact" class="btn-gold">상담 문의하기</a>
+<a href="#curri" class="btn-outline">커리큘럼 보기</a>
+</div>
+</div>
+<div class="hero-card">
+<div class="hero-hanja">文 學 語</div>
+<div class="hero-card-divider"></div>
+<div class="hero-card-tags">
+<span>읽기 · 쓰기 · 말하기</span>
+<span>사고력 · 표현력 · 비판력</span>
+<span>내신 · 수능 · 논술</span>
+</div>
+<div class="hero-stats">
+<div class="hero-stat"><div class="num">4단계</div><div class="label">성적향상 프로그램</div></div>
+<div class="hero-stat"><div class="num">6대</div><div class="label">학사관리 시스템</div></div>
+<div class="hero-stat"><div class="num">1:1</div><div class="label">서술형 첨삭</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- WHY KOREAN -->
+<section class="why-section" id="why">
+<div class="section-inner reveal">
+<span class="section-tag">WHY KOREAN</span>
+<div class="section-title">왜 국어가 대입의 핵심인가?</div>
+<p class="section-desc">2028 수능 개편으로 국어의 중요성이 더욱 커졌습니다. 시대학원이 그 변화의 중심에서 여러분을 이끕니다.</p>
+<div class="why-grid">
+<div class="why-card">
+<div class="why-num">01</div>
+<h3>수능 국어, 변별력 1위</h3>
+<p>2028 수능부터 화법과 언어, 독서와 작문, 문학 전 과목 공통 출제! 선택 과목 없이 모든 영역을 준비해야 하는 시대</p>
+</div>
+<div class="why-card">
+<div class="why-num">02</div>
+<h3>내신 등급, 국어가 좌우</h3>
+<p>상대평가 5등급제로 변경 (공통국어). 1등급 10% → 정확한 독해력과 서술력이 곧 등급</p>
+</div>
+<div class="why-card">
+<div class="why-num">03</div>
+<h3>논술·면접의 기본 역량</h3>
+<p>수시 논술, 학생부 면접 모두 국어 능력이 기반. 독서·작문·비판적 사고력이 합격을 결정</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CURRICULUM CHART -->
+<section class="curri-section" id="curri">
+<div class="section-inner reveal">
+<span class="section-tag">CURRICULUM</span>
+<div class="section-title">2022 개정 교육과정 과목 체계</div>
+<p class="section-desc">2025학년도 고1부터 적용 · 2028 수능부터 새 교육과정 반영</p>
+<div class="curri-layout">
+<div class="chart-box">
+<h3>고등국어 과목별 학점 배분</h3>
+<div class="chart-canvas-wrap"><canvas id="curriChart"></canvas></div>
+</div>
+<div class="curri-tree">
+<!-- 공통 -->
+<div class="curri-group">
+<div class="curri-group-header" style="background:rgba(109,26,54,.06);color:var(--burgundy)" onclick="toggleGroup(this)">
+<span>📘 공통과목 (고1)</span><span class="arrow">▼</span>
+</div>
+<div class="curri-group-body open">
+<div class="curri-subject">공통국어1 <span class="tag" style="background:rgba(109,26,54,.08);color:var(--burgundy)">4학점</span></div>
+<div class="curri-subject">공통국어2 <span class="tag" style="background:rgba(109,26,54,.08);color:var(--burgundy)">4학점</span></div>
+</div>
+</div>
+<!-- 일반선택 -->
+<div class="curri-group">
+<div class="curri-group-header" style="background:rgba(30,64,175,.06);color:var(--blue)" onclick="toggleGroup(this)">
+<span>📗 일반선택 (고2~3) — 2028 수능 전 과목 출제</span><span class="arrow">▼</span>
+</div>
+<div class="curri-group-body">
+<div class="curri-subject">화법과 언어 <span class="tag" style="background:rgba(185,28,28,.08);color:var(--red)">수능출제</span></div>
+<div class="curri-subject">독서와 작문 <span class="tag" style="background:rgba(185,28,28,.08);color:var(--red)">수능출제</span></div>
+<div class="curri-subject">문학 <span class="tag" style="background:rgba(185,28,28,.08);color:var(--red)">수능출제</span></div>
+</div>
+</div>
+<!-- 진로선택 -->
+<div class="curri-group">
+<div class="curri-group-header" style="background:rgba(22,101,52,.06);color:var(--green)" onclick="toggleGroup(this)">
+<span>📙 진로선택</span><span class="arrow">▼</span>
+</div>
+<div class="curri-group-body">
+<div class="curri-subject">주제 탐구 독서 <span class="tag" style="background:rgba(22,101,52,.08);color:var(--green)">인문계열</span></div>
+<div class="curri-subject">문학과 영상 <span class="tag" style="background:rgba(22,101,52,.08);color:var(--green)">예술계열</span></div>
+<div class="curri-subject">직무 의사소통 <span class="tag" style="background:rgba(22,101,52,.08);color:var(--green)">직업계열</span></div>
+</div>
+</div>
+<!-- 융합선택 -->
+<div class="curri-group">
+<div class="curri-group-header" style="background:rgba(180,83,9,.06);color:var(--orange)" onclick="toggleGroup(this)">
+<span>📕 융합선택</span><span class="arrow">▼</span>
+</div>
+<div class="curri-group-body">
+<div class="curri-subject">독서토론과 글쓰기 <span class="tag" style="background:rgba(180,83,9,.08);color:var(--orange)">전 계열</span></div>
+<div class="curri-subject">매체 의사소통 <span class="tag" style="background:rgba(180,83,9,.08);color:var(--orange)">전 계열</span></div>
+<div class="curri-subject">언어생활 탐구 <span class="tag" style="background:rgba(180,83,9,.08);color:var(--orange)">전 계열</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- STEPS -->
+<section class="steps-section" id="steps">
+<div class="section-inner reveal">
+<span class="section-tag">PROGRAM</span>
+<div class="section-title">국어 성적 향상 4단계 프로그램</div>
+<p class="section-desc">체계적인 독해 훈련과 영역별 전문 수업으로 내신 1등급과 수능 국어 고득점을 확실하게!</p>
+<div class="steps-flow">
+<div class="step-card"><div class="step-num">1</div><h4>진단평가</h4><p>독해력·어휘력 수준 파악<br>맞춤 레벨 배치</p></div>
+<div class="step-arrow">→</div>
+<div class="step-card"><div class="step-num">2</div><h4>기초 완성</h4><p>독서·문법·문학 기본기<br>영역별 핵심 정리</p></div>
+<div class="step-arrow">→</div>
+<div class="step-card"><div class="step-num">3</div><h4>실전 훈련</h4><p>기출 분석·서술형 첨삭<br>학교별 맞춤 대비</p></div>
+<div class="step-arrow">→</div>
+<div class="step-card"><div class="step-num">4</div><h4>국어 1등급</h4><p>내신+수능 완성<br>국어 자신감 UP</p></div>
+</div>
+</div>
+</section>
+
+<!-- 2028 수능 변경 -->
+<section class="change-section" id="change">
+<div class="section-inner reveal">
+<span class="section-tag">2028 SUNEUNG</span>
+<div class="section-title">2028 수능 국어, 이렇게 바뀝니다!</div>
+<p class="section-desc">독서+작문 통합 · 문법 필수 출제 · 매체 영역 신설 · 전 영역 공통 출제</p>
+<div class="change-compare">
+<div class="change-card before">
+<div class="change-card-header">기존 수능 (2015 개정)</div>
+<div class="change-item"><strong>공통:</strong> 독서, 문학</div>
+<div class="change-item"><strong>선택 1:</strong> 화법과 작문</div>
+<div class="change-item"><strong>선택 2:</strong> 언어와 매체</div>
+<div class="change-item" style="color:var(--red)">→ 선택 과목에 따라 유불리 발생</div>
+<div class="change-item" style="color:var(--red)">→ 문법은 선택 시에만 출제</div>
+</div>
+<div class="change-arrow-col">→</div>
+<div class="change-card after">
+<div class="change-card-header">2028 수능 (2022 개정)</div>
+<div class="change-item highlight">전 과목 공통 출제!</div>
+<div class="change-item">① 화법과 언어 (필수)</div>
+<div class="change-item">② 독서와 작문 (필수)</div>
+<div class="change-item">③ 문학 (필수)</div>
+<div class="change-item highlight">→ 선택 없이 모두 준비해야!</div>
+<div class="change-item highlight">→ 문법 필수 포함!</div>
+</div>
+</div>
+<div class="change-keys">
+<div class="change-key">독서+작문 통합</div>
+<div class="change-key">문법 필수 출제</div>
+<div class="change-key">매체 영역 신설</div>
+<div class="change-key">전 영역 공통 출제</div>
+</div>
+</div>
+</section>
+
+<!-- MANAGEMENT -->
+<section class="mgmt-section" id="mgmt">
+<div class="section-inner reveal">
+<span class="section-tag">MANAGEMENT</span>
+<div class="section-title">고등부 국어 학사관리 시스템</div>
+<p class="section-desc">레벨업/다운 시스템 | 학력평가 기반 분기별 레벨 조정 (연 4회: 3월, 7월, 9월, 12월)</p>
+<div class="mgmt-grid">
+<div class="mgmt-card"><div class="icon">📋</div><h4>출석</h4><p>담임 체크 → 테스트 → TM → 담임 확인<br>(수업 후: 과제 및 보충 내용 점검)</p></div>
+<div class="mgmt-card"><div class="icon">📝</div><h4>과제</h4><p>매일 지문 독해 + 어휘 학습 + 문법 연습<br>수업 전 제출 → 검사 → 결과 앱 공지</p></div>
+<div class="mgmt-card"><div class="icon">📚</div><h4>수업</h4><p>지문 분석 → 개념 강의 → 문제풀이<br>독해·문법·문학 영역별 심화 수업</p></div>
+<div class="mgmt-card"><div class="icon">✍️</div><h4>서술형</h4><p>서술형 문제 1:1 개별 첨삭 관리<br>논리적 글쓰기 훈련 → 내신 서술형 완벽 대비</p></div>
+<div class="mgmt-card"><div class="icon">📊</div><h4>평가</h4><p>주간 테스트: 매주 영역별 성취도 평가<br>학력평가: 분기별 종합 평가 실시</p></div>
+<div class="mgmt-card"><div class="icon">💬</div><h4>케어</h4><p>비문학 독해 부족 시 보충 강의 제공<br>학부모 성적 문자 발송 시스템</p></div>
+</div>
+</div>
+</section>
+
+<!-- GRADE TABS -->
+<section class="grade-section" id="grade">
+<div class="section-inner reveal">
+<span class="section-tag">BY GRADE</span>
+<div class="section-title">학년별 국어 커리큘럼</div>
+<p class="section-desc">2022 개정 교육과정 기반 학년별·수준별 맞춤 수업</p>
+<div class="grade-tabs">
+<div class="grade-tab active" onclick="switchGrade(0)">고1</div>
+<div class="grade-tab" onclick="switchGrade(1)">고2</div>
+<div class="grade-tab" onclick="switchGrade(2)">고3</div>
+</div>
+<!-- 고1 -->
+<div class="grade-panel active" id="grade0">
+<div class="grade-info">
+<div class="grade-info-card"><h4>공통국어1</h4><p>듣기·말하기, 읽기, 쓰기, 문법 기초 — 국어의 기본 역량을 다지는 핵심 과목</p></div>
+<div class="grade-info-card"><h4>공통국어2</h4><p>문학, 매체 — 독해력 기본 완성 및 다양한 텍스트 이해 능력 배양</p></div>
+<div class="grade-info-card"><h4>내신 대비</h4><p>교과서 지문 분석, 서술형 완벽 대비 — 학교별 맞춤 내신 전략 수립</p></div>
+</div>
+<div class="grade-chart-box"><h4>고1 학습 영역 비중</h4><canvas id="radarChart0"></canvas></div>
+</div>
+<!-- 고2 -->
+<div class="grade-panel" id="grade1">
+<div class="grade-info">
+<div class="grade-info-card"><h4>화법과 언어</h4><p>화법 실전 + 문법 심화 — 어법·표현 완성, 듣기·말하기 전략 학습</p></div>
+<div class="grade-info-card"><h4>독서와 작문</h4><p>비문학 독해 훈련 + 글쓰기 실습 — 다양한 제재의 지문 분석 능력 강화</p></div>
+<div class="grade-info-card"><h4>문학</h4><p>시·소설 감상·비평 — 갈래별 핵심 정리 및 작품 분석 역량 심화</p></div>
+</div>
+<div class="grade-chart-box"><h4>고2 학습 영역 비중</h4><canvas id="radarChart1"></canvas></div>
+</div>
+<!-- 고3 -->
+<div class="grade-panel" id="grade2">
+<div class="grade-info">
+<div class="grade-info-card"><h4>수능 독서</h4><p>EBS 연계 학습 + 고난도 지문 분석 — 시간 내 정확한 독해 전략 훈련</p></div>
+<div class="grade-info-card"><h4>수능 문학+문법</h4><p>기출 패턴 분석 + 변형 문제 훈련 — 수능 고득점을 위한 실전 대비</p></div>
+<div class="grade-info-card"><h4>Final 특강</h4><p>직전 대비 특강 + 취약 유형 집중 — 마지막 점검으로 완벽 마무리</p></div>
+</div>
+<div class="grade-chart-box"><h4>고3 학습 영역 비중</h4><canvas id="radarChart2"></canvas></div>
+</div>
+</div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+<div class="section-inner reveal">
+<span class="section-tag">WEEKLY PLAN</span>
+<div class="section-title">내신관리 주차별 수업내용</div>
+<p class="section-desc">학교별 기출 DB를 기반으로 맞춤형 국어 내신 대비를 제공합니다</p>
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-dot"></div>
+<div class="tl-content">
+<div class="tl-week">1~2주차</div>
+<h4>단원별 내신 대비 강좌</h4>
+<ul>
+<li>교과서 지문 정밀 분석 및 핵심 개념 강의</li>
+<li>문법·어휘 포인트 정리 및 서술형 유형 훈련</li>
+<li>매주 내신 실전 테스트 + 서술형 1:1 첨삭</li>
+<li>테스트 저조 학생 → 개별 보충으로 핵심 내용 숙달</li>
+</ul>
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-dot"></div>
+<div class="tl-content">
+<div class="tl-week">3주차</div>
+<h4>내신 전범위 점검 및 확인</h4>
+<ul>
+<li>최신 기출 분석 → 학교별 출제 경향에 맞춘 모의고사</li>
+<li>교과서 외 연계 지문 분석 및 변형 문제 훈련</li>
+<li>'적중 N제'를 통한 자주 출제되는 유형 확인 점검</li>
+</ul>
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-dot"></div>
+<div class="tl-content">
+<div class="tl-week">4주차</div>
+<h4>최종 점검</h4>
+<ul>
+<li>D-5, D-1일: 학생 개개인 필요 유형 개별 첨삭 및 점검</li>
+<li>서술형 최종 모의 + 문법 핵심 총정리</li>
+<li>직전 보충으로 완벽한 시험 대비 마무리</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- TIPS -->
+<section class="tips-section" id="tips">
+<div class="section-inner reveal">
+<span class="section-tag">STUDY TIPS</span>
+<div class="section-title">국어 성적 향상을 위한 10가지 학습법</div>
+<p class="section-desc">시대학원이 추천하는 국어 공부의 핵심 전략</p>
+<div class="tips-grid">
+<div class="tip-card"><div class="tip-num">01</div><h5>매일 지문 독해 연습!</h5><p>하루 2~3개 비문학 지문을 읽고 구조를 파악하는 습관</p></div>
+<div class="tip-card"><div class="tip-num">02</div><h5>어휘력을 키워라!</h5><p>모르는 어휘는 반드시 사전을 찾아 정리. 어휘력이 곧 독해력</p></div>
+<div class="tip-card"><div class="tip-num">03</div><h5>문법은 원리부터!</h5><p>음운·형태·통사·의미 등 체계적 이해로 원리를 파악</p></div>
+<div class="tip-card"><div class="tip-num">04</div><h5>문학 작품을 즐겨라!</h5><p>교과서 수록 작품을 꼼꼼히 읽고 작가의 의도와 표현 기법을 분석</p></div>
+<div class="tip-card"><div class="tip-num">05</div><h5>서술형은 구조가 핵심!</h5><p>논점 → 근거 → 정리의 3단 구조를 익혀 논리적 서술 능력 UP</p></div>
+<div class="tip-card"><div class="tip-num">06</div><h5>오답 분석을 습관화!</h5><p>틀린 문제의 원인을 분석하고 오답노트로 취약점 보완</p></div>
+<div class="tip-card"><div class="tip-num">07</div><h5>기출문제로 감 잡자!</h5><p>수능·모의고사 기출 분석으로 출제 경향과 함정 유형 파악</p></div>
+<div class="tip-card"><div class="tip-num">08</div><h5>글쓰기를 꾸준히!</h5><p>매주 한 편 이상 글쓰기 연습 → 작문 실력이 내신+수능의 핵심</p></div>
+<div class="tip-card"><div class="tip-num">09</div><h5>매체 리터러시 강화!</h5><p>뉴스·광고·SNS 등 다양한 매체 텍스트를 비판적으로 분석</p></div>
+<div class="tip-card"><div class="tip-num">10</div><h5>독서가 국어의 왕도!</h5><p>다양한 분야의 독서 → 배경지식 확장 → 비문학 독해와 논술에 직결</p></div>
+</div>
+</div>
+</section>
+
+<!-- ESSAY -->
+<section class="essay-section">
+<div class="section-inner reveal">
+<span class="section-tag">인문논술</span>
+<div class="section-title">인문논술 단계별 커리큘럼</div>
+<p class="section-desc">심층면접 대비: 인문학적 소양 + 제시문 기반 면접 (의·치·한의대/최상위대학) 과정 별도 운영</p>
+<div class="essay-grid">
+<div class="essay-card">
+<div class="essay-step">STEP 01</div>
+<h4>논술 기초 다지기</h4>
+<p>논증적 글쓰기 기본 구조 학습<br>제시문 분석 방법 및 논리적 사고 훈련</p>
+<div class="essay-dur">8주 완성</div>
+</div>
+<div class="essay-card">
+<div class="essay-step">STEP 02</div>
+<h4>주제별 인문논술</h4>
+<p>인문·사회 분야 주제별 제시문 분석 및 논술 실습<br>수준별 반편성 / 첨삭 병행</p>
+<div class="essay-dur">16주 완성</div>
+</div>
+<div class="essay-card">
+<div class="essay-step">STEP 03</div>
+<h4>실전 논술</h4>
+<p>대학별 기출문제 풀이 + 1:1 첨삭 진행<br>논술전형 지원이 확정된 학생 대상</p>
+<div class="essay-dur">8주 완성</div>
+</div>
+<div class="essay-card">
+<div class="essay-step">STEP 04</div>
+<h4>대학별 Final</h4>
+<p>대학별 기출 3~5개년 집중 훈련<br>모의 논술 + 시간 관리 실전 연습</p>
+<div class="essay-dur">대학별 회차</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+<div class="section-inner reveal">
+<span class="section-tag">CONTACT</span>
+<div class="section-title">국어의 자신감,<br>시대학원에서 시작하세요!</div>
+<div class="contact-cards">
+<div class="contact-card">
+<div class="emoji">📍</div>
+<h4>찾아오시는 길</h4>
+<p>고양시 덕양구 백양로51<br>네이버타운 8층</p>
+</div>
+<div class="contact-card">
+<div class="emoji">📞</div>
+<h4>상담 문의</h4>
+<p><strong>031-0978-1117</strong><br>언제든 상담 가능합니다</p>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="footer"><p>© 2025 시대학원 · 2022 개정 교육과정 완벽 대비 · 내신 + 수능 + 인문논술 · 학년별·수준별 맞춤 수업</p></footer>
+
+<script>
+// Scroll reveal
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Curriculum toggle
+function toggleGroup(el){
+el.classList.toggle('open');
+el.nextElementSibling.classList.toggle('open');
+}
+
+// Grade tabs
+let radarCharts=[null,null,null];
+function switchGrade(idx){
+document.querySelectorAll('.grade-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+document.querySelectorAll('.grade-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+if(!radarCharts[idx])createRadar(idx);
+}
+
+// Doughnut Chart
+const doughnutCtx=document.getElementById('curriChart').getContext('2d');
+new Chart(doughnutCtx,{
+type:'doughnut',
+data:{
+labels:['공통국어1','공통국어2','화법과 언어','독서와 작문','문학','주제탐구독서','문학과영상','독서토론과글쓰기','매체의사소통'],
+datasets:[{
+data:[4,4,4,4,4,4,4,4,4],
+backgroundColor:['#6D1A36','#8B2E4F','#1E40AF','#2563EB','#3B82F6','#166534','#15803D','#B45309','#D97706'],
+borderWidth:2,borderColor:'#fff',hoverOffset:12
+}]
+},
+options:{
+responsive:true,
+plugins:{
+legend:{position:'bottom',labels:{font:{family:'Noto Sans KR',size:11},padding:10,usePointStyle:true,pointStyleWidth:10}},
+tooltip:{
+backgroundColor:'rgba(61,15,30,.9)',titleFont:{family:'Noto Sans KR',weight:'bold'},bodyFont:{family:'Noto Sans KR'},
+callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}학점`}
+}
+}
+}
+});
+
+// Radar Charts data
+const radarData=[
+{labels:['듣기·말하기','읽기','쓰기','문법','문학','매체'],data:[70,80,75,65,80,60],color:'#6D1A36'},
+{labels:['화법','문법','독해','작문','문학감상','문학비평'],data:[80,85,90,80,85,75],color:'#1E40AF'},
+{labels:['수능독서','수능문학','수능문법','EBS연계','실전모의','취약보완'],data:[95,90,85,90,95,80],color:'#B91C1C'}
+];
+
+function createRadar(idx){
+const ctx=document.getElementById('radarChart'+idx).getContext('2d');
+radarCharts[idx]=new Chart(ctx,{
+type:'radar',
+data:{
+labels:radarData[idx].labels,
+datasets:[{
+label:['고1','고2','고3'][idx]+' 학습 비중',
+data:radarData[idx].data,
+backgroundColor:radarData[idx].color+'20',
+borderColor:radarData[idx].color,
+borderWidth:2,
+pointBackgroundColor:radarData[idx].color,
+pointRadius:5,pointHoverRadius:7
+}]
+},
+options:{
+responsive:true,
+scales:{r:{beginAtZero:true,max:100,ticks:{display:false,stepSize:20},grid:{color:'rgba(0,0,0,.06)'},angleLines:{color:'rgba(0,0,0,.06)'},pointLabels:{font:{family:'Noto Sans KR',size:11,weight:'600'},color:'#374151'}}},
+plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(61,15,30,.9)',titleFont:{family:'Noto Sans KR'},bodyFont:{family:'Noto Sans KR'}}}
+}
+});
+}
+createRadar(0);
+
+// Smooth scroll for nav
+document.querySelectorAll('.nav-links a').forEach(a=>{
+const href=a.getAttribute('href');
+if(href&&href.startsWith('#')){
+a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(href);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})});
+}
+});
+</script>
+</body>
+</html>
