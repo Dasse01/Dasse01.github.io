@@ -790,23 +790,28 @@ footer a{color:var(--gray);text-decoration:none}
 
 /* Mobile */
 /* Mobile hamburger */
-.nav-burger{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
+.nav-burger{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;z-index:1002}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:all .3s}
 .nav-burger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 .nav-burger.open span:nth-child(2){opacity:0}
 .nav-burger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mob-backdrop{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1000}
+.mob-backdrop.show{display:block}
 @media(max-width:768px){
+  .nav{padding:0.6rem 1rem}
   .nav-burger{display:flex}
-  .nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:999;padding:60px 24px}
-  .nav-links.mob-open{display:flex}
-  .nav-links>a,.nav-drop-btn{font-size:1rem!important;padding:10px 16px!important}
-  .nav-dropdown{width:100%;text-align:center}
-  .nav-drop-btn{width:100%;justify-content:center}
-  .nav-drop-menu{position:static!important;transform:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;display:none;background:rgba(30,30,30,.8)!important;border:none!important;box-shadow:none!important;width:100%;border-radius:8px!important;margin-top:4px}
-  .nav-drop-menu::before{display:none}
+  .nav-links{visibility:hidden;opacity:0;pointer-events:none;position:fixed;top:0;right:0;width:240px;height:100vh;background:#08080e;border-left:1px solid rgba(255,255,255,.08);flex-direction:column;align-items:stretch;gap:0;z-index:1001;padding:52px 0 24px;overflow-y:auto;box-shadow:-8px 0 30px rgba(0,0,0,.5);transform:translateX(100%);transition:transform .3s ease,visibility .3s,opacity .3s}
+  .nav-links.mob-open{visibility:visible;opacity:1;pointer-events:auto;transform:translateX(0)}
+  .nav-links>a,.nav-drop-btn{font-size:.72rem!important;padding:10px 16px!important;width:100%;text-align:left;border-bottom:1px solid rgba(255,255,255,.04)}
+  .nav-dropdown{width:100%}
+  .nav-drop-btn{justify-content:flex-start!important}
+  .nav-drop-menu{position:static!important;transform:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;display:none;background:#0e0e18!important;border:none!important;box-shadow:none!important;width:100%;border-radius:0!important;margin:0;padding:4px 0!important;min-width:0}
+  .nav-drop-menu::before{display:none!important}
   .nav-dropdown.mob-expanded .nav-drop-menu{display:block}
-  .nav-drop-menu a{text-align:center!important;font-size:.9rem!important}
-  .nav-cta,.nav-susi,.nav-ai,.nav-blog,.nav-exam-btn{font-size:.9rem!important}
+  .nav-dropdown:hover .nav-drop-menu{display:none}
+  .nav-dropdown.mob-expanded:hover .nav-drop-menu{display:block}
+  .nav-drop-menu a{text-align:left!important;font-size:.68rem!important;padding:8px 24px!important;border-radius:0!important}
+  .nav-cta,.nav-susi,.nav-ai,.nav-blog,.nav-exam-btn{font-size:.72rem!important;text-align:left;display:block;width:100%;border-radius:0!important;margin:0!important;border:none!important;border-bottom:1px solid rgba(255,255,255,.04)!important;padding:10px 16px!important}
   .reality-grid{grid-template-columns:1fr}
   .whatis-features{grid-template-columns:1fr}
   .uni-grid{grid-template-columns:repeat(3,1fr)}
@@ -868,8 +873,7 @@ footer a{color:var(--gray);text-decoration:none}
     <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="nav-cta">상담신청</a>
   </div>
 </nav>
-
-<!-- Hero Banner -->
+<div class="mob-backdrop" id="mobBackdrop"></div>
 <section class="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-streak ls1"></div>
@@ -2125,26 +2129,21 @@ function toggleTool(type){
 (function(){
   var burger=document.getElementById('navBurger');
   var links=document.getElementById('navLinks');
+  var backdrop=document.getElementById('mobBackdrop');
   if(!burger||!links)return;
+  function openMenu(){burger.classList.add('open');links.classList.add('mob-open');if(backdrop)backdrop.classList.add('show');document.body.style.overflow='hidden'}
+  function closeMenu(){burger.classList.remove('open');links.classList.remove('mob-open');if(backdrop)backdrop.classList.remove('show');document.body.style.overflow=''}
   burger.addEventListener('click',function(){
-    burger.classList.toggle('open');
-    links.classList.toggle('mob-open');
+    if(links.classList.contains('mob-open'))closeMenu();else openMenu();
   });
-  // 드롭다운 클릭 토글 (모바일)
+  if(backdrop)backdrop.addEventListener('click',closeMenu);
   links.querySelectorAll('.nav-dropdown').forEach(function(dd){
     dd.querySelector('.nav-drop-btn').addEventListener('click',function(e){
-      if(window.innerWidth<=768){
-        e.preventDefault();
-        dd.classList.toggle('mob-expanded');
-      }
+      if(window.innerWidth<=768){e.preventDefault();dd.classList.toggle('mob-expanded')}
     });
   });
-  // 링크 클릭 시 메뉴 닫기
   links.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click',function(){
-      burger.classList.remove('open');
-      links.classList.remove('mob-open');
-    });
+    a.addEventListener('click',closeMenu);
   });
 })();
 </script>
