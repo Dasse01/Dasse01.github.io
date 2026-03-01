@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국어 내신 기출 분석</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Noto Sans KR',sans-serif;background:#0a0e1a;color:#e2e8f0;line-height:1.6}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,10,20,.92);backdrop-filter:blur(12px);border-bottom:1px solid #1e293b;padding:0;display:flex;align-items:center;height:44px}
+.top-nav-inner{max-width:1300px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.top-nav-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:#fbbf24;font-size:14px;font-weight:800;letter-spacing:-.3px}
+.top-nav-brand span{color:#94a3b8;font-size:11px;font-weight:400}
+.top-nav-links{display:flex;align-items:center;gap:4px}
+.top-nav-links a{color:#94a3b8;text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:6px;transition:all .2s;white-space:nowrap}
+.top-nav-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+.top-nav-links a.active{color:#38bdf8;background:rgba(56,189,248,.1);font-weight:700}
+.top-nav-links a.home-btn{color:#fbbf24;border:1px solid rgba(251,191,36,.25);background:rgba(251,191,36,.06)}
+.top-nav-links a.home-btn:hover{background:rgba(251,191,36,.15);color:#fcd34d}
+#app{padding-top:44px}
+.header{text-align:center;padding:48px 20px 36px;background:linear-gradient(135deg,#0a0e1a,#131b30,#0a0e1a);border-bottom:1px solid #1e293b}
+.badge{display:inline-block;padding:5px 16px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);border-radius:50px;font-size:12px;color:#38bdf8;margin-bottom:16px}
+.header h1{font-size:36px;font-weight:900;color:#fff;margin-bottom:8px}
+.header p{font-size:14px;color:#94a3b8;margin-bottom:20px}
+.stats{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.stats div{text-align:center}
+.stats b{display:block;font-size:26px;color:#38bdf8}
+.stats small{font-size:11px;color:#64748b}
+.wrap{max-width:1300px;margin:0 auto;padding:20px 16px 60px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #1e293b}
+.fbtn{padding:6px 16px;border-radius:50px;border:1px solid #1e293b;background:none;color:#94a3b8;font-size:13px;cursor:pointer;font-family:inherit}
+.fbtn:hover{border-color:#38bdf8;color:#38bdf8}
+.fbtn.on{background:#38bdf8;color:#0a0e1a;border-color:#38bdf8;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(370px,1fr));gap:16px}
+.card{background:#111827;border:1px solid #1e293b;border-radius:14px;padding:22px;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.3);border-color:rgba(56,189,248,.3)}
+.card .top-line{position:absolute;top:0;left:0;right:0;height:3px}
+.card .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.card .num{font-size:12px;font-weight:800;color:#64748b}
+.card .tp{padding:2px 10px;border-radius:50px;font-size:11px;font-weight:700}
+.card .nm{font-size:20px;font-weight:900;color:#fff;margin-bottom:3px}
+.card .loc{font-size:11px;color:#64748b;margin-bottom:12px}
+.mets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.met{background:rgba(255,255,255,.03);border-radius:8px;padding:8px 4px;text-align:center}
+.met b{display:block;font-size:15px;font-weight:800}
+.met small{font-size:9px;color:#64748b}
+.brow{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.brow .bl{width:36px;text-align:right;font-size:10px;color:#64748b;flex-shrink:0}
+.brow .bt{flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden}
+.brow .bf{height:100%;border-radius:3px}
+.brow .bv{width:28px;font-size:10px;font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{padding:2px 7px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:4px;font-size:10px;color:#64748b}
+.hint{font-size:10px;color:#38bdf8;text-align:right;margin-top:6px;opacity:.5}
+/* Detail Page */
+.detail{display:none;min-height:100vh}
+.detail.show{display:block}
+.list-view.hide{display:none}
+.back-bar{position:sticky;top:44px;z-index:10;background:#0f172a;border-bottom:1px solid #1e293b;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.back-btn{background:none;border:1px solid #334155;border-radius:8px;color:#94a3b8;padding:6px 14px;cursor:pointer;font-size:13px;font-family:inherit}
+.back-bar .dn{font-size:16px;font-weight:800;color:#fff}
+.det-wrap{max-width:800px;margin:0 auto;padding:20px 16px 60px}
+.det-hero{background:#111827;border-radius:14px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden}
+.det-hero .top-line{position:absolute;top:0;left:0;right:0;height:3px}
+.sec{margin-bottom:20px}
+.sec-t{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.sec-t i{width:4px;height:16px;border-radius:2px;background:#38bdf8;display:inline-block}
+.sec-t span{font-size:15px;font-weight:800;color:#38bdf8}
+.sec-box{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:18px}
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ii{background:rgba(255,255,255,.03);border-radius:8px;padding:10px 12px}
+.ii small{display:block;font-size:10px;color:#64748b}
+.ii b{font-size:13px;font-weight:700;color:#fff}
+.dbar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.dbar .dl{width:80px;text-align:right;font-size:12px;color:#94a3b8;flex-shrink:0}
+.dbar .dt{flex:1;height:20px;background:rgba(255,255,255,.05);border-radius:5px;overflow:hidden}
+.dbar .df{height:100%;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:10px;font-weight:700;color:#fff;min-width:24px}
+.killer{background:rgba(255,255,255,.03);border:1px solid #1e293b;border-radius:10px;padding:14px;margin-bottom:8px;position:relative}
+.killer .kr{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.killer .kn{width:22px;height:22px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.killer .kt{font-size:13px;font-weight:800;color:#fff}
+.killer .kd{font-size:12px;color:#94a3b8;line-height:1.5}
+.strat{background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:12px 14px;margin-bottom:6px;font-size:13px}
+.strat em{color:#38bdf8;font-weight:700;font-style:normal}
+.insight-box{background:linear-gradient(135deg,rgba(56,189,248,.07),rgba(167,139,250,.07));border:1px solid rgba(56,189,248,.2);border-radius:12px;padding:18px;font-size:13px;line-height:1.8}
+.bottom-back{width:100%;padding:14px;background:#1e293b;border:none;border-radius:10px;color:#94a3b8;font-size:14px;cursor:pointer;margin-top:16px;font-family:inherit}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.header h1{font-size:28px}.stats{gap:20px}.ig{grid-template-columns:1fr 1fr}}
+
+#mapSection{max-width:1300px;margin:0 auto;padding:0 16px 12px}
+#mapToggle{width:100%;padding:10px 16px;background:#111827;border:1px solid #1e293b;border-radius:10px;color:#94a3b8;font-size:13px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+#mapToggle:hover{border-color:#38bdf8;color:#38bdf8}
+#mapToggle .arrow{transition:transform .3s}
+#mapToggle.open .arrow{transform:rotate(180deg)}
+#mapWrap{height:0;overflow:hidden;transition:height .4s ease;border-radius:12px}
+#mapWrap.open{height:420px;border:1px solid #1e293b}
+#mapContainer{width:100%;height:420px}
+.leaflet-popup-content-wrapper{background:#111827!important;color:#e2e8f0!important;border:1px solid #1e293b!important;border-radius:10px!important;box-shadow:0 8px 25px rgba(0,0,0,.4)!important}
+.leaflet-popup-tip{background:#111827!important}
+.leaflet-popup-content{margin:10px 14px!important;font-family:-apple-system,'Noto Sans KR',sans-serif!important}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">시대학원 <span>약술형 논술 전문</span></a>
+    <div class="top-nav-links">
+      <a href="index.html" class="home-btn">🏠 메인</a>
+      <a href="국어내신기출분석.html" class="active">📖 국어 기출분석</a>
+      <a href="수학내신기출분석.html">📐 수학 기출분석</a>
+      <a href="2027_수시지원전략.html">🔥 수시전략</a>
+      <a href="https://blog.naver.com/study9781117" target="_blank" style="color:#22c55e;border:1px solid rgba(34,197,94,.25);background:rgba(34,197,94,.06)">📝 블로그</a>
+    </div>
+  </div>
+</div>
+<div id="app">
+  <div class="list-view" id="listView">
+    <div class="header">
+      <div class="badge">2027학년도 대입 대비 · 시대아카데미 AI 입시연구소</div>
+      <h1>국어 내신 기출 분석</h1>
+      <p>고양·파주·김포·동두천 17개교 — 카드를 터치하면 상세 분석 페이지로 이동합니다.</p>
+      <div class="stats"><div><b>17</b><small>분석 학교</small></div><div><b>34</b><small>생성 파일</small></div><div><b>12</b><small>일반고</small></div><div><b>5</b><small>특목·자공고</small></div></div>
+    </div>
+    
+    <div id="mapSection">
+      <button id="mapToggle">🗺️ 학교 위치 지도 보기 <span class="arrow">▼</span></button>
+      <div id="mapWrap"><div id="mapContainer"></div></div>
+    </div>
+    <div class="wrap">
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </div>
+  <div class="detail" id="detailView"></div>
+</div>
+<script>
+var D=[
+{n:1,nm:"행신고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 행신로 137",es:"1990",st:987,sm:512,sf:475,te:72,tm:28,tf:44,cl:"36학급 (학급당 27명)",cu:"85~90",ca:87.5,li:35,no:30,gr:20,sp:15,ey:"18~23%",tb:48,eb:20,pr:15,mk:17,
+eS:["25~28문항","70분","17~20(60~68%)","2~3(8~12%)","3~4(18~23%)"],
+lS:["현대시 28%","고전시가 18%","현대소설 32%","고전소설 22%"],
+nS:["내용이해 30%","추론·적용 28%","구조분석 24%","어휘·맥락 18%"],
+gS:["음운 변동 ★★★ 수능형 복합","형태소 분석 ★★★ 단어+품사","문장 성분 ★★☆ 주성분·부속","품사 분류 ★★☆ 기본+응용","높임법·피사동 ★★☆ 기본","국어사 ★☆☆ 기본"],
+kl:[["수능형 모의고사 변형","모의고사·사관학교 기출 변형. 지문 유지+선지 변형."],["적용형 비문학 서술형","비문학→새 사례 적용. 독해+응용 복합."],["문법 복합 서술형","음운변동+형태소 복합. 과정 서술 필수."],["시 감상 복합형","현대시 화자+표현법+구조. 수능형 선지."],["고전소설 원문 해석형","원문 현대어 풀이+인물 심리 복합."]],
+sr:["수능형 모의고사 변형 집중: 6·9월 모고+사관학교 변형","적용형 비문학 서술형 코칭: 지문→사례 적용 서술","문법 복합(음운변동+형태소) 과정 서술 반복","1등급 컷 85~90 덕양구 상위: 987명 중 약 13명"],
+in:"행신고는 1990년 개교 덕양구 상위권(987명). 수능형 모의고사 변형과 적용형 비문학 서술형이 핵심. 교과서 48%+EBS 20%+모의고사 17%. 1등급 컷 85~90.",
+g1:"88~90",g2:"85~88",g3:"83~86",tg:["수능형 모의고사 변형","적용형 비문학","덕양구 상위권"]},
+{n:2,nm:"화정고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 화정로 51",es:"1995",st:892,sm:458,sf:434,te:68,tm:25,tf:43,cl:"33학급 (학급당 27명)",cu:"83~88",ca:85.5,li:34,no:28,gr:22,sp:16,ey:"18~23%",tb:50,eb:18,pr:15,mk:17,
+eS:["25~28문항","70분","17~20(62~70%)","2~3(8~12%)","3~4(18~23%)"],
+lS:["현대시 27%","고전시가 20%","현대소설 30%","고전소설 23%"],
+nS:["내용이해 32%","추론·적용 25%","구조분석 25%","어휘·맥락 18%"],
+gS:["음운 변동 ★★★ 심화","형태소 분석 ★★★ 복합형","문장 성분 ★★★ 겹문장 심화","품사 분류 ★★☆ 기본","높임법·피사동 ★★☆ 기본","국어사 ★★☆ 중세국어"],
+kl:[["문법 심화 복합형","음운변동+형태소+문장성분 복합. 문법 22%."],["교과서 본문 심화 변형","교과서 50%이나 심화 적용형."],["고전시가 원문 해석형","고전시가 20%. 원문+표현법 복합."],["비문학 구조분석형","논리구조 파악+요약 서술."],["현대소설 인물심리형","서술시점+인물심리+갈등 복합."]],
+sr:["문법 22% 심화: 음운변동+형태소+문장성분","교과서 50% 심화 변형 대비","고전시가 20% 원문 해석 훈련","1등급 컷 83~88: 892명 중 약 12명"],
+in:"화정고는 1995년 개교 덕양구 중상위(892명). 교과서 충실형+문법 심화 22%가 핵심. 1등급 컷 83~88.",
+g1:"86~88",g2:"83~86",g3:"81~84",tg:["교과서 충실형","문법 22% 심화","고전시가 높음"]},
+{n:3,nm:"화수고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 화중로 72",es:"2003",st:756,sm:392,sf:364,te:62,tm:22,tf:40,cl:"28학급 (학급당 27명)",cu:"82~87",ca:84.5,li:33,no:29,gr:22,sp:16,ey:"18~22%",tb:48,eb:20,pr:15,mk:17,
+eS:["25~28문항","70분","18~21(64~72%)","2~3(8~10%)","3~4(18~22%)"],lS:["현대시 27%","고전시가 19%","현대소설 31%","고전소설 23%"],nS:["내용이해 30%","추론·적용 27%","구조분석 25%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 복합","형태소 분석 ★★☆ 기본+심화","문장 성분 ★★☆ 표준","품사 분류 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★★☆ 중세국어"],
+kl:[["교과서+EBS 혼합 변형","교과서 48%+EBS 20% 혼합 교차 비교."],["문법 강조 서술형","문법 22%. 음운변동 과정 서술."],["비문학 추론형","추론·적용 27%. 지문 응용."],["현대소설 주제의식형","소설 31%. 주제+사회적 맥락."],["고전시가 해석형","원문 해석+감상 복합."]],
+sr:["교과서+EBS 혼합 변형 대비","문법 22% 음운변동+형태소","비문학 추론 27%","1등급 컷 82~87: 756명 중 약 10명"],in:"화수고는 2003년 개교(756명). 교과서+EBS 균형+문법 22%. 1등급 컷 82~87.",g1:"85~87",g2:"82~85",g3:"80~83",tg:["교과서+EBS 혼합","문법 강조","화정권"]},
+{n:4,nm:"능곡고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 능곡로 51",es:"1988",st:678,sm:352,sf:326,te:58,tm:20,tf:38,cl:"26학급 (학급당 26명)",cu:"80~85",ca:82.5,li:33,no:28,gr:23,sp:16,ey:"17~22%",tb:52,eb:17,pr:14,mk:17,
+eS:["25~28문항","70분","18~21(65~72%)","2~3(8~10%)","3~4(17~22%)"],lS:["현대시 26%","고전시가 20%","현대소설 30%","고전소설 24%"],nS:["내용이해 33%","추론·적용 24%","구조분석 25%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 시리즈 최고","형태소 분석 ★★★ 복합형","문장 성분 ★★★ 겹문장","품사 분류 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★★☆ 중세국어"],
+kl:[["문법 23% 시리즈 최고","17개교 중 최고. 음운변동+형태소+문장성분 ★★★."],["교과서 52% 최고 의존","시리즈 최고 교과서 의존."],["고전문학 44%","고전시가 20%+고전소설 24%."],["내용이해 33%","기본 독해력 중심."],["서술형 기본형","17~22% 표준 이하."]],
+sr:["문법 23% 올인 대비","교과서 52% 본문 정복","고전문학 44% 원문 해석","1등급 컷 80~85: 678명 중 약 9명"],in:"능곡고는 1988년 개교 전통교(678명). 문법 23%(최고)+교과서 52%(최고). 고전문학 44%.",g1:"83~85",g2:"80~83",g3:"78~81",tg:["문법 23% 최고","교과서 52% 최고","고전문학 44%"]},
+{n:5,nm:"성사고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 성사로 59",es:"1992",st:823,sm:428,sf:395,te:65,tm:24,tf:41,cl:"31학급 (학급당 26명)",cu:"82~87",ca:84.5,li:34,no:29,gr:21,sp:16,ey:"18~23%",tb:49,eb:19,pr:15,mk:17,
+eS:["25~28문항","70분","17~20(62~68%)","2~3(8~12%)","3~4(18~23%)"],lS:["현대시 27%","고전시가 19%","현대소설 31%","고전소설 23%"],nS:["내용이해 30%","추론·적용 27%","구조분석 25%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 복합","형태소 ★★☆ 기본+심화","문장 성분 ★★☆ 표준","품사 분류 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★★☆ 중세국어"],
+kl:[["균형형 출제 패턴","모든 영역 고른 비중. 전방위 대비."],["교과서+EBS 균형","교과서 49%+EBS 19%."],["현대소설 심화형","소설 31%. 서술시점+인물심리."],["문법 음운변동형","★★★ 과정 서술."],["비문학 추론형","추론·적용 27%."]],
+sr:["균형형: 전 영역 고른 학습","교과서 49%+EBS 19% 병행","현대소설 분석 훈련","1등급 컷 82~87: 823명 중 약 11명"],in:"성사고는 1992년 개교(823명). 균형형 출제. 전방위 대비 필요. 1등급 컷 82~87.",g1:"85~87",g2:"82~85",g3:"80~83",tg:["균형형 출제","안정적 패턴","성사동"]},
+{n:6,nm:"고양일고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 고양시청로 10",es:"1985",st:712,sm:370,sf:342,te:60,tm:22,tf:38,cl:"28학급 (학급당 25명)",cu:"80~85",ca:82.5,li:33,no:28,gr:22,sp:17,ey:"17~22%",tb:50,eb:18,pr:15,mk:17,
+eS:["25~28문항","70분","18~21(65~72%)","2~3(8~10%)","3~4(17~22%)"],lS:["현대시 26%","고전시가 20%","현대소설 30%","고전소설 24%"],nS:["내용이해 32%","추론·적용 25%","구조분석 25%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 복합형","형태소 ★★☆ 기본","문장 성분 ★★☆ 겹문장","품사 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★★☆ 중세국어"],
+kl:[["40년 전통 안정 패턴","1985년 개교. 출제 매우 안정."],["교과서 중심 50%","본문 충실 학습 기본."],["문법 22% 강조","음운변동 복합형 ★★★."],["화작 17% 높음","토론·발표 실전형."],["고전문학 44%","고전시가+고전소설 높음."]],
+sr:["40년 전통 기출 패턴 분석","교과서 50%+문법 22%","화작 17% 실전 대비","1등급 컷 80~85: 712명 중 약 10명"],in:"고양일고는 1985년 개교 40년 전통교(712명). 교과서+문법+안정 패턴. 화작 17% 상위.",g1:"83~85",g2:"80~83",g3:"78~81",tg:["40년 전통","교과서 중심","화작 17%"]},
+{n:7,nm:"동산고",ty:"일반고",tc:"#3b82f6",lo:"고양시 일산동구",ad:"경기도 고양시 일산동구 무궁화로 16",es:"2004",st:645,sm:335,sf:310,te:55,tm:20,tf:35,cl:"24학급 (학급당 27명)",cu:"78~83",ca:80.5,li:32,no:28,gr:22,sp:18,ey:"16~21%",tb:50,eb:18,pr:15,mk:17,
+eS:["25~28문항","70분","18~22(66~75%)","2~3(8~10%)","3~4(16~21%)"],lS:["현대시 26%","고전시가 19%","현대소설 31%","고전소설 24%"],nS:["내용이해 32%","추론·적용 24%","구조분석 26%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 복합형","형태소 ★★☆ 기본","문장 성분 ★★☆ 표준","품사 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★☆☆ 기본"],
+kl:[["화작 18% 시리즈 최고","17개교 중 최고. 토론·발표·매체."],["기본 충실형","교과서 50%+EBS 18%."],["서술형 16~21% 낮음","객관식 중심."],["문법 22%","음운변동 ★★★."],["비문학 구조분석형","구조분석 26%."]],
+sr:["화작 18% 최고: 토론·발표 필수","기본 충실형+단계적 심화","문법 음운변동 기본→복합","1등급 컷 78~83: 645명 중 약 9명"],in:"동산고는 2004년 개교(645명). 화작 18%(최고)+기본 충실형. 서술형 낮고 객관식 중심.",g1:"81~83",g2:"78~81",g3:"76~79",tg:["화작 18% 최고","기본 충실형","객관식 중심"]},
+{n:8,nm:"서정고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 서정로 31",es:"1998",st:734,sm:381,sf:353,te:61,tm:23,tf:38,cl:"28학급 (학급당 26명)",cu:"81~86",ca:83.5,li:34,no:29,gr:21,sp:16,ey:"18~23%",tb:48,eb:20,pr:15,mk:17,
+eS:["25~28문항","70분","17~20(62~68%)","2~3(8~12%)","3~4(18~23%)"],lS:["현대시 27%","고전시가 19%","현대소설 31%","고전소설 23%"],nS:["내용이해 30%","추론·적용 27%","구조분석 25%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 복합형","형태소 ★★☆ 기본+심화","문장 성분 ★★☆ 표준","품사 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★★☆ 중세국어"],
+kl:[["EBS 변형 특화","EBS 20%. 수능특강 지문 변형+선지 교체."],["서술형 안정 패턴","18~23% 안정. 유형 예측 가능."],["현대소설 서술시점형","소설 31%. 시점+인물심리."],["문법 음운변동형","★★★ 과정 서술."],["비문학 추론형","추론·적용 27%."]],
+sr:["EBS 수능특강 변형 집중","서술형 안정 패턴 활용","현대소설 서술시점+인물심리","1등급 컷 81~86: 734명 중 약 10명"],in:"서정고는 1998년 개교(734명). EBS 변형 특화+서술형 안정 패턴. 유형 예측 가능. 1등급 컷 81~86.",g1:"84~86",g2:"81~84",g3:"79~82",tg:["EBS 변형 특화","서술형 안정","서정동권"]},
+{n:9,nm:"향동고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 향기3로 6",es:"2021",st:542,sm:275,sf:267,te:64,tm:14,tf:50,cl:"27학급 (학급당 20명, 소규모)",cu:"76~82",ca:79,li:33,no:28,gr:22,sp:17,ey:"25~30%",tb:40,eb:20,pr:20,mk:20,
+eS:["23~26문항","70분","14~17(55~62%)","2~3(8~12%)","4~6(25~30%)"],lS:["현대시 27%","고전시가 18%","현대소설 32%","고전소설 23%"],nS:["내용이해 28%","추론·적용 28%","구조분석 26%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 수능형","형태소 ★★★ 복합형","문장 성분 ★★☆ 표준","품사 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★☆☆ 기본"],
+kl:[["서술형 25~30% 일반고 최고","신설교. 젊은 교사진 수능형."],["소규모 학급(20명)","채점 꼼꼼, 부분점수 세분화."],["교과서 40% 최저","교과서+EBS+프린트+모의 각 20%."],["수능형 문법 복합","음운변동+형태소 ★★★."],["추론형 비문학","추론·적용 28%."]],
+sr:["서술형 25~30% 최고: 전문 코칭 필수","소규모 맞춤 부분점수 전략","교과서+EBS+프린트+모의 균등 대비","1등급 컷 76~82: 542명 중 약 7명"],in:"향동고는 2021년 개교 최신설교(542명). 서술형 25~30%(일반고 최고), 소규모(20명), 교과서 40%(최저). 유동성 최대.",g1:"80~82",g2:"77~80",g3:"75~78",tg:["신설교(2021)","서술형 25~30%","소규모 20명"]},
+{n:10,nm:"신원고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 신원로 95",es:"2000",st:689,sm:358,sf:331,te:58,tm:21,tf:37,cl:"26학급 (학급당 26명)",cu:"79~84",ca:81.5,li:33,no:29,gr:22,sp:16,ey:"18~22%",tb:49,eb:19,pr:15,mk:17,
+eS:["25~28문항","70분","18~21(65~72%)","2~3(8~10%)","3~4(18~22%)"],lS:["현대시 27%","고전시가 19%","현대소설 31%","고전소설 23%"],nS:["내용이해 30%","추론·적용 26%","구조분석 26%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 복합형","형태소 ★★☆ 기본","문장 성분 ★★☆ 표준","품사 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★★☆ 중세국어"],
+kl:[["표준형 안정 출제","모든 영역 표준. 큰 변수 없음."],["교과서 49% 중심","교과서+EBS 19% 보조."],["비문학 균형형","추론·구조분석 각 26%."],["문법 음운변동형","★★★ 과정 서술."],["소설 31%","서술시점+인물심리 표준."]],
+sr:["표준형 출제 활용: 기출 효율 극대화","교과서 49%+EBS 19%","문법 음운변동 반복","1등급 컷 79~84: 689명 중 약 9명"],in:"신원고는 2000년 개교(689명). 표준형 안정 출제. 기출 분석 효율 높음. 1등급 컷 79~84.",g1:"82~84",g2:"79~82",g3:"77~80",tg:["표준형 출제","안정적 패턴","신원동권"]},
+{n:11,nm:"백양고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 백양로 58",es:"1993",st:856,sm:445,sf:411,te:67,tm:25,tf:42,cl:"32학급 (학급당 27명)",cu:"84~90",ca:87,li:35,no:30,gr:20,sp:15,ey:"18~24%",tb:47,eb:20,pr:16,mk:17,
+eS:["25~28문항","70분","17~20(60~68%)","2~3(8~12%)","3~5(18~24%)"],lS:["현대시 28%","고전시가 18%","현대소설 32%","고전소설 22%"],nS:["내용이해 28%","추론·적용 29%","구조분석 25%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 수능형","형태소 ★★★ 복합형","문장 성분 ★★☆ 표준","품사 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★★☆ 중세국어"],
+kl:[["수능형 지향 출제","덕양구 상위. 수능형 선지+모의 변형."],["추론형 비문학 29%","시리즈 상위. 수능형 독해력."],["서술형 18~24% 상위","상한 24%로 높음."],["문법 수능형 복합","음운변동+형태소 ★★★."],["현대시 28%","수능형 시 감상 복합."]],
+sr:["수능형 지향: 모의고사+수능특강","추론형 비문학 29% 심화","서술형 24% 상한 대비","1등급 컷 84~90: 856명 중 약 12명"],in:"백양고는 1993년 개교 덕양구 상위권(856명). 수능형 지향+추론형 29%. 1등급 컷 84~90.",g1:"88~90",g2:"84~87",g3:"82~85",tg:["수능형 지향","추론 비문학 29%","덕양구 상위"]},
+{n:12,nm:"무원고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 화신로 65",es:"1997",st:762,sm:398,sf:364,te:78,tm:10,tf:68,cl:"32학급 (학급당 24명)",cu:"81~87",ca:84,li:34,no:29,gr:21,sp:16,ey:"18~23%",tb:50,eb:15,pr:15,mk:20,
+eS:["25~28문항","70분","17~20(62~68%)","2~3(8~12%)","3~4(18~23%)"],lS:["현대시 27%","고전시가 19%","현대소설 31%","고전소설 23%"],nS:["내용이해 28%","추론·적용 28%","구조분석 26%","어휘·맥락 18%"],gS:["음운 변동 ★★★ 복합형","형태소 ★★☆ 기본+심화","문장 성분 ★★☆ 표준","품사 ★★☆ 기본","높임법 ★★☆ 기본","국어사 ★★☆ 중세국어"],
+kl:[["모의고사 변형 20% 최고","시리즈 최고. 6·9월+사관+교육청."],["29년 전통 안정 패턴","출제 매우 안정."],["적용형 비문학","추론·적용 28%."],["교과서 50%","교과서+모의고사 혼합."],["문법 음운변동형","★★★ 과정 서술."]],
+sr:["모의고사 변형 20% 최고: 모고 완벽 대비","29년 전통 기출 패턴 활용","적용형 비문학 서술형 훈련","1등급 컷 81~87: 762명 중 약 10명"],in:"무원고는 1997년 개교 29년 전통교(762명). 모의고사 변형 20%(최고)+안정 패턴. 1등급 컷 81~87.",g1:"85~87",g2:"82~85",g3:"80~83",tg:["모의고사 20% 최고","29년 전통","행신동권"]},
+{n:13,nm:"고양국제고",ty:"국제고",tc:"#a78bfa",lo:"고양시 일산서구",ad:"경기도 고양시 일산서구 가좌로 77",es:"2011",st:589,sm:201,sf:388,te:72,tm:28,tf:44,cl:"21학급 (학급당 28명, 기숙형)",cu:"89~94",ca:91.5,li:34,no:35,gr:14,sp:17,ey:"30~40%",tb:30,eb:15,pr:20,mk:15,
+eS:["20~25문항","70분","10~14(42~55%)","2~3(8~12%)","5~8(30~40%)"],lS:["현대시 24%","고전시가 14%","현대소설 30%","세계문학 32%"],nS:["학술논문형 30%","사회·국제이슈 28%","논증구조 25%","어휘·맥락 17%"],gS:["음운 변동 ★★☆ 기본","형태소 ★★☆ 기본","문장 구조 ★★★ 복문·학술체","국어사 ★★☆ 기본","어문규정 ★★☆ 기본","학술용어 ★★★ 국제고 특화"],
+kl:[["비평 논술형 10~15점","학술 비평+논증 300~600자. 대학 수준."],["세계문학 비교감상 32%","동서양 문학 비교 심화."],["학술논문형 비문학 30%","대학 학부 수준 텍스트."],["논증구조 25%","비판적 사고+논리 서술."],["사회·국제이슈 28%","글로벌 이슈 반영."]],
+sr:["비평 논술형 전문 코칭: 300~600자","세계문학 32% 비교감상 심화","학술논문형 30% 대학 수준 독해","1등급 컷 89~94 최고: 589명 중 약 8명"],in:"고양국제고는 2011년 개교 공립 국제고(589명). 논술형 30~40%(최고), 대학 수준 비평, 세계문학 32%. 1등급 컷 89~94 전체 최고.",g1:"92~94",g2:"89~92",g3:"87~90",tg:["국제고(공립)","논술형 30~40%","대학 수준"]},
+{n:14,nm:"고양외고",ty:"외국어고",tc:"#fb7185",lo:"고양시 덕양구",ad:"경기도 고양시 덕양구 통일로 820",es:"2002",st:720,sm:242,sf:478,te:67,tm:32,tf:35,cl:"30학급 (학급당 24명, 영·중·일·스 4학과)",cu:"87~93",ca:90,li:40,no:30,gr:17,sp:13,ey:"28~35%",tb:38,eb:19,pr:20,mk:13,
+eS:["22~26문항","70분","13~17(52~62%)","2~3(8~10%)","5~7(28~35%)"],lS:["현대시 20%","고전시가 13%","현대소설 40%","번역문학 27%"],nS:["사회·문화 30%","논증구조 27%","비판적읽기 26%","어휘·맥락 17%"],gS:["음운 변동 ★★☆ 기본","형태소 ★★☆ 기본","문장 구조 ★★★ 번역투 교정","외래어 표기 ★★★ 외고 독자","높임법 ★★☆ 기본","국어사 ★★☆ 기본"],
+kl:[["번역문학 비교 논술형","4개 학과 원작 연계 300~500자, 10~12점."],["사회·문화 비문학 30%","외국어 연계 텍스트."],["외래어·번역투 교정","외고 독자 문법."],["소설 비중 40% 최고","현대소설+번역문학=67%."],["서술형+논술형 28~35%","일반고 1.5~2배."]],
+sr:["번역문학 비교 논술형: 4개 학과 원작","사회·문화 30% 논증분석","외래어+번역투 교정: 독자 영역","1등급 컷 87~93: 720명 중 약 10명"],in:"고양외고는 사립 특목고(720명, 4개 학과). 번역문학 비교 논술형(최대 차별), 문학 40%(최고). 외래어·번역투 교정 독자 영역.",g1:"91~93",g2:"88~91",g3:"86~89",tg:["외고(사립)","번역문학 27%","4개 학과"]},
+{n:15,nm:"운정고",ty:"자공고",tc:"#14b8a6",lo:"파주시 운정",ad:"경기도 파주시 와석순환로 267",es:"2012",st:1215,sm:581,sf:634,te:85,tm:27,tf:58,cl:"38학급 (학급당 32명, 자공고 2.0)",cu:"87~93",ca:90,li:36,no:32,gr:19,sp:13,ey:"25~32%",tb:40,eb:22,pr:20,mk:18,
+eS:["25~30문항","70분","17~21(55~62%)","2~3(8~12%)","4~6(25~32%)"],lS:["현대시 26%","고전시가 18%","현대소설 34%","고전소설 22%"],nS:["추론·비판 32%","내용이해 28%","구조분석 24%","어휘·맥락 16%"],gS:["음운 변동 ★★★ 수능형 복합","형태소 ★★★ 복합형","문장 성분 ★★☆ 겹문장","품사 ★★☆ 수능형","높임법 ★★☆ 기본+응용","국어사 ★★☆ 기본"],
+kl:[["수능형 추론 고배점 서술형","자공고 최고 변별. 8~10점."],["EBS 변형 22% 최고","수능특강→서술형 전환."],["소설 주제의식 복합","서술시점+인물심리+사회적 맥락."],["음운변동+형태소 수능형","서술형 1~2문항 고정."],["조건 충족형 고배점","조건 2~3개+충족. 8~10점."]],
+sr:["수능형 추론 고배점 서술형 전문 코칭","EBS 수능특강→서술형 전환 예측","소설 복합: 주제+사회적 맥락","1등급 컷 87~93: 1,215명 중 약 17명"],in:"운정고는 자공고 2.0(1,215명 초대규모). 리치고 1.2등급(전국 상위 7%). 비평준화→상위권 집중. EBS 22% 최고. 1등급 컷 87~93.",g1:"91~93",g2:"88~91",g3:"87~90",tg:["자공고 2.0","리치고 1.2등급","1,215명"]},
+{n:16,nm:"동두천외고",ty:"외국어고",tc:"#fb7185",lo:"동두천시",ad:"경기도 동두천시 지행로 145",es:"2005",st:541,sm:165,sf:376,te:62,tm:23,tf:39,cl:"24학급 (학급당 22명, 기숙 · 3학과)",cu:"86~92",ca:89,li:39,no:30,gr:17,sp:14,ey:"25~33%",tb:36,eb:19,pr:24,mk:12,
+eS:["23~27문항","70분","14~18(50~58%)","2~3(8~10%)","5~7(25~33%)"],lS:["현대시 23%","고전시가 15%","현대소설 36%","번역문학 26%"],nS:["사회·문화 29%","논리구조 27%","비판적읽기 27%","어휘·맥락 17%"],gS:["음운 변동 ★★☆ 기본+서술","형태소 ★★☆ 기본","문장 구조 ★★★ 번역투 교정","외래어 표기 ★★★ 공립외고","높임법 ★★☆ 기본","국어사 ★★☆ 한글 창제"],
+kl:[["번역문학 비교 서술형","공립외고 핵심. 3학과 원작 8~12점."],["사회·문화 비문학 논증","사회·문화 29%+비판 27%."],["문학 비평 감상 서술형","시·소설 비평적 감상."],["외래어·번역투 교정","외고 독자 문법."],["토론·발표 실전형","너울제·외국어의밤 연계."]],
+sr:["번역문학 비교 서술형: 3학과 원작","사회·문화 29% 논증분석","외래어+번역투 교정: 공립외고 독자","1등급 컷 86~92: 541명 중 7~8명"],in:"동두천외고는 경기 북부 유일 공립 외국어고(541명, 기숙형). 교훈 'Second to None'. 번역문학 26%+문학 39%.",g1:"90~92",g2:"87~90",g3:"86~89",tg:["외고(공립)","번역문학 26%","기숙형"]},
+{n:17,nm:"김포외고",ty:"외국어고",tc:"#f59e0b",lo:"김포시 월곶면",ad:"경기도 김포시 월곶면 김포대로 2537",es:"2006",st:586,sm:192,sf:394,te:46,tm:31,tf:15,cl:"24학급 (학급당 24명, 전원기숙 · 3학과)",cu:"85~91",ca:88,li:38,no:31,gr:17,sp:14,ey:"25~33%",tb:37,eb:19,pr:23,mk:12,
+eS:["23~27문항","70분","14~18(50~58%)","2~3(8~10%)","5~7(25~33%)"],lS:["현대시 23%","고전시가 16%","현대소설 35%","번역문학 26%"],nS:["사회·문화 28%","논리구조 27%","비판적읽기 28%","어휘·맥락 17%"],gS:["음운 변동 ★★☆ 기본+서술","형태소 ★★☆ 기본","문장 구조 ★★★ 번역투 교정","외래어 표기 ★★★ 사립외고","높임법 ★★☆ 기본","국어사 ★★☆ 한글 창제"],
+kl:[["번역문학 비교 서술형","사립외고 핵심. 3학과 원작 8~12점."],["사회·문화 비문학 논증","사회·문화 28%+비판 28%."],["문학 비평 감상 서술형","자체교재 심화 연계."],["외래어·번역투 교정","외고 독자 문법."],["면학실 연계 수행평가형","전원기숙 면학실(S1~S4) 연동."]],
+sr:["번역문학 비교 서술형: 3학과 원작","사회·문화 28% 논증분석","외래어+번역투 교정: 사립외고 독자","1등급 컷 85~91: 면학실(S1~S4) 연동"],in:"김포외고는 사립 외국어고(586명, 김포시 유일 특목고). 전원 기숙+면학실(S1~S4). 산속 캠퍼스. 전국 외고 중 균일한 남녀 성비.",g1:"89~91",g2:"86~89",g3:"85~88",tg:["외고(사립)","전원 기숙","면학실 S1~S4"]}
+];
+
+
+var MAP_SCHOOLS=[
+{nm:"행신고",ty:"일반고",lat:37.6161,lng:126.8426,tc:"#3b82f6"},
+{nm:"화정고",ty:"일반고",lat:37.6361,lng:126.8275,tc:"#3b82f6"},
+{nm:"화수고",ty:"일반고",lat:37.6450,lng:126.8362,tc:"#3b82f6"},
+{nm:"능곡고",ty:"일반고",lat:37.6237,lng:126.8253,tc:"#3b82f6"},
+{nm:"성사고",ty:"일반고",lat:37.6590,lng:126.8380,tc:"#3b82f6"},
+{nm:"고양일고",ty:"일반고",lat:37.6999,lng:126.9011,tc:"#3b82f6"},
+{nm:"동산고",ty:"일반고",lat:37.6446,lng:126.8878,tc:"#3b82f6"},
+{nm:"서정고",ty:"일반고",lat:37.6211,lng:126.8494,tc:"#3b82f6"},
+{nm:"향동고",ty:"일반고",lat:37.5966,lng:126.8936,tc:"#3b82f6"},
+{nm:"신원고",ty:"일반고",lat:37.6682,lng:126.8871,tc:"#3b82f6"},
+{nm:"백양고",ty:"일반고",lat:37.6292,lng:126.8383,tc:"#3b82f6"},
+{nm:"무원고",ty:"일반고",lat:37.6310,lng:126.8390,tc:"#3b82f6"},
+{nm:"고양국제고",ty:"국제고",lat:37.6844,lng:126.8088,tc:"#a78bfa"},
+{nm:"고양외고",ty:"외국어고",lat:37.6900,lng:126.8615,tc:"#fb7185"},
+{nm:"동두천외고",ty:"외국어고",lat:37.9028,lng:127.0606,tc:"#fb7185"},
+{nm:"김포외고",ty:"외국어고",lat:37.6342,lng:126.6785,tc:"#f59e0b"},
+{nm:"운정고",ty:"자공고",lat:37.7221,lng:126.7365,tc:"#14b8a6"}
+];
+
+var currentFilter="전체";
+var BC=["#ef4444","#3b82f6","#10b981","#a78bfa"];
+var KC=["#ef4444","#3b82f6","#f59e0b","#10b981","#a78bfa"];
+
+
+function initMap(){
+  var mapEl=document.getElementById("mapContainer");if(!mapEl)return;
+  var map=L.map("mapContainer",{zoomControl:false}).setView([37.68,126.83],10);
+  L.control.zoom({position:"bottomright"}).addTo(map);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{
+    attribution:'© OpenStreetMap © CARTO',maxZoom:18
+  }).addTo(map);
+  MAP_SCHOOLS.forEach(function(s){
+    var abbr=s.ty==="일반고"?"일":s.ty==="외국어고"?"외":s.ty==="국제고"?"국":"★";
+    var icon=L.divIcon({
+      html:'<div style="width:32px;height:32px;border-radius:50%;background:'+s.tc+';border:2px solid rgba(255,255,255,.8);box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;cursor:pointer">'+abbr+'</div>',
+      className:"",iconSize:[32,32],iconAnchor:[16,16]
+    });
+    var marker=L.marker([s.lat,s.lng],{icon:icon}).addTo(map);
+    var school=D.find(function(d){return d.nm===s.nm});
+    if(school){
+      var cutCol=school.ca>=89?"#ef4444":school.ca>=84?"#f59e0b":"#10b981";
+      marker.bindPopup('<div style="min-width:180px"><strong style="font-size:15px;color:#fff">'+s.nm+'</strong><br><span style="display:inline-block;padding:1px 8px;border-radius:50px;background:'+s.tc+'33;color:'+s.tc+';font-size:10px;font-weight:700;margin:4px 0">'+s.ty+'</span><br><span style="font-size:12px;color:#94a3b8">1등급 컷 <b style="color:'+cutCol+'">'+school.cu+'</b> · 서술형 '+school.ey+'</span><br><button onclick="goBack();showDetail('+school.n+')" style="margin-top:8px;width:100%;padding:7px;border:none;border-radius:6px;background:'+s.tc+';color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">상세 분석 →</button></div>',{closeButton:false});
+    }
+  });
+  document.getElementById("mapToggle").onclick=function(){
+    var w=document.getElementById("mapWrap");
+    var isOpen=w.classList.contains("open");
+    w.classList.toggle("open");
+    this.classList.toggle("open");
+    this.querySelector(".arrow").textContent=isOpen?"▼":"▲";
+    if(!isOpen)setTimeout(function(){map.invalidateSize()},450);
+  };
+}
+
+function init(){
+  var fb=document.getElementById("filters");
+  ["전체","일반고","외국어고","국제고","자공고"].forEach(function(f){
+    var b=document.createElement("button");
+    b.className="fbtn"+(f==="전체"?" on":"");
+    b.textContent=f;
+    b.onclick=function(){currentFilter=f;document.querySelectorAll(".fbtn").forEach(function(x){x.className="fbtn"});this.className="fbtn on";renderGrid()};
+    fb.appendChild(b);
+  });
+  renderGrid();
+}
+
+function renderGrid(){
+  var g=document.getElementById("grid");
+  g.innerHTML="";
+  var list=currentFilter==="전체"?D:D.filter(function(s){return s.ty===currentFilter});
+  list.forEach(function(s){
+    var cutCol=s.ca>=89?"#ef4444":s.ca>=84?"#f59e0b":"#10b981";
+    var html='<div class="top-line" style="background:'+s.tc+'"></div>';
+    html+='<div class="hd"><span class="num">#'+String(s.n).padStart(2,"0")+'</span><span class="tp" style="background:'+s.tc+'22;color:'+s.tc+'">'+s.ty+'</span></div>';
+    html+='<div class="nm">'+s.nm+'</div>';
+    html+='<div class="loc">'+s.lo+' · '+s.es+'년 · '+s.st.toLocaleString()+'명</div>';
+    html+='<div class="mets">';
+    html+='<div class="met"><b style="color:'+cutCol+'">'+s.cu+'</b><small>1등급 컷</small></div>';
+    html+='<div class="met"><b style="color:#38bdf8">'+s.ey+'</b><small>서술형</small></div>';
+    html+='<div class="met"><b style="color:#94a3b8">'+s.tb+'%</b><small>교과서</small></div>';
+    html+='</div>';
+    var bars=[["문학",s.li,BC[0]],["비문학",s.no,BC[1]],["문법",s.gr,BC[2]],["화작",s.sp,BC[3]]];
+    bars.forEach(function(b){
+      html+='<div class="brow"><span class="bl">'+b[0]+'</span><div class="bt"><div class="bf" style="width:'+b[1]*2.2+'%;background:'+b[2]+'"></div></div><span class="bv" style="color:'+b[2]+'">'+b[1]+'%</span></div>';
+    });
+    html+='<div class="tags">';s.tg.forEach(function(t){html+='<span class="tag">'+t+'</span>'});html+='</div>';
+    html+='<div class="hint">상세 분석 보기 →</div>';
+    var card=document.createElement("div");card.className="card";card.innerHTML=html;
+    card.onclick=function(){showDetail(s.n)};
+    g.appendChild(card);
+  });
+}
+
+function showDetail(n){
+  var s=D.find(function(x){return x.n===n});if(!s)return;
+  document.getElementById("listView").className="list-view hide";
+  var dv=document.getElementById("detailView");dv.className="detail show";
+  window.scrollTo(0,0);
+  var cutCol=s.ca>=89?"#ef4444":s.ca>=84?"#f59e0b":"#10b981";
+  var h='<div class="back-bar"><button class="back-btn" onclick="goBack()">← 목록</button><span class="dn">'+s.nm+'</span><span class="tp" style="background:'+s.tc+'22;color:'+s.tc+';padding:2px 10px;border-radius:50px;font-size:11px;font-weight:700">'+s.ty+'</span></div>';
+  h+='<div class="det-wrap">';
+  h+='<div class="det-hero"><div class="top-line" style="background:'+s.tc+'"></div><div style="font-size:11px;color:#64748b">#'+String(s.n).padStart(2,"0")+' · '+s.ty+'</div><h2 style="font-size:26px;font-weight:900;color:#fff;margin:4px 0">'+s.nm+'</h2><div style="font-size:13px;color:#94a3b8">'+s.ad+' · '+s.es+'년 개교</div></div>';
+
+  h+=sec("학교 기본 정보",ig([["학생 수",s.st.toLocaleString()+"명 (남 "+s.sm+" / 여 "+s.sf+")"],["교원 수",s.te+"명 (남 "+s.tm+" / 여 "+s.tf+")"],["학급 편성",s.cl],["1등급 컷",'<span style="color:'+cutCol+'">'+s.cu+"점</span>"],["학년별 1등급","고1: "+s.g1+" / 고2: "+s.g2+" / 고3: "+s.g3]]));
+
+  h+=sec("시험 구조",ig([["총 문항",s.eS[0]],["시험 시간",s.eS[1]],["객관식",s.eS[2]],["단답형",s.eS[3]],["서술형",s.eS[4]],["만점","100점"]]));
+
+  var barH="";
+  [["문학",s.li,BC[0]],["비문학",s.no,BC[1]],["문법",s.gr,BC[2]],["화법·작문",s.sp,BC[3]]].forEach(function(b){barH+=dbar(b[0],b[1],b[2],45)});
+  h+=sec("영역별 출제 비중",barH);
+
+  var srcH="";
+  [["교과서",s.tb,"#3b82f6"],["EBS",s.eb,"#ef4444"],["프린트·자체교재",s.pr,"#a78bfa"],["모의고사 변형",s.mk,"#f59e0b"]].forEach(function(b){srcH+=dbar(b[0],b[1],b[2],55)});
+  h+=sec("출제 소재 구성비",srcH);
+
+  var lH="";s.lS.forEach(function(x,i){var p=x.split(" ");lH+=dbar(p[0],parseInt(p[1]),BC[i%4],40)});
+  h+=sec("문학 하위 영역",lH);
+
+  var nH="";s.nS.forEach(function(x,i){var cs=["#14b8a6","#3b82f6","#ef4444","#a78bfa"];var p=x.split(" ");nH+=dbar(p[0],parseInt(p[1]),cs[i%4],36)});
+  h+=sec("비문학 하위 유형",nH);
+
+  var gH='<div class="ig">';s.gS.forEach(function(x){var p=x.split(" ");gH+='<div class="ii"><small>'+p[0]+" "+p[1]+'</small><b style="font-size:12px">'+p.slice(2).join(" ")+'</b></div>'});gH+='</div>';
+  h+=sec("문법 영역 상세",gH);
+
+  var kH="";s.kl.forEach(function(k,i){
+    kH+='<div class="killer" style="border-left:4px solid '+KC[i]+'"><div class="kr"><span class="kn" style="background:'+KC[i]+'">'+(i+1)+'</span><span class="kt">'+k[0]+'</span></div><div class="kd">'+k[1]+'</div></div>';
+  });
+  h+=sec("킬러 문항 패턴 TOP 5",kH);
+
+  var sH="";s.sr.forEach(function(t,i){sH+='<div class="strat"><em>'+(i+1)+'. </em>'+t+'</div>'});
+  h+=sec("시대학원 맞춤 대비 전략",sH);
+
+  h+=sec("종합 인사이트",'<div class="insight-box">'+s.in+'</div>');
+  h+='<button class="bottom-back" onclick="goBack()">← 목록으로 돌아가기</button>';
+  h+='</div>';
+  dv.innerHTML=h;
+}
+
+function goBack(){
+  document.getElementById("detailView").className="detail";
+  document.getElementById("listView").className="list-view";
+  window.scrollTo(0,0);
+}
+
+function sec(title,content){
+  return '<div class="sec"><div class="sec-t"><i></i><span>'+title+'</span></div><div class="sec-box">'+content+'</div></div>';
+}
+function ig(items){
+  var h='<div class="ig">';items.forEach(function(x){h+='<div class="ii"><small>'+x[0]+'</small><b>'+x[1]+'</b></div>'});return h+'</div>';
+}
+function dbar(label,val,color,max){
+  return '<div class="dbar"><span class="dl">'+label+'</span><div class="dt"><div class="df" style="width:'+((val/max)*100)+'%;background:'+color+'">'+val+'%</div></div></div>';
+}
+init();
+initMap();
+</script>
+</body>
+</html>

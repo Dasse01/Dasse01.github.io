@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수학 내신 기출 분석</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Noto Sans KR',sans-serif;background:#0a0e1a;color:#e2e8f0;line-height:1.6}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,10,20,.92);backdrop-filter:blur(12px);border-bottom:1px solid #1e293b;padding:0;display:flex;align-items:center;height:44px}
+.top-nav-inner{max-width:1300px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.top-nav-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:#fbbf24;font-size:14px;font-weight:800;letter-spacing:-.3px}
+.top-nav-brand span{color:#94a3b8;font-size:11px;font-weight:400}
+.top-nav-links{display:flex;align-items:center;gap:4px}
+.top-nav-links a{color:#94a3b8;text-decoration:none;font-size:12px;font-weight:500;padding:6px 12px;border-radius:6px;transition:all .2s;white-space:nowrap}
+.top-nav-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+.top-nav-links a.active{color:#38bdf8;background:rgba(56,189,248,.1);font-weight:700}
+.top-nav-links a.home-btn{color:#fbbf24;border:1px solid rgba(251,191,36,.25);background:rgba(251,191,36,.06)}
+.top-nav-links a.home-btn:hover{background:rgba(251,191,36,.15);color:#fcd34d}
+#app{padding-top:44px}
+.header{text-align:center;padding:48px 20px 36px;background:linear-gradient(135deg,#0a0e1a,#131b30,#0a0e1a);border-bottom:1px solid #1e293b}
+.badge{display:inline-block;padding:5px 16px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);border-radius:50px;font-size:12px;color:#38bdf8;margin-bottom:16px}
+.header h1{font-size:36px;font-weight:900;color:#fff;margin-bottom:8px}
+.header p{font-size:14px;color:#94a3b8;margin-bottom:20px}
+.stats{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.stats div{text-align:center}
+.stats b{display:block;font-size:26px;color:#38bdf8}
+.stats small{font-size:11px;color:#64748b}
+.wrap{max-width:1300px;margin:0 auto;padding:20px 16px 60px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #1e293b}
+.fbtn{padding:6px 16px;border-radius:50px;border:1px solid #1e293b;background:none;color:#94a3b8;font-size:13px;cursor:pointer;font-family:inherit}
+.fbtn:hover{border-color:#38bdf8;color:#38bdf8}
+.fbtn.on{background:#38bdf8;color:#0a0e1a;border-color:#38bdf8;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(370px,1fr));gap:16px}
+.card{background:#111827;border:1px solid #1e293b;border-radius:14px;padding:22px;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.3);border-color:rgba(56,189,248,.3)}
+.card .top-line{position:absolute;top:0;left:0;right:0;height:3px}
+.card .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.card .num{font-size:12px;font-weight:800;color:#64748b}
+.card .tp{padding:2px 10px;border-radius:50px;font-size:11px;font-weight:700}
+.card .nm{font-size:20px;font-weight:900;color:#fff;margin-bottom:3px}
+.card .loc{font-size:11px;color:#64748b;margin-bottom:12px}
+.mets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.met{background:rgba(255,255,255,.03);border-radius:8px;padding:8px 4px;text-align:center}
+.met b{display:block;font-size:15px;font-weight:800}
+.met small{font-size:9px;color:#64748b}
+.brow{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.brow .bl{width:56px;text-align:right;font-size:10px;color:#64748b;flex-shrink:0}
+.brow .bt{flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden}
+.brow .bf{height:100%;border-radius:3px}
+.brow .bv{width:28px;font-size:10px;font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{padding:2px 7px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:4px;font-size:10px;color:#64748b}
+.hint{font-size:10px;color:#38bdf8;text-align:right;margin-top:6px;opacity:.5}
+/* Detail Page */
+.detail{display:none;min-height:100vh}
+.detail.show{display:block}
+.list-view.hide{display:none}
+.back-bar{position:sticky;top:44px;z-index:10;background:#0f172a;border-bottom:1px solid #1e293b;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.back-btn{background:none;border:1px solid #334155;border-radius:8px;color:#94a3b8;padding:6px 14px;cursor:pointer;font-size:13px;font-family:inherit}
+.back-bar .dn{font-size:16px;font-weight:800;color:#fff}
+.det-wrap{max-width:800px;margin:0 auto;padding:20px 16px 60px}
+.det-hero{background:#111827;border-radius:14px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden}
+.det-hero .top-line{position:absolute;top:0;left:0;right:0;height:3px}
+.sec{margin-bottom:20px}
+.sec-t{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.sec-t i{width:4px;height:16px;border-radius:2px;background:#38bdf8;display:inline-block}
+.sec-t span{font-size:15px;font-weight:800;color:#38bdf8}
+.sec-box{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:18px}
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ii{background:rgba(255,255,255,.03);border-radius:8px;padding:10px 12px}
+.ii small{display:block;font-size:10px;color:#64748b}
+.ii b{font-size:13px;font-weight:700;color:#fff}
+.dbar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.dbar .dl{width:80px;text-align:right;font-size:12px;color:#94a3b8;flex-shrink:0}
+.dbar .dt{flex:1;height:20px;background:rgba(255,255,255,.05);border-radius:5px;overflow:hidden}
+.dbar .df{height:100%;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:10px;font-weight:700;color:#fff;min-width:24px}
+.killer{background:rgba(255,255,255,.03);border:1px solid #1e293b;border-radius:10px;padding:14px;margin-bottom:8px;position:relative}
+.killer .kr{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.killer .kn{width:22px;height:22px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.killer .kt{font-size:13px;font-weight:800;color:#fff}
+.killer .kd{font-size:12px;color:#94a3b8;line-height:1.5}
+.strat{background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:12px 14px;margin-bottom:6px;font-size:13px}
+.strat em{color:#38bdf8;font-weight:700;font-style:normal}
+.strat-sub{margin-top:8px;padding:10px 14px;background:rgba(255,255,255,.02);border:1px solid #1e293b;border-radius:8px;font-size:12px;color:#94a3b8;line-height:1.7}
+.strat-sub strong{color:#e2e8f0}
+.insight-box{background:linear-gradient(135deg,rgba(56,189,248,.07),rgba(167,139,250,.07));border:1px solid rgba(56,189,248,.2);border-radius:12px;padding:18px;font-size:13px;line-height:1.8}
+.bottom-back{width:100%;padding:14px;background:#1e293b;border:none;border-radius:10px;color:#94a3b8;font-size:14px;cursor:pointer;margin-top:16px;font-family:inherit}
+/* Map */
+#mapSection{max-width:1300px;margin:0 auto;padding:0 16px 12px}
+#mapToggle{width:100%;padding:10px 16px;background:#111827;border:1px solid #1e293b;border-radius:10px;color:#94a3b8;font-size:13px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+#mapToggle:hover{border-color:#38bdf8;color:#38bdf8}
+#mapToggle .arrow{transition:transform .3s}
+#mapToggle.open .arrow{transform:rotate(180deg)}
+#mapWrap{height:0;overflow:hidden;transition:height .4s ease;border-radius:12px}
+#mapWrap.open{height:420px;border:1px solid #1e293b}
+#mapContainer{width:100%;height:420px}
+.leaflet-popup-content-wrapper{background:#111827!important;color:#e2e8f0!important;border:1px solid #1e293b!important;border-radius:10px!important;box-shadow:0 8px 25px rgba(0,0,0,.4)!important}
+.leaflet-popup-tip{background:#111827!important}
+.leaflet-popup-content{margin:10px 14px!important;font-family:-apple-system,'Noto Sans KR',sans-serif!important}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.header h1{font-size:28px}.stats{gap:20px}.ig{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="top-nav">
+  <div class="top-nav-inner">
+    <a href="index.html" class="top-nav-brand">시대학원 <span>약술형 논술 전문</span></a>
+    <div class="top-nav-links">
+      <a href="index.html" class="home-btn">🏠 메인</a>
+      <a href="국어내신기출분석.html">📖 국어 기출분석</a>
+      <a href="수학내신기출분석.html" class="active">📐 수학 기출분석</a>
+      <a href="2027_수시지원전략.html">🔥 수시전략</a>
+      <a href="https://blog.naver.com/study9781117" target="_blank" style="color:#22c55e;border:1px solid rgba(34,197,94,.25);background:rgba(34,197,94,.06)">📝 블로그</a>
+    </div>
+  </div>
+</div>
+<div id="app">
+  <div class="list-view" id="listView">
+    <div class="header">
+      <div class="badge">2027학년도 대입 대비 · 시대아카데미 AI 입시연구소</div>
+      <h1>수학 내신 기출 분석</h1>
+      <p>고양·파주 14개교 — 카드를 터치하면 상세 분석 페이지로 이동합니다.</p>
+      <div class="stats"><div><b>14</b><small>분석 학교</small></div><div><b>11</b><small>일반고</small></div><div><b>1</b><small>외국어고</small></div><div><b>1</b><small>국제고</small></div><div><b>1</b><small>자공고</small></div></div>
+    </div>
+
+    <div id="mapSection">
+      <button id="mapToggle">🗺️ 학교 위치 지도 보기 <span class="arrow">▼</span></button>
+      <div id="mapWrap"><div id="mapContainer"></div></div>
+    </div>
+
+    <div class="wrap">
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </div>
+  <div class="detail" id="detailView"></div>
+</div>
+<script>
+var D=[
+{n:1,nm:"행신고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"행신동",es:"1994",st:"~900명",cu:"92~95",ca:93.5,de:"28%",src:"교과서+쎈",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",45],cR:["쎈(부교재)",35],cM:["모의변형",20],
+ft:["쎈 교재 비중 높음","수능형 사고력 문항 증가","행신동 중심"],
+kty:"교과서+부교재 융합",kp:"쎈 변형 완벽 숙지",sum:"쎈 변형 다수, 수능형 사고력 증가",
+kl:[["절댓값+가우스 결합","함수 그래프 해석+조건 분석 동시 요구. 변별력 최고."],["합성함수 해의 개수","교과서 예제→조건 추가→난이도 2단계 상향."],["원·직선 위치관계","도형 조건+방정식 융합 다단계 풀이."],["수열 귀납법 응용","점화식 조건 해석+일반항 추론 결합."],["삼각함수 그래프 조건","주기·진폭·위상 복합 서술형."]],
+sr:["쎈 유형 변형 완벽 숙지: A·B·C단계별 변형 추적","수능형 사고력 문항 증가 추세: 모의고사 변형 20% 집중","서술형 28%: 풀이 과정 서술 채점기준 숙지","1등급 컷 92~95: ~900명 중 약 12명"],
+stG:"교과전형 핵심 타깃. 1~2등급이면 수도권 중상위 교과 지원 가능. 수도권 대학 지역균형선발 인원 786명 확대 적극 활용.",
+stJ:"'제한된 환경에서 최선의 결과'를 보여주는 전략. 교과 세특의 자기주도적 탐구가 차별화 포인트.",
+stS:"내신 vs 수능 형식 차이가 큼. 시험 기간 학교 시험 집중, 비시험 기간 수능형 전환 '리듬 관리' 필수.",
+in:"행신고는 덕양구 상위권(~900명). 쎈 변형이 핵심, 수능형 사고력 문항 증가 추세. 교과서 45%+쎈 35%+모의변형 20%. 서술형 28%. 1등급 컷 92~95.",
+lat:37.6161,lng:126.8426,tg:["쎈 변형 핵심","수능형 사고력","덕양구 상위"]},
+
+{n:2,nm:"화정고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"화정동",es:"1995",st:"~850명",cu:"91~94",ca:92.5,de:"27%",src:"교과서+마플",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",45],cR:["마플(부교재)",35],cM:["모의변형",20],
+ft:["마플 중심 출제","안정적 패턴","중간 난이도 촘촘"],
+kty:"교과서+부교재 융합",kp:"마플 유형 완벽 숙지",sum:"중간 난이도 촘촘, 실수 방지 관건",
+kl:[["마플 유형 변형","마플 예제·유제 숫자·조건 변경 출제."],["함수 그래프 해석","이차함수·절댓값 그래프 교차점 문제."],["도형 넓이 최적화","좌표평면 위 도형의 넓이 최댓값 탐구."],["집합·명제 복합","집합 원소 조건+명제 진위 판정."],["경우의 수 응용","순열·조합 조건 해석 다단계."]],
+sr:["마플 유형 완벽 숙지: 유제→변형 추적","중간 난이도 촘촘: 실수 방지 훈련 핵심","안정적 패턴: 기출 분석 효과 높음","1등급 컷 91~94: ~850명 중 약 12명"],
+stG:"교과전형 핵심 타깃. 안정적 출제 패턴으로 내신 관리 유리. 1~2등급 확보 시 수도권 교과 적극 지원.",
+stJ:"안정적 내신 관리를 기반으로 생기부 스토리라인 구축. 동아리·독서 일관성이 핵심.",
+stS:"내신 vs 수능 형식 차이 존재. 마플 유형이 수능과 일부 연결되므로 부교재 심화가 수능 기초력 확보에 도움.",
+in:"화정고는 덕양구 중상위(~850명). 마플 중심 안정적 출제. 중간 난이도 촘촘하여 실수 방지가 관건. 1등급 컷 91~94.",
+lat:37.6361,lng:126.8275,tg:["마플 중심","안정적 패턴","실수 방지형"]},
+
+{n:3,nm:"화수고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"화정동",es:"1998",st:"~800명",cu:"89~92",ca:90.5,de:"25%",src:"교과서+개념원리",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",48],cR:["개념원리(부교재)",32],cM:["모의변형",20],
+ft:["개념원리 기반","기본기 충실형","예제 변형 출제"],
+kty:"교과서+부교재 융합",kp:"개념원리 예제 변형 대비",sum:"기본 개념 충실, 예제 변형",
+kl:[["개념원리 예제 변형","교재 예제 숫자·조건 변경 출제."],["함수 정의역·치역","이차함수 범위 조건 문제."],["방정식·부등식 활용","실생활 조건 해석 서술형."],["도형의 방정식 기본","원·직선 기본 위치관계."],["확률 조건부 해석","사건의 독립·종속 판별."]],
+sr:["개념원리 예제 변형 집중 대비","기본기 충실: 개념 정확성이 등급 결정","서술형 25%: 기본 풀이 과정 서술","1등급 컷 89~92: ~800명 중 약 11명"],
+stG:"개념 충실형 출제로 기본기 확보 유리. 1등급 컷이 상대적으로 낮아 내신 확보 기회 존재.",
+stJ:"기본 개념 위의 심화 탐구를 세특에 녹이는 전략. 개념에서 출발해 응용까지 보여주는 스토리 구성.",
+stS:"개념원리 기반 학습이 수능 기초력과 직결. 기본 개념 확실히 다진 후 수능형 문제로 확장.",
+in:"화수고는 개념원리 기반 기본기 충실형(~800명). 교과서 48%+개념원리 32%. 예제 변형 중심. 1등급 컷 89~92.",
+lat:37.6450,lng:126.8362,tg:["개념원리 기반","기본기 충실","예제 변형"]},
+
+{n:4,nm:"능곡고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"능곡동",es:"1985",st:"~750명",cu:"88~91",ca:89.5,de:"25%",src:"교과서+쎈",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",47],cR:["쎈(부교재)",33],cM:["모의변형",20],
+ft:["전통교","계산력 중시","전통적 출제 패턴"],
+kty:"교과서+부교재 융합",kp:"계산력 훈련 + 쎈 숙지",sum:"전통적 출제, 계산력 요구 높음",
+kl:[["계산 집약형 함수","다항식 연산+인수분해 복합."],["쎈 B단계 변형","중상 난이도 쎈 유형 변형."],["방정식 판별식 활용","이차방정식 근의 조건 분석."],["수열 합 계산","시그마 계산+귀납 과정 서술."],["도형 좌표 계산","좌표평면 거리·넓이 계산 집약."]],
+sr:["계산력 훈련 필수: 연산 실수 방지가 등급 결정","쎈 B단계 변형 집중 대비","전통적 패턴: 기출 분석 효과 높음","1등급 컷 88~91: ~750명 중 약 10명"],
+stG:"전통적 출제 패턴으로 예측 가능. 계산 실수 방지가 등급 결정의 핵심.",
+stJ:"오랜 전통의 학교 프로필 활용. 꾸준한 성적 향상 그래프를 보여주는 것이 유리.",
+stS:"계산력 중시 출제가 수능 수학 기초 훈련과 연결. 정확한 연산 습관이 수능에서도 강점.",
+in:"능곡고는 1985년 개교 전통교(~750명). 계산력 요구 높고 전통적 출제 패턴. 쎈 기반. 1등급 컷 88~91.",
+lat:37.6237,lng:126.8253,tg:["전통교","계산력 중시","쎈 기반"]},
+
+{n:5,nm:"성사고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"성사동",es:"1987",st:"~780명",cu:"89~92",ca:90.5,de:"26%",src:"교과서+RPM+쎈",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",43],cR:["RPM+쎈(부교재)",37],cM:["모의변형",20],
+ft:["RPM+쎈 혼합형","중상 난이도 집중","유형 변형 다수"],
+kty:"교과서+부교재 융합",kp:"RPM+쎈 혼합형 대비",sum:"RPM 유형 변형, 중상 집중",
+kl:[["RPM+쎈 교차 변형","두 교재 유형 섞어 출제."],["함수 그래프 복합","이차+절댓값 함수 복합 그래프."],["확률·통계 조건 해석","조건부확률 다단계."],["집합 원소 개수","벤다이어그램 조건 복합."],["도형 증명형 서술","도형 성질 증명 과정 서술."]],
+sr:["RPM+쎈 2종 교재 완벽 숙지","중상 난이도 집중: 유형 변형 대비","서술형 26%: 풀이 과정 채점기준 숙지","1등급 컷 89~92: ~780명 중 약 11명"],
+stG:"2종 부교재 혼합 출제로 폭넓은 유형 대비 필요. 중상 난이도 문제 적중률이 등급 결정.",
+stJ:"다양한 문제 유형 경험을 세특에 반영. 수학적 사고의 깊이를 보여주는 전략.",
+stS:"RPM과 쎈의 혼합 훈련이 수능 다양한 유형 대비에 유리. 유형 파악 능력 강화.",
+in:"성사고는 RPM+쎈 혼합형(~780명). 중상 난이도 집중, 유형 변형 다수. 2종 부교재 교차 출제. 1등급 컷 89~92.",
+lat:37.6590,lng:126.8380,tg:["RPM+쎈 혼합","중상 집중","유형 변형"]},
+
+{n:6,nm:"고양일고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"고양동",es:"1988",st:"~820명",cu:"90~93",ca:91.5,de:"27%",src:"교과서+쎈+마플",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",42],cR:["쎈+마플(부교재)",38],cM:["모의변형",20],
+ft:["사고력 문항 확대 추세","쎈+마플 복합","난이도 상승 중"],
+kty:"교과서+부교재 융합",kp:"사고력 문항 집중 대비",sum:"사고력 문항 점진 확대",
+kl:[["사고력 복합 함수","조건 해석+그래프 추론 결합."],["쎈+마플 교차 출제","양 교재 C단계 변형."],["수능형 추론 문항","기출 모의고사 변형 사고력."],["도형의 방정식 심화","원+접선+넓이 복합."],["서술형 논증 과정","풀이 논리 구조 채점."]],
+sr:["사고력 문항 확대 추세: 단순 유형 암기 불가","쎈+마플 C단계 교차 변형 대비","수능형 추론 문항 증가: 모의 변형 20%","1등급 컷 90~93: ~820명 중 약 11명"],
+stG:"사고력 문항 확대로 단순 암기형 대비로는 부족. 개념 이해 기반의 응용력이 등급 결정.",
+stJ:"사고력 중심 출제를 세특에서 '수학적 탐구력'으로 연결. 문제 해결 과정을 보여주는 기록 중요.",
+stS:"사고력 문항 확대가 수능형 사고와 연결. 내신 대비가 곧 수능 기초력 확보.",
+in:"고양일고는 사고력 문항 점진 확대 추세(~820명). 쎈+마플 복합, 난이도 상승 중. 1등급 컷 90~93.",
+lat:37.6999,lng:126.9011,tg:["사고력 확대","쎈+마플","난이도 상승"]},
+
+{n:7,nm:"동산고",ty:"일반고",tc:"#3b82f6",lo:"고양시 일산동구",ad:"삼송동",es:"2012",st:"~700명",cu:"88~91",ca:89.5,de:"25%",src:"교과서+쎈",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",46],cR:["쎈(부교재)",34],cM:["모의변형",20],
+ft:["신설교","출제 패턴 안정화 중","변화 가능성 있음"],
+kty:"교과서+부교재 융합",kp:"출제 패턴 분석 + 쎈 숙지",sum:"신설교 출제 패턴 안정화 중",
+kl:[["쎈 A·B단계 변형","기본~중상 유형 변형."],["함수 그래프 해석","이차함수 꼭짓점·축 활용."],["방정식 근의 조건","판별식+근과 계수 관계."],["도형 기본 활용","좌표평면 기본 도형 문제."],["확률 기본 계산","경우의 수+확률 기본."]],
+sr:["최근 기출 분석 필수: 패턴 안정화 중","쎈 A·B단계 변형 집중","기본 충실형: 교과서 46% 중심","1등급 컷 88~91: ~700명 중 약 10명"],
+stG:"출제 패턴 안정화 중이므로 최근 기출 분석이 특히 중요. 시대학원의 최신 기출 DB 활용 필수.",
+stJ:"신설교 특성을 활용, 다양한 교내 활동 참여 기회를 생기부에 반영.",
+stS:"기본기 충실형 출제로 수능 기초 확보에 유리. 패턴 변화 가능성에 대비한 유연한 학습 필요.",
+in:"동산고는 2012년 개교 신설교(~700명). 출제 패턴 안정화 중, 쎈 기반. 기본 충실형. 1등급 컷 88~91.",
+lat:37.6446,lng:126.8878,tg:["신설교","패턴 안정화","쎈 기반"]},
+
+{n:8,nm:"서정고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"행신동",es:"1996",st:"~780명",cu:"89~92",ca:90.5,de:"26%",src:"교과서+개념원리",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",46],cR:["개념원리(부교재)",34],cM:["모의변형",20],
+ft:["개념 정확성 중시","그래프 해석 문항 다수","개념원리 기반"],
+kty:"교과서+부교재 융합",kp:"개념 정확성 + 그래프 해석 훈련",sum:"개념 정확성, 그래프 해석 다수",
+kl:[["그래프 해석 복합","함수 그래프 교차점·변화 분석."],["개념원리 예제 변형","교재 예제 조건 변형."],["방정식 근 판별","이차방정식 실근 조건."],["도형 넓이 계산","좌표평면 삼각형·사각형 넓이."],["수열 규칙 발견","규칙성 파악+일반항 서술."]],
+sr:["개념 정확성 훈련: 정의·정리 정확히 숙지","그래프 해석 문항 집중 대비","개념원리 예제→변형 추적","1등급 컷 89~92: ~780명 중 약 11명"],
+stG:"개념 정확성 중시 출제로 꼼꼼한 개념 학습이 핵심. 그래프 해석 능력이 변별력.",
+stJ:"개념 깊이를 세특에 반영. 그래프·시각화를 활용한 탐구 활동이 차별화 포인트.",
+stS:"개념 정확성 훈련이 수능 기본기에 직결. 그래프 해석력은 수능 킬러 문항 대비에도 유효.",
+in:"서정고는 개념 정확성 중시형(~780명). 개념원리 기반, 그래프 해석 문항 다수. 1등급 컷 89~92.",
+lat:37.6211,lng:126.8494,tg:["개념 정확성","그래프 해석","개념원리"]},
+
+{n:9,nm:"향동고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"향동동",es:"2020",st:"~600명",cu:"88~91",ca:89.5,de:"26%",src:"교과서+쎈+RPM",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",42],cR:["쎈+RPM(부교재)",36],cM:["모의변형",22],
+ft:["수능 연계형 문항","최신 개교","쎈+RPM 복합"],
+kty:"교과서+부교재 융합",kp:"수능 연계형 문항 집중 대비",sum:"수능 연계형 문항 적극 도입",
+kl:[["수능형 함수 추론","모의고사 변형 사고력 문항."],["쎈+RPM 교차 변형","양 교재 혼합 출제."],["확률 다단계","조건부확률 복합 계산."],["도형 방정식 응용","원+직선+접선 복합."],["서술형 논증","풀이 과정 논리 구조 채점."]],
+sr:["수능 연계형 문항 집중: 모의변형 22% 최고 수준","쎈+RPM 교차 변형 대비","최신 개교: 출제 패턴 변화 주시","1등급 컷 88~91: ~600명 중 약 8명"],
+stG:"수능 연계형 출제로 내신과 수능의 시너지 가능. 양면 전략에 유리한 학교.",
+stJ:"수능 연계 학습을 세특에 '자기주도적 학습'으로 풀어내는 전략.",
+stS:"수능 연계형 내신 출제로 내신 대비 = 수능 대비. 덕양구 일반고 중 정시 친화적.",
+in:"향동고는 2020년 개교 최신설교(~600명). 수능 연계형 문항 적극 도입, 모의변형 22%. 1등급 컷 88~91.",
+lat:37.5966,lng:126.8936,tg:["수능 연계형","최신 개교","정시 친화"]},
+
+{n:10,nm:"신원고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"신원동",es:"2019",st:"~550명",cu:"87~90",ca:88.5,de:"25%",src:"교과서+마플",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",47],cR:["마플(부교재)",33],cM:["모의변형",20],
+ft:["최신 개교","출제 스타일 형성 초기","마플 기반"],
+kty:"교과서+부교재 융합",kp:"마플 변형 + 최신 기출 분석",sum:"최신 개교, 스타일 형성 초기",
+kl:[["마플 유형 기본 변형","교재 유형 숫자 변경 출제."],["이차함수 기본 활용","꼭짓점·축·범위 활용."],["도형 좌표 기본","거리·넓이 기본 계산."],["경우의 수 분류","순열·조합 조건 분류."],["집합 연산 기본","교집합·합집합 원소."]],
+sr:["최신 기출 집중 분석: 패턴 형성 초기","마플 유형 변형 대비","교과서 47% 중심: 기본 충실","1등급 컷 87~90: ~550명 중 약 7명"],
+stG:"1등급 컷이 상대적으로 낮아 내신 등급 확보에 유리. 교과전형 적극 활용 가능.",
+stJ:"신설교 특성을 활용한 다양한 교내 활동 참여. 소규모 학교의 장점을 생기부에 반영.",
+stS:"출제 스타일 안정화 과정에서 변화에 대비한 유연한 학습 필요.",
+in:"신원고는 2019년 개교 최신설교(~550명). 마플 기반, 출제 스타일 형성 초기. 1등급 컷 87~90으로 내신 확보 유리.",
+lat:37.6682,lng:126.8871,tg:["최신 개교","마플 기반","내신 확보 유리"]},
+
+{n:11,nm:"백양고",ty:"일반고",tc:"#3b82f6",lo:"고양시 덕양구",ad:"화신동",es:"2003",st:"~730명",cu:"89~92",ca:90.5,de:"26%",src:"교과서+쎈",diff:"순차 상승형",obj:"5지선다 중심",
+cL:["교과서",45],cR:["쎈(부교재)",35],cM:["모의변형",20],
+ft:["안정적 패턴","중간 난이도 변별","쎈 기반"],
+kty:"교과서+부교재 융합",kp:"쎈 유형 완벽 숙지",sum:"안정적 패턴, 중간 변별 다수",
+kl:[["쎈 B단계 집중 변형","중간 변별 유형 변형."],["함수 조건 해석","이차함수 조건 분석."],["수열 합·일반항","시그마 계산+일반항 추론."],["확률 기본 복합","경우의 수+확률 복합."],["도형 넓이 계산","좌표 도형 넓이 정확 계산."]],
+sr:["안정적 패턴: 기출 분석 효과 최고","쎈 B단계 변형 집중","중간 변별 실수 방지 훈련","1등급 컷 89~92: ~730명 중 약 10명"],
+stG:"안정적 패턴으로 기출 분석 효과가 높음. 시대학원 기출 DB 활용으로 예측 가능한 대비.",
+stJ:"안정적 내신 관리 기반으로 생기부 활동에 투자할 여력 확보. 균형 잡힌 전략 수립.",
+stS:"중간 변별 문항 집중으로 실수 방지가 핵심. 안정적 패턴이 수능 기초 확보에 유리.",
+in:"백양고는 안정적 패턴 쎈 기반(~730명). 중간 난이도 변별 다수. 기출 분석 효과 높음. 1등급 컷 89~92.",
+lat:37.6292,lng:126.8383,tg:["안정적 패턴","중간 변별","쎈 기반"]},
+
+{n:12,nm:"고양외고",ty:"외국어고",tc:"#10b981",lo:"고양시 덕양구",ad:"덕양구",es:"2002",st:"~720명",cu:"92~96",ca:94,de:"30%",src:"교과서+올림포스+프린트",diff:"순차 상승형",obj:"5지선다+주관식",
+cL:["교과서",45],cR:["올림포스·쎈",30],cM:["교사 프린트",25],
+ft:["서울대 16명(2024)","경기권 최강 외고","수능형 사고력 급증","교사 프린트 25%"],
+kty:"수능형 사고력",kp:"프린트 확보 필수",sum:"서울대 16명(2024), 경기권 최강 외고",
+kl:[["수능형 사고력 문항","모의고사+수능 기출 변형 사고력."],["교사 프린트 25%","교과서·부교재 外 자체 제작."],["합성함수 조건 추론","함수 합성+조건 해석 복합."],["도형 증명 서술형","도형 성질 논증 서술."],["확률 다단계 추론","조건부확률+베이즈 응용."]],
+sr:["프린트 확보 필수: 교사 자체 제작 25%","수능형 사고력 문항 급증 대비","서술형 30%: 논증형 서술 코칭","1등급 컷 92~96: ~720명 중 약 10명"],
+stG:"높은 학교 경쟁으로 등급 확보 어렵지만, 학교 프로필(경쟁 강도)이 대학 평가에서 인정됨. 3등급도 일반고 1등급과 동등 이상 평가 사례 존재.",
+stJ:"학종의 핵심 대상. 외국어 특기+글로벌 역량을 살린 생기부 구성이 관건. 서울대 16명 대부분 학종 합격.",
+stS:"수시 학종이 주력이나, 수능최저 충족을 위한 최소한의 정시 준비 필요. 수학 내신이 곧 수능 기초력.",
+in:"고양외고는 경기권 최강 외고(서울대 16명, 2024). 프린트 25%, 수능형 사고력 급증. 1등급 컷 92~96.",
+lat:37.6900,lng:126.8615,tg:["서울대 16명","프린트 25%","수능형 사고력"]},
+
+{n:13,nm:"고양국제고",ty:"국제고",tc:"#a78bfa",lo:"고양시 일산서구",ad:"일산서구",es:"2011",st:"~300명",cu:"96~98",ca:97,de:"35~40%",src:"교과서+자체교재",diff:"균등 고난도",obj:"단답형+논술형",
+cL:["교과서",40],cR:["자체교재",35],cM:["실생활 모델링",25],
+ft:["객관식 없음!","단답형 16문항+논술형 3문항","논증력 평가","실생활 모델링","해외대 다수"],
+kty:"논술형 모델링",kp:"논술 서술 훈련",sum:"단답+논술형, 객관식 없음! 해외대 다수",
+kl:[["수학적 모델링 논술","실생활 상황→수학적 모델 구성 15점."],["증명형 논술","수학적 명제 증명 과정 서술."],["조건 해석 다단계","복수 조건 동시 해석 장문."],["그래프 분석 논술","함수 그래프 특성 논증."],["통계 해석 논술","데이터 분석+해석 서술형."]],
+sr:["논술형 전문 코칭: 수학적 모델링+증명","단답형 16문항 정확도 훈련","객관식 없음: 완전 서술형 전환","1등급 컷 96~98: ~300명 중 약 4명"],
+stG:"교과전형 활용이 어렵고 학종 중심 입시. 극도로 높은 1등급 컷(96~98)으로 등급 확보 자체가 도전.",
+stJ:"해외대+국내 학종 병행 전략. 논술형 시험 경험이 학종 면접·서류에서 강점으로 작용.",
+stS:"수능최저 충족이 관건. 논술형 내신 훈련이 수능 서술형(향후)에 대비하는 간접 효과.",
+in:"고양국제고는 객관식 없는 완전 논술형(~300명). 단답 16문항+논술 3문항. 실생활 모델링 25%. 1등급 컷 96~98 전체 최고.",
+lat:37.6844,lng:126.8088,tg:["객관식 없음","논술형 모델링","1등급 96~98"]},
+
+{n:14,nm:"운정고",ty:"자공고",tc:"#14b8a6",lo:"파주시 운정",ad:"파주시",es:"2012",st:"~1,215명",cu:"95~97",ca:96,de:"30~35%",src:"올림포스+미션지 중심",diff:"균등 분포",obj:"5지선다+주관식",
+cL:["교과서",28],cR:["올림포스+미션지",54],cM:["모의변형",18],
+ft:["전국 자공고 1위","서울대 22명(2025)","SKY 107명(2025)","올림포스+미션지 핵심","균등 난이도","동점자 극다"],
+kty:"시간 소모형 다단계",kp:"미션지 분석 필수",sum:"전국 자공고 1위 · 서울대 22명 · SKY 107명(2025)",
+kl:[["미션지 변형 다단계","미션지 유형 조건 변형 장문."],["올림포스 심화 변형","올림포스 예제→조건 추가 심화."],["수능형 추론 고배점","8~10점 사고력 서술형."],["조건 충족형 서술","조건 2~3개 동시 충족 서술."],["시간 소모형 계산","다단계 계산 집약형 문항."]],
+sr:["미션지 분석 필수: 올림포스+미션지 54%","수능형 추론 고배점 서술형 전문 코칭","균등 분포: 쉬운 문제 없이 전체 고난도","1등급 컷 95~97: ~1,215명 중 약 17명"],
+stG:"높은 학교 경쟁으로 등급 확보 어렵지만, 학교 프로필이 교과 서류평가에서 큰 강점. 운정고 3등급 ≈ 일반고 1등급 평가 사례.",
+stJ:"학종에서 강력한 학교 프로필 효과. 자공고 특성+심화 탐구 경험이 서울대·상위 학종 합격의 핵심. SKY 107명이 증명하는 학종 경쟁력.",
+stS:"내신 시험 자체가 수능형 사고력을 요구하므로 내신 대비 = 수능 대비. 모의기출 변형 18%가 수능과 직결. '양면 전략'의 최적 환경.",
+in:"운정고는 전국 자공고 1위(서울대 22명, SKY 107명, 2025). ~1,215명 초대규모. 올림포스+미션지 54%. 균등 고난도. 1등급 컷 95~97.",
+lat:37.7221,lng:126.7365,tg:["전국 자공고 1위","SKY 107명","미션지 핵심"]}
+];
+
+var currentFilter="전체";
+var BC=["#3b82f6","#0ea5e9","#94a3b8"];
+var KC=["#ef4444","#3b82f6","#f59e0b","#10b981","#a78bfa"];
+
+function initMap(){
+  var mapEl=document.getElementById("mapContainer");if(!mapEl)return;
+  var map=L.map("mapContainer",{zoomControl:false}).setView([37.66,126.85],11);
+  L.control.zoom({position:"bottomright"}).addTo(map);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{
+    attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:18
+  }).addTo(map);
+  D.forEach(function(s){
+    var abbr=s.ty==="일반고"?"일":s.ty==="외국어고"?"외":s.ty==="국제고"?"국":"★";
+    var icon=L.divIcon({
+      html:'<div style="width:32px;height:32px;border-radius:50%;background:'+s.tc+';border:2px solid rgba(255,255,255,.8);box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;cursor:pointer">'+abbr+'</div>',
+      className:"",iconSize:[32,32],iconAnchor:[16,16]
+    });
+    var marker=L.marker([s.lat,s.lng],{icon:icon}).addTo(map);
+    var cutCol=s.ca>=94?"#ef4444":s.ca>=90?"#f59e0b":"#10b981";
+    marker.bindPopup('<div style="min-width:180px"><strong style="font-size:15px;color:#fff">'+s.nm+'</strong><br><span style="display:inline-block;padding:1px 8px;border-radius:50px;background:'+s.tc+'33;color:'+s.tc+';font-size:10px;font-weight:700;margin:4px 0">'+s.ty+'</span><br><span style="font-size:12px;color:#94a3b8">1등급 컷 <b style="color:'+cutCol+'">'+s.cu+'</b> · 서술형 '+s.de+'</span><br><button onclick="goBack();showDetail('+s.n+')" style="margin-top:8px;width:100%;padding:7px;border:none;border-radius:6px;background:'+s.tc+';color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">상세 분석 →</button></div>',{closeButton:false});
+  });
+  document.getElementById("mapToggle").onclick=function(){
+    var w=document.getElementById("mapWrap");
+    var isOpen=w.classList.contains("open");
+    w.classList.toggle("open");
+    this.classList.toggle("open");
+    this.querySelector(".arrow").textContent=isOpen?"▼":"▲";
+    if(!isOpen)setTimeout(function(){map.invalidateSize()},450);
+  };
+}
+
+function init(){
+  var fb=document.getElementById("filters");
+  ["전체","일반고","외국어고","국제고","자공고"].forEach(function(f){
+    var b=document.createElement("button");
+    b.className="fbtn"+(f==="전체"?" on":"");
+    b.textContent=f;
+    b.onclick=function(){currentFilter=f;document.querySelectorAll(".fbtn").forEach(function(x){x.className="fbtn"});this.className="fbtn on";renderGrid()};
+    fb.appendChild(b);
+  });
+  renderGrid();
+}
+
+function renderGrid(){
+  var g=document.getElementById("grid");
+  g.innerHTML="";
+  var list=currentFilter==="전체"?D:D.filter(function(s){return s.ty===currentFilter});
+  list.forEach(function(s){
+    var cutCol=s.ca>=94?"#ef4444":s.ca>=90?"#f59e0b":"#10b981";
+    var html='<div class="top-line" style="background:'+s.tc+'"></div>';
+    html+='<div class="hd"><span class="num">#'+String(s.n).padStart(2,"0")+'</span><span class="tp" style="background:'+s.tc+'22;color:'+s.tc+'">'+s.ty+'</span></div>';
+    html+='<div class="nm">'+s.nm+'</div>';
+    html+='<div class="loc">'+s.lo+' · '+s.es+'년 · '+s.st+'</div>';
+    html+='<div class="mets">';
+    html+='<div class="met"><b style="color:'+cutCol+'">'+s.cu+'</b><small>1등급 컷</small></div>';
+    html+='<div class="met"><b style="color:#38bdf8">'+s.de+'</b><small>서술형</small></div>';
+    html+='<div class="met"><b style="color:#94a3b8">'+s.src.split("+")[1].substring(0,4)+'</b><small>주요 부교재</small></div>';
+    html+='</div>';
+    var bars=[[s.cL[0],s.cL[1],BC[0]],[s.cR[0],s.cR[1],BC[1]],[s.cM[0],s.cM[1],BC[2]]];
+    bars.forEach(function(b){
+      html+='<div class="brow"><span class="bl">'+b[0].substring(0,6)+'</span><div class="bt"><div class="bf" style="width:'+b[1]*1.7+'%;background:'+b[2]+'"></div></div><span class="bv" style="color:'+b[2]+'">'+b[1]+'%</span></div>';
+    });
+    html+='<div class="tags">';s.tg.forEach(function(t){html+='<span class="tag">'+t+'</span>'});html+='</div>';
+    html+='<div class="hint">상세 분석 보기 →</div>';
+    var card=document.createElement("div");card.className="card";card.innerHTML=html;
+    card.onclick=function(){showDetail(s.n)};
+    g.appendChild(card);
+  });
+}
+
+function showDetail(n){
+  var s=D.find(function(x){return x.n===n});if(!s)return;
+  document.getElementById("listView").className="list-view hide";
+  var dv=document.getElementById("detailView");dv.className="detail show";
+  window.scrollTo(0,0);
+  var cutCol=s.ca>=94?"#ef4444":s.ca>=90?"#f59e0b":"#10b981";
+  var h='<div class="back-bar"><button class="back-btn" onclick="goBack()">← 목록</button><span class="dn">'+s.nm+'</span><span class="tp" style="background:'+s.tc+'22;color:'+s.tc+';padding:2px 10px;border-radius:50px;font-size:11px;font-weight:700">'+s.ty+'</span></div>';
+  h+='<div class="det-wrap">';
+  h+='<div class="det-hero"><div class="top-line" style="background:'+s.tc+'"></div><div style="font-size:11px;color:#64748b">#'+String(s.n).padStart(2,"0")+' · '+s.ty+'</div><h2 style="font-size:26px;font-weight:900;color:#fff;margin:4px 0">'+s.nm+'</h2><div style="font-size:13px;color:#94a3b8">'+s.ad+' · '+s.es+'년 개교 · '+s.st+'</div></div>';
+
+  h+=sec("학교 기본 정보",ig([["학생 수",s.st],["1등급 컷",'<span style="color:'+cutCol+'">'+s.cu+"점</span>"],["서술형 비중",s.de],["출제 소재",s.src],["난이도 분포",s.diff],["객관식 형태",s.obj]]));
+
+  var srcH="";
+  [[s.cL[0],s.cL[1],"#3b82f6"],[s.cR[0],s.cR[1],"#0ea5e9"],[s.cM[0],s.cM[1],"#94a3b8"]].forEach(function(b){srcH+=dbar(b[0],b[1],b[2],60)});
+  h+=sec("출제 소재 구성비",srcH);
+
+  var ftH='<div class="ig">';
+  ftH+='<div class="ii"><small>킬러 문항 유형</small><b style="color:#ef4444">'+s.kty+'</b></div>';
+  ftH+='<div class="ii"><small>핵심 대비 포인트</small><b style="color:#f59e0b">'+s.kp+'</b></div>';
+  ftH+='<div class="ii"><small>출제 특성 요약</small><b>'+s.sum+'</b></div>';
+  ftH+='</div>';
+  var tagH='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">';
+  s.ft.forEach(function(f){tagH+='<span style="padding:3px 10px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);border-radius:6px;font-size:11px;color:#38bdf8;font-weight:600">✦ '+f+'</span>'});
+  tagH+='</div>';
+  h+=sec("출제 특성",ftH+tagH);
+
+  var kH="";s.kl.forEach(function(k,i){
+    kH+='<div class="killer" style="border-left:4px solid '+KC[i]+'"><div class="kr"><span class="kn" style="background:'+KC[i]+'">'+(i+1)+'</span><span class="kt">'+k[0]+'</span></div><div class="kd">'+k[1]+'</div></div>';
+  });
+  h+=sec("킬러 문항 패턴 TOP 5",kH);
+
+  var sH="";s.sr.forEach(function(t,i){sH+='<div class="strat"><em>'+(i+1)+'. </em>'+t+'</div>'});
+  h+=sec("시대학원 맞춤 대비 전략",sH);
+
+  // 입시 전략 (교과/종합/정시)
+  var admH='<div class="strat-sub"><strong>📌 학생부교과 전략</strong><br>'+s.stG+'</div>';
+  admH+='<div class="strat-sub" style="margin-top:6px"><strong>📌 학생부종합 전략</strong><br>'+s.stJ+'</div>';
+  admH+='<div class="strat-sub" style="margin-top:6px"><strong>📌 정시(수능) 전략</strong><br>'+s.stS+'</div>';
+  h+=sec("입시 전략 (수시·정시)",admH);
+
+  h+=sec("종합 인사이트",'<div class="insight-box">'+s.in+'</div>');
+  h+='<button class="bottom-back" onclick="goBack()">← 목록으로 돌아가기</button>';
+  h+='</div>';
+  dv.innerHTML=h;
+}
+
+function goBack(){
+  document.getElementById("detailView").className="detail";
+  document.getElementById("listView").className="list-view";
+  window.scrollTo(0,0);
+}
+
+function sec(title,content){
+  return '<div class="sec"><div class="sec-t"><i></i><span>'+title+'</span></div><div class="sec-box">'+content+'</div></div>';
+}
+function ig(items){
+  var h='<div class="ig">';items.forEach(function(x){h+='<div class="ii"><small>'+x[0]+'</small><b>'+x[1]+'</b></div>'});return h+'</div>';
+}
+function dbar(label,val,color,max){
+  return '<div class="dbar"><span class="dl">'+label+'</span><div class="dt"><div class="df" style="width:'+((val/max)*100)+'%;background:'+color+'">'+val+'%</div></div></div>';
+}
+init();
+initMap();
+</script>
+</body>
+</html>
