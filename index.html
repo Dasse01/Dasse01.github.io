@@ -239,6 +239,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav-drop-btn .arrow{font-size:0.55rem;transition:transform 0.3s;opacity:0.5}
 .nav-dropdown:hover .arrow{transform:rotate(180deg)}
 .nav-drop-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:rgba(20,20,20,0.97);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.4rem;min-width:160px;opacity:0;visibility:hidden;transition:all 0.25s;box-shadow:0 12px 40px rgba(0,0,0,0.5);pointer-events:none}
+.nav-drop-menu::before{content:'';position:absolute;top:-12px;left:0;right:0;height:12px;background:transparent}
 .nav-dropdown:hover .nav-drop-menu{opacity:1;visibility:visible;pointer-events:auto}
 .nav-drop-menu a{display:block;color:var(--gray);text-decoration:none;font-size:0.8rem;font-weight:500;padding:0.5rem 0.8rem;border-radius:5px;transition:all 0.2s;white-space:nowrap}
 .nav-drop-menu a:hover{color:var(--white);background:rgba(255,255,255,0.06)}
@@ -252,6 +253,12 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav-susi{color:var(--lgold)!important;font-weight:700!important;background:rgba(245,158,11,0.1);padding:0.3rem 0.7rem;border-radius:3px;border:1px solid rgba(245,158,11,0.25)!important}
 .nav-susi:hover{background:rgba(245,158,11,0.2)!important;color:#fcd34d!important}
 .nav-susi::after{background:var(--lgold)!important}
+.nav-blog{color:#22c55e!important;font-weight:700!important;background:rgba(34,197,94,0.08);padding:0.3rem 0.7rem;border-radius:3px;border:1px solid rgba(34,197,94,0.25)!important;font-size:0.82rem!important;text-decoration:none;white-space:nowrap}
+.nav-blog:hover{background:rgba(34,197,94,0.2)!important;color:#4ade80!important}
+.nav-blog::after{display:none!important}
+.nav-exam-btn{color:#38bdf8!important;font-weight:700!important;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2)!important;border-radius:3px}
+.nav-exam-btn:hover{color:#7dd3fc!important;background:rgba(56,189,248,0.18)!important}
+.nav-exam-btn .arrow{color:#38bdf8!important}
 
 /* 수시전략 프로모션 배너 */
 .susi-promo{position:relative;overflow:hidden;padding:5rem 2rem;background:linear-gradient(135deg,#1a0f00 0%,#0d0a05 50%,#0a0a14 100%)}
@@ -802,6 +809,7 @@ footer a{color:var(--gray);text-decoration:none}
 <nav class="nav" id="nav">
   <a href="#" class="nav-brand">시대학원 <span>약술형 논술 전문</span></a>
   <div class="nav-links">
+    <a href="원장인사말.html" style="color:var(--lgold);font-weight:700;font-size:0.82rem">💬 원장인사말</a>
     <div class="nav-dropdown">
       <button class="nav-drop-btn">약술형 논술 <span class="arrow">▼</span></button>
       <div class="nav-drop-menu">
@@ -830,8 +838,16 @@ footer a{color:var(--gray);text-decoration:none}
         <a href="시대학원_고등수학_강좌안내.html">🔢 고등수학</a>
       </div>
     </div>
+    <div class="nav-dropdown">
+      <button class="nav-drop-btn nav-exam-btn">📊 내신기출분석 <span class="arrow">▼</span></button>
+      <div class="nav-drop-menu">
+        <a href="국어내신기출분석.html">📖 국어 기출분석</a>
+        <a href="수학내신기출분석.html">📐 수학 기출분석</a>
+      </div>
+    </div>
     <a href="2027_수시지원전략.html" class="nav-susi">🔥 수시전략</a>
     <a href="#" onclick="document.getElementById('hw-chat-toggle').click();return false;" class="nav-ai">🤖 김휘창입시컨설팅 AI상담</a>
+    <a href="https://blog.naver.com/study9781117" target="_blank" class="nav-blog">📝 블로그</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="nav-cta">상담신청</a>
   </div>
 </nav>
