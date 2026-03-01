@@ -227,17 +227,28 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav.scrolled{padding:0.5rem 2rem;box-shadow:0 4px 30px rgba(0,0,0,0.5)}
 .nav-brand{font-family:var(--font-display);font-size:1.5rem;color:var(--gold);text-decoration:none;letter-spacing:1px}
 .nav-brand span{color:var(--white);font-size:0.9rem;margin-left:0.5rem;font-family:var(--font-body);font-weight:300}
-.nav-links{display:flex;gap:1.5rem;align-items:center}
-.nav-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.3s;position:relative}
-.nav-links a:hover{color:var(--white)}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--red);transition:width 0.3s}
-.nav-links a:hover::after{width:100%}
-.nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem;border-radius:4px;font-weight:700!important;font-size:0.85rem!important}
+.nav-links{display:flex;gap:0.3rem;align-items:center}
+.nav-links>a{color:var(--gray);text-decoration:none;font-size:0.82rem;font-weight:500;transition:color 0.3s;position:relative;padding:0.4rem 0.7rem;white-space:nowrap}
+.nav-links>a:hover{color:var(--white)}
+.nav-links>a::after{content:'';position:absolute;bottom:0;left:0.7rem;right:0.7rem;width:auto;height:2px;background:var(--red);transform:scaleX(0);transition:transform 0.3s;transform-origin:center}
+.nav-links>a:hover::after{transform:scaleX(1)}
+/* Dropdown */
+.nav-dropdown{position:relative}
+.nav-drop-btn{color:var(--gray);font-size:0.82rem;font-weight:500;padding:0.4rem 0.7rem;cursor:pointer;display:flex;align-items:center;gap:0.3rem;transition:color 0.3s;white-space:nowrap;background:none;border:none;font-family:var(--font-body)}
+.nav-drop-btn:hover{color:var(--white)}
+.nav-drop-btn .arrow{font-size:0.55rem;transition:transform 0.3s;opacity:0.5}
+.nav-dropdown:hover .arrow{transform:rotate(180deg)}
+.nav-drop-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:rgba(20,20,20,0.97);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.4rem;min-width:160px;opacity:0;visibility:hidden;transition:all 0.25s;box-shadow:0 12px 40px rgba(0,0,0,0.5);pointer-events:none}
+.nav-dropdown:hover .nav-drop-menu{opacity:1;visibility:visible;pointer-events:auto}
+.nav-drop-menu a{display:block;color:var(--gray);text-decoration:none;font-size:0.8rem;font-weight:500;padding:0.5rem 0.8rem;border-radius:5px;transition:all 0.2s;white-space:nowrap}
+.nav-drop-menu a:hover{color:var(--white);background:rgba(255,255,255,0.06)}
+.nav-drop-menu a::after{display:none!important}
+.nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem;border-radius:4px;font-weight:700!important;font-size:0.82rem!important;white-space:nowrap}
 .nav-cta::after{display:none!important}
 .nav-cta:hover{background:var(--fire)!important}
-.nav-ai{color:#a78bfa!important;font-weight:700!important;background:rgba(139,92,246,0.12);padding:0.3rem 0.7rem;border-radius:3px;border:1px solid rgba(139,92,246,0.3)!important;cursor:pointer}
+.nav-ai{color:#a78bfa!important;font-weight:700!important;background:rgba(139,92,246,0.12);padding:0.35rem 0.7rem;border-radius:3px;border:1px solid rgba(139,92,246,0.3)!important;cursor:pointer;white-space:nowrap;font-size:0.82rem!important}
 .nav-ai:hover{background:rgba(139,92,246,0.25)!important;color:#c4b5fd!important}
-.nav-ai::after{background:#a78bfa!important}
+.nav-ai::after{display:none!important}
 .nav-susi{color:var(--lgold)!important;font-weight:700!important;background:rgba(245,158,11,0.1);padding:0.3rem 0.7rem;border-radius:3px;border:1px solid rgba(245,158,11,0.25)!important}
 .nav-susi:hover{background:rgba(245,158,11,0.2)!important;color:#fcd34d!important}
 .nav-susi::after{background:var(--lgold)!important}
@@ -791,20 +802,35 @@ footer a{color:var(--gray);text-decoration:none}
 <nav class="nav" id="nav">
   <a href="#" class="nav-brand">시대학원 <span>약술형 논술 전문</span></a>
   <div class="nav-links">
-    <a href="#reality">현실 직시</a>
-    <a href="#whatis">약술형이란</a>
-    <a href="#universities">모집 대학</a>
-    <a href="#why">왜 시대학원</a>
-    <a href="#results">합격 실적</a>
-    <a href="#tools">분석 도구</a>
-    <a href="#suneung">수능 병행</a>
-    <a href="#reviews-kr">공부법 후기</a>
-    <a href="#instructors">강사진</a>
+    <div class="nav-dropdown">
+      <button class="nav-drop-btn">약술형 논술 <span class="arrow">▼</span></button>
+      <div class="nav-drop-menu">
+        <a href="#reality">⚡ 현실 직시</a>
+        <a href="#whatis">📋 약술형이란</a>
+        <a href="#universities">🏫 모집 대학</a>
+        <a href="#results">🏆 합격 실적</a>
+        <a href="#tools">📊 분석 도구</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <button class="nav-drop-btn">학원 안내 <span class="arrow">▼</span></button>
+      <div class="nav-drop-menu">
+        <a href="#why">💎 왜 시대학원</a>
+        <a href="#suneung">📝 수능 병행</a>
+        <a href="#reviews-kr">💬 공부법 후기</a>
+        <a href="#instructors">👨‍🏫 강사진</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <button class="nav-drop-btn">학습 프로그램 <span class="arrow">▼</span></button>
+      <div class="nav-drop-menu">
+        <a href="국어약술형_랜딩페이지.html">📖 국어 약술형</a>
+        <a href="수학약술형_랜딩페이지.html">📐 수학 약술형</a>
+        <a href="시대학원_고등국어_강좌안내.html">📚 고등국어</a>
+        <a href="시대학원_고등수학_강좌안내.html">🔢 고등수학</a>
+      </div>
+    </div>
     <a href="2027_수시지원전략.html" class="nav-susi">🔥 수시전략</a>
-    <a href="국어약술형_랜딩페이지.html">국어 약술</a>
-    <a href="수학약술형_랜딩페이지.html">수학 약술</a>
-    <a href="시대학원_고등국어_강좌안내.html">고등국어</a>
-    <a href="시대학원_고등수학_강좌안내.html">고등수학</a>
     <a href="#" onclick="document.getElementById('hw-chat-toggle').click();return false;" class="nav-ai">🤖 김휘창입시컨설팅 AI상담</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="nav-cta">상담신청</a>
   </div>
