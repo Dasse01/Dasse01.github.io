@@ -7,6 +7,32 @@
   let sessionId = localStorage.getItem('chatbot_session') || '';
   let isOpen = false;
   let isStreaming = false;
+  let serverReady = false;
+  let serverWaking = false;
+
+  // ─── 서버 워밍업 (Render 콜드스타트 대응) ─────────────
+  async function warmUpServer() {
+    if (serverReady || serverWaking) return;
+    serverWaking = true;
+    try {
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort(), 60000);
+      await fetch(API_URL + '/api/stream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'ping', session_id: '' }),
+        signal: ctrl.signal
+      });
+      clearTimeout(tid);
+      serverReady = true;
+    } catch(e) {
+      // 실패해도 다음 실제 요청에서 재시도
+    }
+    serverWaking = false;
+  }
+
+  // 페이지 로드 시 백그라운드 워밍업
+  setTimeout(warmUpServer, 2000);
 
   // ─── 스타일 주입 ──────────────────────────────────────
   const style = document.createElement('style');
@@ -546,6 +572,7 @@
       toggle.classList.add('open');
       badge.style.display = 'none';
       input.focus();
+      warmUpServer();
     } else {
       closeChat();
     }
@@ -594,6 +621,12 @@
     isStreaming = true;
     sendBtn.disabled = true;
 
+    // 서버 응답 대기 안내 (5초 후)
+    const slowTimer = setTimeout(() => {
+      const bubble = typingEl.querySelector('.hw-msg-bubble');
+      if (bubble) bubble.innerHTML = '<div class="hw-typing"><span></span><span></span><span></span></div><div style="font-size:11px;color:#94a3b8;margin-top:6px">서버 연결 중... 최초 접속 시 30초 정도 소요될 수 있습니다</div>';
+    }, 5000);
+
     try {
       // 스트리밍 API 호출
       const response = await fetch(API_URL + '/api/stream', {
@@ -607,6 +640,7 @@
       }
 
       // 타이핑 제거, 봇 메시지 생성
+      clearTimeout(slowTimer);
       typingEl.remove();
       const botBubble = addMessage('', 'bot');
       const bubbleContent = botBubble.querySelector('.hw-msg-bubble');
@@ -648,7 +682,10 @@
         }
       }
 
+      serverReady = true;
+
     } catch (error) {
+      clearTimeout(slowTimer);
       typingEl.remove();
 
       // 스트리밍 실패 시 일반 API로 폴백
