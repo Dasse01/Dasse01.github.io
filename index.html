@@ -235,6 +235,9 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 .nav-cta{background:var(--red)!important;color:var(--white)!important;padding:0.5rem 1.2rem;border-radius:4px;font-weight:700!important;font-size:0.85rem!important}
 .nav-cta::after{display:none!important}
 .nav-cta:hover{background:var(--fire)!important}
+.nav-ai{color:#a78bfa!important;font-weight:700!important;background:rgba(139,92,246,0.12);padding:0.3rem 0.7rem;border-radius:3px;border:1px solid rgba(139,92,246,0.3)!important;cursor:pointer}
+.nav-ai:hover{background:rgba(139,92,246,0.25)!important;color:#c4b5fd!important}
+.nav-ai::after{background:#a78bfa!important}
 .nav-susi{color:var(--lgold)!important;font-weight:700!important;background:rgba(245,158,11,0.1);padding:0.3rem 0.7rem;border-radius:3px;border:1px solid rgba(245,158,11,0.25)!important}
 .nav-susi:hover{background:rgba(245,158,11,0.2)!important;color:#fcd34d!important}
 .nav-susi::after{background:var(--lgold)!important}
@@ -802,6 +805,7 @@ footer a{color:var(--gray);text-decoration:none}
     <a href="수학약술형_랜딩페이지.html">수학 약술</a>
     <a href="시대학원_고등국어_강좌안내.html">고등국어</a>
     <a href="시대학원_고등수학_강좌안내.html">고등수학</a>
+    <a href="#" onclick="document.getElementById('hw-chat-toggle').click();return false;" class="nav-ai">🤖 김휘창입시컨설팅 AI상담</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="nav-cta">상담신청</a>
   </div>
 </nav>
@@ -2057,5 +2061,7 @@ function toggleTool(type){
   setTimeout(function(){ startCountUp(); }, 2000);
 })();
 </script>
+<!-- AI 입시상담 챗봇 위젯 -->
+<script src="chatbot-widget.js"></script>
 </body>
 </html>
