@@ -8,7 +8,7 @@
 <!-- ═══ SEO 메타태그 (네이버 검색 최적화) ═══ -->
 
 <!-- 기본 메타 -->
-<meta name="description" content="고양시 일산 약술형 논술 전문 시대학원. 내신 4~6등급도 인서울 가능! 가천대·삼육대·수원대 등 15개 대학 약술형 논술 국어·수학 전문 강의. 30년 경력 김휘창 원장의 데이터 기반 수시 컨설팅. 031)978-1117">
+<meta name="description" content="고양시 일산 약술형 논술 전문. 내신 4~6등급 인서울 전략, 가천대·국민대·수원대 대비. 031-978-1117">
 <meta name="keywords" content="약술형논술,약술형논술학원,고양시학원,일산학원,논술학원,가천대논술,수원대논술,삼육대논술,을지대논술,한국공학대논술,약술형국어,약술형수학,수시컨설팅,대입컨설팅,시대학원,고양시논술,일산논술,덕양구학원,내신4등급인서울,중위권대입전략">
 <meta name="author" content="시대학원">
 <meta name="robots" content="index, follow">
@@ -789,35 +789,8 @@ footer a{color:var(--gray);text-decoration:none}
 .reveal-left.visible{opacity:1;transform:translateX(0)}
 
 /* Mobile */
-/* Mobile hamburger */
-.nav-burger{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;z-index:1002}
-.nav-burger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:all .3s}
-.nav-burger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-.nav-burger.open span:nth-child(2){opacity:0}
-.nav-burger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-/* Mobile overlay menu - completely separate from .nav-links */
-#mobileMenu{display:none;position:fixed;top:0;right:0;width:250px;height:100vh;background:#0a0a10;border-left:1px solid rgba(255,255,255,.08);z-index:1001;padding:56px 0 30px;overflow-y:auto;box-shadow:-8px 0 30px rgba(0,0,0,.6);flex-direction:column}
-#mobileMenu.open{display:flex}
-#mobileMenu a{color:#b0b0c0;text-decoration:none;font-size:.75rem;padding:11px 18px;border-bottom:1px solid rgba(255,255,255,.04);transition:color .2s}
-#mobileMenu a:active,#mobileMenu a:hover{color:#fff;background:rgba(255,255,255,.04)}
-#mobileMenu .mm-group{padding:0}
-#mobileMenu .mm-title{color:#888;font-size:.65rem;padding:10px 18px 4px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.04)}
-#mobileMenu .mm-title .mm-arrow{font-size:.5rem;transition:transform .2s}
-#mobileMenu .mm-sub{display:none;background:rgba(255,255,255,.02)}
-#mobileMenu .mm-group.open .mm-sub{display:block}
-#mobileMenu .mm-group.open .mm-arrow{transform:rotate(180deg)}
-#mobileMenu .mm-sub a{padding-left:28px;font-size:.7rem}
-#mobileMenu .mm-highlight{color:#fbbf24!important;font-weight:700}
-#mobileMenu .mm-red{color:#fff!important;background:#dc2626;text-align:center;margin:12px 14px;border-radius:6px;font-weight:700;font-size:.8rem;border:none}
-#mobileMenu .mm-green{color:#22c55e!important;font-weight:600}
-#mobileMenu .mm-purple{color:#a78bfa!important;font-weight:600}
-#mobileMenu .mm-blue{color:#38bdf8!important;font-weight:600}
-.mob-backdrop{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.65);z-index:1000}
-.mob-backdrop.show{display:block}
 @media(max-width:768px){
-  .nav{padding:0.6rem 1rem}
-  .nav-burger{display:flex}
-  .nav-links{display:none!important}
+  .nav-links{display:none}
   .reality-grid{grid-template-columns:1fr}
   .whatis-features{grid-template-columns:1fr}
   .uni-grid{grid-template-columns:repeat(3,1fr)}
@@ -835,8 +808,7 @@ footer a{color:var(--gray);text-decoration:none}
 <!-- Nav -->
 <nav class="nav" id="nav">
   <a href="#" class="nav-brand">시대학원 <span>약술형 논술 전문</span></a>
-  <button class="nav-burger" id="navBurger"><span></span><span></span><span></span></button>
-  <div class="nav-links" id="navLinks">
+  <div class="nav-links">
     <a href="원장인사말.html" style="color:var(--lgold);font-weight:700;font-size:0.82rem">💬 원장인사말</a>
     <div class="nav-dropdown">
       <button class="nav-drop-btn">약술형 논술 <span class="arrow">▼</span></button>
@@ -879,49 +851,8 @@ footer a{color:var(--gray);text-decoration:none}
     <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="nav-cta">상담신청</a>
   </div>
 </nav>
-<div class="mob-backdrop" id="mobBackdrop"></div>
-<div id="mobileMenu">
-  <a href="원장인사말.html" class="mm-highlight">💬 원장인사말</a>
-  <div class="mm-group">
-    <div class="mm-title">약술형 논술 <span class="mm-arrow">▼</span></div>
-    <div class="mm-sub">
-      <a href="#reality">⚡ 현실 직시</a>
-      <a href="#whatis">📋 약술형이란</a>
-      <a href="#universities">🏫 모집 대학</a>
-      <a href="#results">🏆 합격 실적</a>
-      <a href="#tools">📊 분석 도구</a>
-    </div>
-  </div>
-  <div class="mm-group">
-    <div class="mm-title">학원 안내 <span class="mm-arrow">▼</span></div>
-    <div class="mm-sub">
-      <a href="#why">💎 왜 시대학원</a>
-      <a href="#suneung">📝 수능 병행</a>
-      <a href="#reviews-kr">💬 공부법 후기</a>
-      <a href="#instructors">👨‍🏫 강사진</a>
-    </div>
-  </div>
-  <div class="mm-group">
-    <div class="mm-title">학습 프로그램 <span class="mm-arrow">▼</span></div>
-    <div class="mm-sub">
-      <a href="국어약술형_랜딩페이지.html">📖 국어 약술형</a>
-      <a href="수학약술형_랜딩페이지.html">📐 수학 약술형</a>
-      <a href="시대학원_고등국어_강좌안내.html">📚 고등국어</a>
-      <a href="시대학원_고등수학_강좌안내.html">🔢 고등수학</a>
-    </div>
-  </div>
-  <div class="mm-group">
-    <div class="mm-title mm-blue">📊 내신기출분석 <span class="mm-arrow">▼</span></div>
-    <div class="mm-sub">
-      <a href="국어내신기출분석.html">📖 국어 기출분석</a>
-      <a href="수학내신기출분석.html">📐 수학 기출분석</a>
-    </div>
-  </div>
-  <a href="2027_수시지원전략.html" class="mm-highlight">🔥 수시전략</a>
-  <a href="#" class="mm-purple" onclick="document.getElementById('hw-chat-toggle').click();return false;">🤖 AI상담</a>
-  <a href="https://blog.naver.com/study9781117" target="_blank" class="mm-green">📝 블로그</a>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="mm-red">상담신청</a>
-</div>
+
+<!-- Hero Banner -->
 <section class="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-streak ls1"></div>
@@ -2170,47 +2101,6 @@ function toggleTool(type){
 
   observer.observe(hero);
   setTimeout(function(){ startCountUp(); }, 2000);
-})();
-</script>
-<!-- 모바일 메뉴 -->
-<script>
-(function(){
-  var burger=document.getElementById('navBurger');
-  var menu=document.getElementById('mobileMenu');
-  var backdrop=document.getElementById('mobBackdrop');
-  if(!burger||!menu)return;
-
-  function openMenu(){
-    menu.classList.add('open');
-    burger.classList.add('open');
-    if(backdrop)backdrop.classList.add('show');
-    document.body.style.overflow='hidden';
-  }
-  function closeMenu(){
-    menu.classList.remove('open');
-    burger.classList.remove('open');
-    if(backdrop)backdrop.classList.remove('show');
-    document.body.style.overflow='';
-  }
-
-  burger.addEventListener('click',function(){
-    menu.classList.contains('open')?closeMenu():openMenu();
-  });
-  if(backdrop)backdrop.addEventListener('click',closeMenu);
-
-  // 아코디언 드롭다운
-  menu.querySelectorAll('.mm-title').forEach(function(title){
-    title.addEventListener('click',function(){
-      title.parentElement.classList.toggle('open');
-    });
-  });
-
-  // 링크 클릭→메뉴 닫기→이동
-  menu.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click',function(){
-      closeMenu();
-    });
-  });
 })();
 </script>
 <!-- AI 입시상담 챗봇 위젯 -->
