@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>시대학원 고등부 수학 - 2026년 3월 가정통신문</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+  <!-- html2canvas & jsPDF for export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --primary: #1F4E79;
+      --secondary: #2E75B6;
+      --accent: #C00000;
+      --orange: #ED7D31;
+      --light-blue: #E8F4FD;
+      --light-green: #E8F8E8;
+      --light-red: #FDE8E8;
+      --light-yellow: #FFF2CC;
+      --light-purple: #F3E8FD;
+      --dark: #333333;
+      --gray: #666666;
+      --white: #FFFFFF;
+      --border: #DDDDDD;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--white);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    /* 표지 섹션 */
+    .cover {
+      background: linear-gradient(135deg, var(--primary) 0%, #0d3a5c 100%);
+      color: var(--white);
+      padding: 60px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    }
+
+    .cover h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 8px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .cover h2 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    .cover-divider {
+      width: 100px;
+      height: 2px;
+      background: var(--white);
+      margin: 0 auto 30px;
+    }
+
+    .cover-date {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .cover-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .cover-box {
+      background: var(--white);
+      color: var(--primary);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 35px;
+    }
+
+    .cover-box h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .cover-box p {
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+
+    .cover-box .accent {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .seminar-banner {
+      background: var(--accent);
+      color: var(--white);
+      padding: 18px;
+      margin-top: 25px;
+      border-radius: 8px;
+    }
+
+    .seminar-banner h4 {
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .seminar-banner p {
+      font-size: 0.85rem;
+      opacity: 0.95;
+    }
+
+    /* 섹션 공통 */
+    .section {
+      padding: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      background: var(--primary);
+      color: var(--white);
+      padding: 15px 25px;
+      margin: -40px -40px 30px -40px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-header.accent-header {
+      background: var(--accent);
+    }
+
+    .section-intro {
+      font-size: 1rem;
+      margin-bottom: 25px;
+      line-height: 1.8;
+    }
+
+    .section-intro strong {
+      color: var(--accent);
+    }
+
+    .section-intro .primary {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* 카드 스타일 */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--secondary);
+    }
+
+    .card.blue-bg { background: var(--light-blue); }
+    .card.green-bg { background: var(--light-green); }
+    .card.red-bg { background: var(--light-red); }
+    .card.yellow-bg { background: var(--light-yellow); }
+    .card.purple-bg { background: var(--light-purple); }
+
+    .card.blue-border::before { background: #4472C4; }
+    .card.green-border::before { background: #548235; }
+    .card.red-border::before { background: var(--accent); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-badge {
+      background: var(--secondary);
+      color: var(--white);
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .card-badge.stage-1 { background: #4472C4; }
+    .card-badge.stage-2 { background: #548235; }
+    .card-badge.stage-3 { background: var(--accent); }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .card-subtitle {
+      font-size: 0.85rem;
+      color: var(--gray);
+      font-style: italic;
+    }
+
+    .card-content {
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .card-content ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .card-content li {
+      padding: 4px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .card-content li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--secondary);
+      font-weight: bold;
+    }
+
+    .check-list li::before {
+      content: '✓';
+      color: #548235;
+    }
+
+    .card-footer {
+      background: var(--light-yellow);
+      margin: 15px -20px -20px -20px;
+      padding: 12px 20px;
+      font-size: 0.9rem;
+      border-radius: 0 0 8px 8px;
+    }
+
+    /* 핵심 안내 리스트 */
+    .key-points {
+      background: var(--light-blue);
+      padding: 25px;
+      border-radius: 8px;
+    }
+
+    .key-points h3 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .key-point-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 12px 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.1);
+    }
+
+    .key-point-item:last-child {
+      border-bottom: none;
+    }
+
+    .key-point-num {
+      width: 28px;
+      height: 28px;
+      background: var(--secondary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .key-point-num.special {
+      background: var(--accent);
+    }
+
+    .key-point-text h4 {
+      font-size: 1rem;
+      color: var(--dark);
+      margin-bottom: 3px;
+    }
+
+    .key-point-text p {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    /* 3종 노트 */
+    .note-card {
+      border-left: 5px solid;
+      padding-left: 20px;
+    }
+
+    .note-card.concept { border-color: #4472C4; }
+    .note-card.solution { border-color: #548235; }
+    .note-card.wrong { border-color: var(--accent); }
+
+    .note-card h4 {
+      font-size: 1.15rem;
+      margin-bottom: 5px;
+    }
+
+    .note-card.concept h4 { color: #4472C4; }
+    .note-card.solution h4 { color: #548235; }
+    .note-card.wrong h4 { color: var(--accent); }
+
+    /* 관리 시스템 */
+    .manage-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 18px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .manage-item:nth-child(odd) { background: var(--light-blue); }
+    .manage-item:nth-child(even) { background: var(--light-green); }
+
+    .manage-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .manage-content {
+      flex: 1;
+    }
+
+    .manage-content h4 {
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .manage-content p {
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+
+    .manage-tag {
+      background: var(--orange);
+      color: var(--white);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* 테스트 단계 */
+    .test-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .test-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .test-circle.step-1 { background: #4472C4; }
+    .test-circle.step-2 { background: #548235; }
+    .test-circle.step-3 { background: var(--accent); }
+
+    .test-info h4 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .test-info h4.step-1 { color: #4472C4; }
+    .test-info h4.step-2 { color: #548235; }
+    .test-info h4.step-3 { color: var(--accent); }
+
+    .test-info ul {
+      list-style: none;
+      margin-bottom: 10px;
+    }
+
+    .test-info li {
+      font-size: 0.9rem;
+      padding: 3px 0;
+    }
+
+    .test-date {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    /* 설명회 섹션 */
+    .seminar-section {
+      background: var(--light-red);
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .seminar-section h3 {
+      color: var(--accent);
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .seminar-section h2 {
+      color: var(--primary);
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .seminar-section h4 {
+      font-size: 1.1rem;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .seminar-section p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    .seminar-info {
+      background: var(--white);
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 25px;
+    }
+
+    .seminar-info-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .seminar-info-item:last-child {
+      border-bottom: none;
+    }
+
+    .seminar-info-label {
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 60px;
+    }
+
+    .seminar-notice {
+      background: var(--light-yellow);
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--orange);
+      font-weight: 700;
+      margin-top: 15px;
+    }
+
+    .seminar-content {
+      background: var(--light-blue);
+      padding: 25px;
+      border-radius: 8px;
+    }
+
+    .seminar-content h4 {
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .seminar-content ol {
+      padding-left: 25px;
+    }
+
+    .seminar-content li {
+      padding: 6px 0;
+      font-size: 0.95rem;
+    }
+
+    /* 부탁 사항 */
+    .request-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 18px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .request-item:nth-child(odd) { background: var(--light-blue); }
+    .request-item:nth-child(even) { background: var(--light-green); }
+    .request-item.special { background: var(--light-red); }
+
+    .request-num {
+      width: 32px;
+      height: 32px;
+      background: var(--secondary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .request-num.special {
+      background: var(--accent);
+    }
+
+    .request-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .request-text.special {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* 마무리 메시지 */
+    .closing-message {
+      background: var(--primary);
+      color: var(--white);
+      padding: 18px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* 푸터 */
+    .footer {
+      background: linear-gradient(135deg, var(--primary) 0%, #0d3a5c 100%);
+      color: var(--white);
+      padding: 50px 40px;
+      text-align: center;
+    }
+
+    .footer h2 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .footer-divider {
+      width: 80px;
+      height: 2px;
+      background: var(--white);
+      margin: 0 auto 25px;
+    }
+
+    .footer-date {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .footer-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .footer-values {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .footer-values h4 {
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .footer-values p {
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    .footer-seminar {
+      background: var(--accent);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .footer-contact {
+      background: rgba(255,255,255,0.1);
+      padding: 25px;
+      border-radius: 8px;
+    }
+
+    .footer-contact h4 {
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .footer-contact p {
+      font-size: 0.95rem;
+      padding: 5px 0;
+    }
+
+    /* AI 분석 안내 */
+    .ai-notice {
+      background: var(--light-blue);
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--primary);
+      margin-top: 20px;
+    }
+
+    /* 프로그램 리스트 */
+    .program-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 18px;
+      background: var(--light-yellow);
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .program-icon {
+      width: 45px;
+      height: 45px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .program-content h4 {
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .program-content p {
+      font-size: 0.9rem;
+      color: var(--dark);
+      line-height: 1.5;
+    }
+
+    /* 인쇄 스타일 */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      
+      .container {
+        box-shadow: none;
+        max-width: 100%;
+      }
+      
+      .section {
+        page-break-inside: avoid;
+      }
+      
+      .floating-toolbar {
+        display: none !important;
+      }
+    }
+
+    /* 플로팅 툴바 */
+    .floating-toolbar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .floating-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: 'Noto Sans KR', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .floating-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    .floating-btn.home {
+      background: linear-gradient(135deg, #1F4E79, #2E75B6);
+      color: white;
+    }
+
+    .floating-btn.home:hover {
+      background: linear-gradient(135deg, #2E75B6, #3498db);
+    }
+
+    .floating-btn.image {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+    }
+
+    .floating-btn.image:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+    }
+
+    .floating-btn.pdf {
+      background: linear-gradient(135deg, #C00000, #ef4444);
+      color: white;
+    }
+
+    .floating-btn.pdf:hover {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+    .floating-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .floating-btn .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* 모바일 플로팅 버튼 */
+    @media (max-width: 600px) {
+      .floating-toolbar {
+        top: auto;
+        bottom: 20px;
+        right: 15px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .floating-btn {
+        padding: 10px 14px;
+        font-size: 0.8rem;
+      }
+
+      .floating-btn span.btn-text {
+        display: none;
+      }
+
+      .floating-btn {
+        padding: 12px;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    /* 토스트 알림 */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #333;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 2000;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .toast.error {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+    /* 반응형 */
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      
+      .section {
+        padding: 25px;
+      }
+      
+      .section-header {
+        margin: -25px -25px 20px -25px;
+        font-size: 1.1rem;
+      }
+      
+      .cover {
+        padding: 40px 25px;
+      }
+      
+      .cover h1 {
+        font-size: 2.2rem;
+        letter-spacing: 4px;
+      }
+      
+      .cover h2 {
+        font-size: 1.4rem;
+      }
+      
+      .test-step {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .manage-item {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 플로팅 툴바 -->
+  <div class="floating-toolbar">
+    <a href="index.html" class="floating-btn home">
+      <span>🏠</span>
+      <span class="btn-text">메인으로</span>
+    </a>
+    <button class="floating-btn image" onclick="saveAsImage()" id="btnImage">
+      <span>🖼️</span>
+      <span class="btn-text">이미지 저장</span>
+    </button>
+    <button class="floating-btn pdf" onclick="saveAsPDF()" id="btnPDF">
+      <span>📄</span>
+      <span class="btn-text">PDF 저장</span>
+    </button>
+  </div>
+
+  <!-- 토스트 알림 -->
+  <div class="toast" id="toast"></div>
+  <div class="container">
+    <!-- 표지 -->
+    <header class="cover">
+      <h1>시대학원</h1>
+      <h2>고등부 수학</h2>
+      <div class="cover-divider"></div>
+      <p class="cover-date">2026년 3월</p>
+      <p class="cover-title">가정통신문</p>
+      
+      <div class="cover-box">
+        <h3>🎯 1학기 중간고사 완벽 대비</h3>
+        <p>3단계 내신 대비 시스템 + 학교별 맞춤 관리</p>
+        <p class="accent">+ 실시간 학부모 소통 시스템</p>
+      </div>
+      
+      <div class="seminar-banner">
+        <h4>📢 4월 초 주말 | 덕양구 고등학교 내신분석설명회 개최!</h4>
+        <p>김휘창 원장 주관 | 학교별 기출 경향 & 대비 전략 공개</p>
+      </div>
+    </header>
+
+    <!-- 인사말 -->
+    <section class="section">
+      <div class="section-header">📝 학부모님께 드리는 글</div>
+      
+      <p class="section-intro">
+        안녕하세요, <strong class="primary">시대학원</strong>입니다.<br><br>
+        새 학기가 시작되고 <strong>1학기 중간고사가 약 6주 앞으로</strong> 다가왔습니다.<br><br>
+        시대학원은 <strong class="primary">'관리가 강한 학원'</strong>을 목표로 체계적인 내신 대비 시스템을 운영하고 있습니다.
+      </p>
+      
+      <div class="key-points">
+        <h3>📋 이번 가정통신문 핵심 안내</h3>
+        
+        <div class="key-point-item">
+          <span class="key-point-num">1</span>
+          <div class="key-point-text">
+            <h4>3월 주요 학습 일정</h4>
+            <p>주차별 학습 로드맵</p>
+          </div>
+        </div>
+        
+        <div class="key-point-item">
+          <span class="key-point-num">2</span>
+          <div class="key-point-text">
+            <h4>3단계 내신 대비 시스템</h4>
+            <p>선행 → 시즌1 → 시즌2</p>
+          </div>
+        </div>
+        
+        <div class="key-point-item">
+          <span class="key-point-num">3</span>
+          <div class="key-point-text">
+            <h4>시대학원 3종 노트 학습법</h4>
+            <p>개념/풀이/오답노트</p>
+          </div>
+        </div>
+        
+        <div class="key-point-item">
+          <span class="key-point-num">4</span>
+          <div class="key-point-text">
+            <h4>학교별 맞춤 내신 대비</h4>
+            <p>기출 분석 + 프린트 제공</p>
+          </div>
+        </div>
+        
+        <div class="key-point-item">
+          <span class="key-point-num">5</span>
+          <div class="key-point-text">
+            <h4>촘촘한 관리 시스템</h4>
+            <p>출결/숙제/테스트/클리닉</p>
+          </div>
+        </div>
+        
+        <div class="key-point-item">
+          <span class="key-point-num special">⭐</span>
+          <div class="key-point-text">
+            <h4 style="color: var(--accent);">내신분석설명회 안내</h4>
+            <p>4월 초 주말 | 덕양구 고교 기출 분석</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3월 학습 일정 -->
+    <section class="section">
+      <div class="section-header">📅 3월 주요 학습 일정</div>
+      
+      <div class="card blue-bg">
+        <div class="card-header">
+          <span class="card-badge">1주차</span>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>개학 적응 / 진단평가 실시</li>
+            <li>학습 계획 수립 / 개념노트 시작</li>
+            <li>학교별 중간고사 범위 조사</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card green-bg">
+        <div class="card-header">
+          <span class="card-badge" style="background: #548235;">2주차</span>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>3월 학력평가 대비 (고3)</li>
+            <li>단원별 개념 정리 / 기본 유형 풀이</li>
+            <li>내신 대비 시즌1 본격 시작</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card yellow-bg">
+        <div class="card-header">
+          <span class="card-badge" style="background: var(--orange);">3주차</span>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>단원별 1차 테스트 실시</li>
+            <li>오답노트 작성 시작</li>
+            <li>유형별 문제 반복 훈련</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card red-bg">
+        <div class="card-header">
+          <span class="card-badge" style="background: var(--accent);">4주차</span>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>중간고사 대비 집중 기간 돌입</li>
+            <li>학교별 기출 분석 시작</li>
+            <li>심화 문제 풀이 / 실전 모의고사</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3단계 내신 대비 시스템 -->
+    <section class="section">
+      <div class="section-header">🎯 3단계 내신 대비 시스템</div>
+      
+      <p class="section-intro">
+        시대학원은 <strong>방학 → 시즌1 → 시즌2</strong> 3단계 커리큘럼으로<br>
+        '개념 → 유형 → 실전'까지 완벽하게 연결합니다.
+      </p>
+      
+      <div class="card blue-bg blue-border">
+        <div class="card-header">
+          <span class="card-badge stage-1">1단계</span>
+          <span class="card-subtitle">방학 중</span>
+        </div>
+        <h4 class="card-title" style="color: #4472C4; margin-bottom: 12px;">개념 입문 (선행)</h4>
+        <div class="card-content">
+          <ul class="check-list">
+            <li>교과서 개념 100% 이해</li>
+            <li>공식 암기 아닌 '원리·사고체계' 구축</li>
+            <li>문제풀이 기반 사고법 완성</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card green-bg green-border">
+        <div class="card-header">
+          <span class="card-badge stage-2">2단계</span>
+          <span class="card-subtitle">학기 중 1~4주차</span>
+        </div>
+        <h4 class="card-title" style="color: #548235; margin-bottom: 12px;">내신 대비 시즌1</h4>
+        <div class="card-content">
+          <ul class="check-list">
+            <li>실전 개념 완성 + 유형별 반복</li>
+            <li>기출 기반 핵심 유형 정리</li>
+            <li>매수업 60~80문항 과제 훈련</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card red-bg red-border">
+        <div class="card-header">
+          <span class="card-badge stage-3">3단계</span>
+          <span class="card-subtitle">학기 중 5~8주차</span>
+        </div>
+        <h4 class="card-title" style="color: var(--accent); margin-bottom: 12px;">내신 대비 시즌2</h4>
+        <div class="card-content">
+          <ul class="check-list">
+            <li>만점 대비 심화·고난도 풀이</li>
+            <li>학교별 기출 분석 (25회분)</li>
+            <li>50분 실전 모의고사로 실전 감각</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3종 노트 학습법 -->
+    <section class="section">
+      <div class="section-header">📚 시대학원 3종 노트 학습법</div>
+      
+      <p class="section-intro">
+        시대학원은 <strong>개념노트, 풀이노트, 오답노트</strong> 3종 노트 시스템을 통해<br>
+        학생들의 자기주도학습 능력을 체계적으로 키워갑니다.
+      </p>
+      
+      <div class="card blue-bg">
+        <div class="note-card concept">
+          <h4>📘 개념노트 <span style="font-weight: 400; font-size: 0.85rem; color: var(--gray); font-style: italic;">Concept Note</span></h4>
+          <div class="card-content">
+            <ul>
+              <li>수학 개념과 공식을 자신만의 언어로 정리</li>
+              <li>개념 간 연결고리 시각화 (마인드맵)</li>
+              <li>자주 헷갈리는 개념 비교 정리</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-footer">
+          ⏰ 수업 후 당일 작성 → 주 1회 강사 확인
+        </div>
+      </div>
+      
+      <div class="card green-bg">
+        <div class="note-card solution">
+          <h4>📗 풀이노트 <span style="font-weight: 400; font-size: 0.85rem; color: var(--gray); font-style: italic;">Solution Note</span></h4>
+          <div class="card-content">
+            <ul>
+              <li>문제 조건 정리 및 풀이 전략 수립</li>
+              <li>단계별 풀이 과정 상세 기록</li>
+              <li>중간 계산 생략 금지 / 검산 습관화</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-footer">
+          ⏰ 매 수업 강사 직접 점검 + 피드백
+        </div>
+      </div>
+      
+      <div class="card red-bg">
+        <div class="note-card wrong">
+          <h4>📕 오답노트 <span style="font-weight: 400; font-size: 0.85rem; color: var(--gray); font-style: italic;">Wrong Answer Note</span></h4>
+          <div class="card-content">
+            <ul>
+              <li>오답 유형 분류 (개념/조건/계산/시간)</li>
+              <li>왜 틀렸는지 원인 분석 기록</li>
+              <li>유사 문제 추가 풀이로 완전 정복</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-footer">
+          ⏰ 매주 1회 강사 서명 + 시험 전 집중 복습
+        </div>
+      </div>
+    </section>
+
+    <!-- 학교별 맞춤 내신 대비 -->
+    <section class="section">
+      <div class="section-header">🏫 학교별 맞춤 내신 대비</div>
+      
+      <p class="section-intro">
+        "학교마다 다른 내신, <strong>학교별 맞춤 대비</strong>가 필수입니다."
+      </p>
+      
+      <div class="card blue-bg">
+        <div class="card-header">
+          <span style="font-size: 1.5rem;">📊</span>
+          <span class="card-title">학교별 기출 분석</span>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>최근 10개년 모의고사 기출 분석</li>
+            <li>학교별 내신 기출 25회분 분석</li>
+            <li>출제 경향 & 난이도 파악</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card green-bg">
+        <div class="card-header">
+          <span style="font-size: 1.5rem;">📝</span>
+          <span class="card-title">학교별 프린트 제공</span>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>학교 담당 교사별 출제 스타일 분석</li>
+            <li>학교 특화 프린트 맞춤 제작</li>
+            <li>서술형 출제 패턴별 대비 자료</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card purple-bg">
+        <div class="card-header">
+          <span style="font-size: 1.5rem;">📋</span>
+          <span class="card-title">자체 제작 실전 모의고사</span>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>50분 실제 시험과 동일한 형태</li>
+            <li>학교별 난이도 반영 문제 구성</li>
+            <li>실전 감각 극대화 훈련</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card yellow-bg">
+        <div class="card-header">
+          <span style="font-size: 1.5rem;">✍️</span>
+          <span class="card-title">손글씨 해설지</span>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>선생님이 직접 손으로 풀이 정리</li>
+            <li>실제 시험장에서의 사고 흐름 그대로</li>
+            <li>학생들이 가장 선호하는 자료</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 단원별 테스트 시스템 -->
+    <section class="section">
+      <div class="section-header">📝 단원별 테스트 강화 시스템</div>
+      
+      <p class="section-intro">
+        중간고사 고득점을 위한 <strong class="primary">3단계 테스트 시스템</strong>을 운영합니다.
+      </p>
+      
+      <div class="test-step">
+        <div class="test-circle step-1">1차</div>
+        <div class="test-info">
+          <h4 class="step-1">기본 유형 테스트</h4>
+          <ul>
+            <li>• 개념 확인 + 기본 문제</li>
+            <li>• 단원별 핵심 유형 점검</li>
+            <li>• 취약점 조기 발견</li>
+          </ul>
+          <p class="test-date">📅 3월 3~4주차</p>
+        </div>
+      </div>
+      
+      <div class="test-step">
+        <div class="test-circle step-2">2차</div>
+        <div class="test-info">
+          <h4 class="step-2">심화 유형 테스트</h4>
+          <ul>
+            <li>• 고난도 + 서술형 문제</li>
+            <li>• 유형별 반복 훈련 결과 점검</li>
+            <li>• 서술형 감점 요인 사전 차단</li>
+          </ul>
+          <p class="test-date">📅 4월 1주차</p>
+        </div>
+      </div>
+      
+      <div class="test-step">
+        <div class="test-circle step-3">Final</div>
+        <div class="test-info">
+          <h4 class="step-3">파이널 테스트</h4>
+          <ul>
+            <li>• 학교별 기출 + 예상문제</li>
+            <li>• 50분 실전 모의고사</li>
+            <li>• 시간 배분 & 실전 감각 완성</li>
+          </ul>
+          <p class="test-date">📅 4월 2주차</p>
+        </div>
+      </div>
+      
+      <div class="ai-notice">
+        ※ 모든 테스트 결과는 AI 분석 시스템을 통해 취약점 분석 후 맞춤형 보강 학습 진행
+      </div>
+    </section>
+
+    <!-- 촘촘한 관리 시스템 -->
+    <section class="section">
+      <div class="section-header">✅ 촘촘한 관리 시스템</div>
+      
+      <p class="section-intro">
+        "단순 수업이 아닌, <strong>전 과정을 촘촘하게 관리</strong>합니다."
+      </p>
+      
+      <div class="manage-item">
+        <span class="manage-icon">📍</span>
+        <div class="manage-content">
+          <h4>출결 관리</h4>
+          <p>학생 도착 시간 맞춰 출결 문자 발송<br>10분 이상 지각 시 개별 연락</p>
+        </div>
+        <span class="manage-tag">📱 출결 문자 자동 발송</span>
+      </div>
+      
+      <div class="manage-item">
+        <span class="manage-icon">📋</span>
+        <div class="manage-content">
+          <h4>숙제 검사</h4>
+          <p>매 수업 전원 숙제 검사<br>완료율, 채점 상태, 부족 개념 체크</p>
+        </div>
+        <span class="manage-tag">📱 매일 학부모님께 문자 피드백</span>
+      </div>
+      
+      <div class="manage-item">
+        <span class="manage-icon">📝</span>
+        <div class="manage-content">
+          <h4>복습 TEST</h4>
+          <p>매 수업마다 복습 테스트 진행<br>약한 부분 파악 + 실전력 상승</p>
+        </div>
+        <span class="manage-tag">📱 테스트 결과 문자 안내</span>
+      </div>
+      
+      <div class="manage-item">
+        <span class="manage-icon">💬</span>
+        <div class="manage-content">
+          <h4>클리닉</h4>
+          <p>언제든지 질문 가능 / 개별 첨삭<br>기초 부족 학생 별도 클리닉</p>
+        </div>
+        <span class="manage-tag">📱 1:1 밀착 관리</span>
+      </div>
+      
+      <div class="manage-item">
+        <span class="manage-icon">📓</span>
+        <div class="manage-content">
+          <h4>풀이노트 검사</h4>
+          <p>매 수업 선생님이 직접 풀이노트 확인<br>논리 흐름·정확성 점검, 비효율 교정</p>
+        </div>
+        <span class="manage-tag">📱 대체 풀이법 제공</span>
+      </div>
+    </section>
+
+    <!-- 자기주도학습 강화 -->
+    <section class="section">
+      <div class="section-header">🎯 자기주도학습 강화 프로그램</div>
+      
+      <div class="program-item">
+        <div class="program-icon">📋</div>
+        <div class="program-content">
+          <h4>학습 플래너</h4>
+          <p>• 매 수업 목표 기록 / 숙제 및 진도 체크<br>• 성취도(%)로 진행 상황 시각화<br>• 학생 스스로 공부 흐름 조절 가능</p>
+        </div>
+      </div>
+      
+      <div class="program-item">
+        <div class="program-icon">🏫</div>
+        <div class="program-content">
+          <h4>자습실 운영</h4>
+          <p>• 평일 4시~10시 / 주말 10시~6시 개방<br>• 시험 기간 연장 운영<br>• 질문 시 즉시 선생님 지도</p>
+        </div>
+      </div>
+      
+      <div class="program-item">
+        <div class="program-icon">❓</div>
+        <div class="program-content">
+          <h4>질문 시스템</h4>
+          <p>• 현장 질문 + 카카오톡 사진 질문 가능<br>• 당일 답변 원칙<br>• 막히는 문제 바로바로 해결</p>
+        </div>
+      </div>
+      
+      <div class="program-item">
+        <div class="program-icon">🎯</div>
+        <div class="program-content">
+          <h4>목표 등급 관리</h4>
+          <p>• 학생별 중간고사 목표 등급 설정<br>• 목표 달성 위한 학습량 역산<br>• 주간 점검으로 진도 관리</p>
+        </div>
+      </div>
+      
+      <div class="program-item">
+        <div class="program-icon">📊</div>
+        <div class="program-content">
+          <h4>주간 리포트</h4>
+          <p>• 출결·숙제율·진도·강사 코멘트 포함<br>• 매주 일요일 학부모님께 발송<br>• 자녀 학습 현황 한눈에 파악</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 내신분석설명회 -->
+    <section class="section">
+      <div class="section-header accent-header">📢 덕양구 고등학교 내신분석설명회</div>
+      
+      <div class="seminar-section">
+        <h3>🎓 2026학년도 1학기 중간고사 대비</h3>
+        <h2>덕양구 관내 고등학교 & 특목고</h2>
+        <h4>내신 기출 경향 분석 & 대비 전략 설명회</h4>
+        <p>김휘창 원장 주관</p>
+      </div>
+      
+      <div class="seminar-info">
+        <div class="seminar-info-item">
+          <span class="seminar-info-label">📅 일시</span>
+          <span>2026년 4월 초 주말 (상세 일정 별도 공지)</span>
+        </div>
+        <div class="seminar-info-item">
+          <span class="seminar-info-label">📍 장소</span>
+          <span>시대학원 (네이버타운 8층)</span>
+        </div>
+        <div class="seminar-info-item">
+          <span class="seminar-info-label">👤 대상</span>
+          <span>고등학생 학부모님 (재원생 + 비재원생)</span>
+        </div>
+        <div class="seminar-info-item">
+          <span class="seminar-info-label">📞 문의</span>
+          <span>031-978-1117 / 시대학원.com</span>
+        </div>
+        <div class="seminar-notice">
+          ※ 사전 예약 필수 (선착순 마감)
+        </div>
+      </div>
+      
+      <div class="seminar-content">
+        <h4>📋 설명회 주요 내용</h4>
+        <ol>
+          <li>덕양구 관내 주요 고등학교 수학 내신 기출 경향 분석</li>
+          <li>일부 특목고 내신 출제 패턴 및 대비 전략</li>
+          <li>학교별 서술형 문제 유형 및 감점 포인트</li>
+          <li>2026학년도 1학기 중간고사 예상 범위 & 핵심 유형</li>
+          <li>학교별 맞춤 내신 대비 로드맵 제시</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 학부모님께 부탁드리는 사항 -->
+    <section class="section">
+      <div class="section-header">🏠 학부모님께 부탁드리는 사항</div>
+      
+      <div class="request-item">
+        <span class="request-num">1</span>
+        <p class="request-text">가정에서 노트 작성 여부 확인 부탁드립니다.<br>(개념노트 / 풀이노트 / 오답노트)</p>
+      </div>
+      
+      <div class="request-item">
+        <span class="request-num">2</span>
+        <p class="request-text">매일 발송되는 숙제/테스트 결과 문자를<br>함께 확인해 주세요.</p>
+      </div>
+      
+      <div class="request-item">
+        <span class="request-num">3</span>
+        <p class="request-text">매주 일요일 발송되는 주간 리포트를<br>꼭 확인해 주세요.</p>
+      </div>
+      
+      <div class="request-item">
+        <span class="request-num">4</span>
+        <p class="request-text">시험 기간 스마트폰 사용 시간 관리에<br>협조 부탁드립니다.</p>
+      </div>
+      
+      <div class="request-item special">
+        <span class="request-num special">⭐</span>
+        <p class="request-text special">4월 초 내신분석설명회에 참석해 주세요!<br>(사전 예약 필수)</p>
+      </div>
+      
+      <div class="closing-message">
+        시대학원은 '관리가 강한 학원'으로<br>
+        학생 한 명 한 명의 성장을 위해 최선을 다하겠습니다.
+      </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+      <h2>감사합니다</h2>
+      <div class="footer-divider"></div>
+      <p class="footer-date">2026년 3월</p>
+      <p class="footer-name">시대학원 원장 김 휘 창</p>
+      
+      <div class="footer-values">
+        <h4>📌 시대학원 핵심 가치</h4>
+        <p>✓ 3단계 내신 커리큘럼 &nbsp; ✓ 학교별 맞춤 대비<br>
+        ✓ 촘촘한 관리 시스템 &nbsp; ✓ 실시간 학부모 소통</p>
+      </div>
+      
+      <div class="footer-seminar">
+        📢 4월 초 주말 | 덕양구 고등학교 내신분석설명회 개최!
+      </div>
+      
+      <div class="footer-contact">
+        <h4>📞 상담 문의 & 설명회 예약</h4>
+        <p>전화: 031-978-1117</p>
+        <p>홈페이지: 시대학원.com</p>
+        <p>주소: 고양시 덕양구 백양로51 네이버타운 8층</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // 토스트 알림 표시
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast ' + type + ' show';
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // 버튼 로딩 상태 관리
+    function setButtonLoading(btn, loading) {
+      if (loading) {
+        btn.disabled = true;
+        const icon = btn.querySelector('span:first-child');
+        icon.innerHTML = '<div class="spinner"></div>';
+      } else {
+        btn.disabled = false;
+      }
+    }
+
+    // 고해상도 이미지로 저장
+    async function saveAsImage() {
+      const btn = document.getElementById('btnImage');
+      const originalIcon = btn.querySelector('span:first-child').textContent;
+      
+      try {
+        setButtonLoading(btn, true);
+        showToast('🖼️ 이미지 생성 중... 잠시만 기다려주세요.');
+        
+        const container = document.querySelector('.container');
+        const toolbar = document.querySelector('.floating-toolbar');
+        
+        // 툴바 임시 숨김
+        toolbar.style.display = 'none';
+        
+        // html2canvas로 캡처 (고해상도)
+        const canvas = await html2canvas(container, {
+          scale: 2, // 2배 해상도
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#f5f7fa',
+          logging: false,
+          windowWidth: 700,
+          onclone: (clonedDoc) => {
+            const clonedContainer = clonedDoc.querySelector('.container');
+            clonedContainer.style.maxWidth = '700px';
+            clonedContainer.style.margin = '0';
+          }
+        });
+        
+        // 툴바 복원
+        toolbar.style.display = '';
+        
+        // 이미지 다운로드
+        const link = document.createElement('a');
+        link.download = '시대학원_2026년3월_가정통신문.png';
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+        
+        showToast('✅ 이미지가 저장되었습니다!', 'success');
+      } catch (error) {
+        console.error('이미지 저장 오류:', error);
+        showToast('❌ 이미지 저장에 실패했습니다.', 'error');
+        document.querySelector('.floating-toolbar').style.display = '';
+      } finally {
+        btn.querySelector('span:first-child').textContent = originalIcon;
+        setButtonLoading(btn, false);
+      }
+    }
+
+    // PDF로 저장
+    async function saveAsPDF() {
+      const btn = document.getElementById('btnPDF');
+      const originalIcon = btn.querySelector('span:first-child').textContent;
+      
+      try {
+        setButtonLoading(btn, true);
+        showToast('📄 PDF 생성 중... 잠시만 기다려주세요.');
+        
+        const container = document.querySelector('.container');
+        const toolbar = document.querySelector('.floating-toolbar');
+        
+        // 툴바 임시 숨김
+        toolbar.style.display = 'none';
+        
+        // html2canvas로 캡처
+        const canvas = await html2canvas(container, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          windowWidth: 700,
+          onclone: (clonedDoc) => {
+            const clonedContainer = clonedDoc.querySelector('.container');
+            clonedContainer.style.maxWidth = '700px';
+            clonedContainer.style.margin = '0';
+            clonedContainer.style.boxShadow = 'none';
+          }
+        });
+        
+        // 툴바 복원
+        toolbar.style.display = '';
+        
+        // jsPDF로 PDF 생성
+        const { jsPDF } = window.jspdf;
+        
+        // A4 비율로 PDF 생성
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        let heightLeft = imgHeight;
+        let position = 0;
+        
+        // 첫 페이지
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        
+        // 추가 페이지가 필요한 경우
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+        
+        // PDF 다운로드
+        pdf.save('시대학원_2026년3월_가정통신문.pdf');
+        
+        showToast('✅ PDF가 저장되었습니다!', 'success');
+      } catch (error) {
+        console.error('PDF 저장 오류:', error);
+        showToast('❌ PDF 저장에 실패했습니다.', 'error');
+        document.querySelector('.floating-toolbar').style.display = '';
+      } finally {
+        btn.querySelector('span:first-child').textContent = originalIcon;
+        setButtonLoading(btn, false);
+      }
+    }
+  </script>
+</body>
+</html>
