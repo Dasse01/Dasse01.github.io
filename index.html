@@ -788,9 +788,37 @@ footer a{color:var(--gray);text-decoration:none}
 .reveal-left{opacity:0;transform:translateX(-40px);transition:all 0.8s cubic-bezier(0.16,1,0.3,1)}
 .reveal-left.visible{opacity:1;transform:translateX(0)}
 
+/* 가정통신문 네비게이션 스타일 */
+.nav-newsletter{color:#f472b6!important;font-weight:700!important;background:rgba(244,114,182,0.1);padding:0.3rem 0.7rem;border-radius:3px;border:1px solid rgba(244,114,182,0.25)!important;font-size:0.82rem!important;white-space:nowrap}
+.nav-newsletter:hover{background:rgba(244,114,182,0.2)!important;color:#f9a8d4!important}
+.nav-newsletter::after{display:none!important}
+
+/* 햄버거 메뉴 버튼 */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1001}
+.nav-hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.3s}
+.nav-hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-hamburger.active span:nth-child(2){opacity:0}
+.nav-hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* 모바일 메뉴 패널 */
+.mobile-menu{position:fixed;top:0;right:-100%;width:85%;max-width:320px;height:100vh;background:linear-gradient(180deg,#0a0a0a 0%,#111 100%);z-index:999;padding:80px 25px 30px;overflow-y:auto;transition:right 0.35s cubic-bezier(0.22,0.61,0.36,1);box-shadow:-5px 0 30px rgba(0,0,0,0.5)}
+.mobile-menu.open{right:0}
+.mobile-menu-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:998;opacity:0;visibility:hidden;transition:all 0.3s}
+.mobile-menu-overlay.open{opacity:1;visibility:visible}
+.mobile-menu a{display:block;color:var(--lgray);text-decoration:none;padding:14px 0;font-size:0.95rem;border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.2s}
+.mobile-menu a:hover{color:var(--white);padding-left:8px}
+.mobile-menu .mm-section{margin-bottom:15px}
+.mobile-menu .mm-title{font-size:0.75rem;color:var(--dgray);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.mobile-menu .mm-highlight{color:var(--lgold)!important;font-weight:700}
+.mobile-menu .mm-newsletter{color:#f472b6!important;font-weight:700}
+.mobile-menu .mm-ai{color:#a78bfa!important;font-weight:700}
+.mobile-menu .mm-cta{display:block;background:var(--red);color:var(--white)!important;text-align:center;padding:14px!important;border-radius:6px;margin-top:20px;font-weight:700;border:none!important}
+.mobile-menu .mm-cta:hover{background:var(--fire);padding-left:0!important}
+
 /* Mobile */
 @media(max-width:768px){
   .nav-links{display:none}
+  .nav-hamburger{display:flex}
   .reality-grid{grid-template-columns:1fr}
   .whatis-features{grid-template-columns:1fr}
   .uni-grid{grid-template-columns:repeat(3,1fr)}
@@ -845,12 +873,79 @@ footer a{color:var(--gray);text-decoration:none}
         <a href="수학내신기출분석.html">📐 수학 기출분석</a>
       </div>
     </div>
+    <a href="시대학원_가정통신문.html" class="nav-newsletter">📮 가정통신문</a>
     <a href="2027_수시지원전략.html" class="nav-susi">🔥 수시전략</a>
     <a href="#" onclick="document.getElementById('hw-chat-toggle').click();return false;" class="nav-ai">🤖 김휘창입시컨설팅 AI상담</a>
     <a href="https://blog.naver.com/study9781117" target="_blank" class="nav-blog">📝 블로그</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="nav-cta">상담신청</a>
   </div>
+  <!-- 햄버거 메뉴 버튼 -->
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
+
+<!-- 모바일 메뉴 오버레이 -->
+<div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+
+<!-- 모바일 메뉴 패널 -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-section">
+    <div class="mm-title">소개</div>
+    <a href="원장인사말.html" class="mm-highlight">💬 원장인사말</a>
+  </div>
+  
+  <div class="mm-section">
+    <div class="mm-title">약술형 논술</div>
+    <a href="#reality" onclick="toggleMobileMenu()">⚡ 현실 직시</a>
+    <a href="#whatis" onclick="toggleMobileMenu()">📋 약술형이란</a>
+    <a href="#universities" onclick="toggleMobileMenu()">🏫 모집 대학</a>
+    <a href="#results" onclick="toggleMobileMenu()">🏆 합격 실적</a>
+    <a href="#tools" onclick="toggleMobileMenu()">📊 분석 도구</a>
+  </div>
+  
+  <div class="mm-section">
+    <div class="mm-title">학원 안내</div>
+    <a href="#why" onclick="toggleMobileMenu()">💎 왜 시대학원</a>
+    <a href="#suneung" onclick="toggleMobileMenu()">📝 수능 병행</a>
+    <a href="#reviews-kr" onclick="toggleMobileMenu()">💬 공부법 후기</a>
+    <a href="#instructors" onclick="toggleMobileMenu()">👨‍🏫 강사진</a>
+  </div>
+  
+  <div class="mm-section">
+    <div class="mm-title">학습 프로그램</div>
+    <a href="국어약술형_랜딩페이지.html">📖 국어 약술형</a>
+    <a href="수학약술형_랜딩페이지.html">📐 수학 약술형</a>
+    <a href="시대학원_고등국어_강좌안내.html">📚 고등국어</a>
+    <a href="시대학원_고등수학_강좌안내.html">🔢 고등수학</a>
+  </div>
+  
+  <div class="mm-section">
+    <div class="mm-title">내신 기출분석</div>
+    <a href="국어내신기출분석.html">📖 국어 기출분석</a>
+    <a href="수학내신기출분석.html">📐 수학 기출분석</a>
+  </div>
+  
+  <div class="mm-section">
+    <div class="mm-title">알림</div>
+    <a href="시대학원_가정통신문.html" class="mm-newsletter">📮 가정통신문 (3월)</a>
+  </div>
+  
+  <div class="mm-section">
+    <div class="mm-title">입시 전략</div>
+    <a href="2027_수시지원전략.html" class="mm-highlight">🔥 수시지원전략</a>
+    <a href="#" onclick="document.getElementById('hw-chat-toggle').click();toggleMobileMenu();return false;" class="mm-ai">🤖 AI 입시상담</a>
+  </div>
+  
+  <div class="mm-section">
+    <div class="mm-title">외부 링크</div>
+    <a href="https://blog.naver.com/study9781117" target="_blank">📝 네이버 블로그</a>
+  </div>
+  
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLScaYlwKKcMRA2dyjM62iU-Pt82HXRuR_wb3bASd09BewHKFDw/viewform" target="_blank" class="mm-cta">📋 상담 신청하기</a>
+</div>
 
 <!-- Hero Banner -->
 <section class="hero">
@@ -2008,10 +2103,21 @@ footer a{color:var(--gray);text-decoration:none}
 
 <footer>
   <p>© 2025 시대학원. All rights reserved. | 약술형 논술 전문 | 경기도 고양시 덕양구 백양로51 네이버타운 8층</p>
-  <p style="margin-top:0.5rem"><a href="2027_수시지원전략.html">🔥 수시전략</a> · <a href="국어약술형_랜딩페이지.html">국어 약술형</a> · <a href="수학약술형_랜딩페이지.html">수학 약술형</a></p>
+  <p style="margin-top:0.5rem"><a href="2027_수시지원전략.html">🔥 수시전략</a> · <a href="국어약술형_랜딩페이지.html">국어 약술형</a> · <a href="수학약술형_랜딩페이지.html">수학 약술형</a> · <a href="시대학원_가정통신문.html" style="color:#f472b6">📮 가정통신문</a></p>
 </footer>
 
 <script>
+// 모바일 메뉴 토글
+function toggleMobileMenu(){
+  const hamburger = document.getElementById('navHamburger');
+  const menu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('mobileOverlay');
+  hamburger.classList.toggle('active');
+  menu.classList.toggle('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+
 // Nav scroll effect
 window.addEventListener('scroll',()=>{
   document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50);
